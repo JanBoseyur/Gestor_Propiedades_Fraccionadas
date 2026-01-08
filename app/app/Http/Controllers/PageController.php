@@ -20,4 +20,9 @@ class PageController extends Controller
     {
         return view('admin.AdminDashboard');
     }
+
+    public function AdminPropertyDetails()
+    {
+        return view('admin.AdminPropertyDetails');
+    }
 }
