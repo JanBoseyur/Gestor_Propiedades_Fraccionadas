@@ -5,7 +5,7 @@
 
 <head>
     <meta charset = "UTF-8">
-    <meta name = "viewport" conten t= "width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@yield('title', 'Panel Admin')</title>
 
@@ -16,14 +16,14 @@
     @stack('head')
 </head>
 
-<body class = "">
+<body class = "h-screen overflow-hidden">
     
-    @include('components.header')
+    @include('components.Header')
 
-    <div class = "flex flex-col flex-1">
-        @include('components.sidebar')
+    <div class = "flex h-[calc(100vh-4rem)]">
+        @include('components.Sidebar')
 
-        <main class = "">
+        <main class = "p-5 flex-1 overflow-y-auto">
             @yield('content')
         </main>
     </div>

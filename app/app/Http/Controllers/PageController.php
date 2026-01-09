@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
-    public function login()
+    public function Login()
     {
-        return view('login');
+        return view('Login');
     }
 
-    public function register()
+    public function Register()
     {
-        return view('auth.register');
+        return view('auth.Register');
     }
 
     public function AdminDashboard()
@@ -25,4 +25,10 @@ class PageController extends Controller
     {
         return view('admin.AdminPropertyDetails');
     }
+
+    public function ManagePartners()
+    {
+        return view('admin.ManagePartners');
+    }
 }
+
