@@ -95,7 +95,7 @@
 
                     <!-- Ir al Home -->
                     <a
-                        href = "{{ route('AdminDashboard') }}"
+                        href = "{{ route('admin.dashboard') }}"
                         class = "inline-flex w-full justify-center py-3 px-4
                             rounded-md text-sm font-medium text-white
                             bg-[#2E6C6F] hover:bg-[#265a5c]

@@ -65,47 +65,22 @@
     <!-- Componente de Propiedades -->  
     <h2 class = "text-2xl font-bold my-5">Vista Rápida de Propiedades</h2>
 
+    <!-- Controlar Separación y Posicionamiento --> 
     <div class = "grid grid-cols-3 gap-6">
 
-        <x-property-card
-            title="Ocupacion de Socios"
-            background="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop"
-            :partners=8
-            location="Punta Cana, Dominican Republic"
-            >
-        </x-property-card>
+        <!-- Componente Propiedades con Datos Dinamicos --> 
+        @foreach ($propiedades as $propiedad)
+            
+            <a href = "{{ route('propiedades.show', $propiedad->id) }}">
+                <x-property-card 
+                    :title="$propiedad->nombre"
+                    :background="$propiedad->imagen1"
+                    :partners="$propiedad->n_socios"
+                    :location="$propiedad->ubicacion"
+                />
+            </a>
 
-        <x-property-card
-            title="Ocupacion de Socios"
-            background="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop"
-            :partners=8
-            location="Punta Cana, Dominican Republic"
-            >
-        </x-property-card>
-
-        <x-property-card
-            title="Ocupacion de Socios"
-            background="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop"
-            :partners=8
-            location="Punta Cana, Dominican Republic"
-            >
-        </x-property-card>
-
-        <x-property-card
-            title="Ocupacion de Socios"
-            background="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop"
-            :partners=8
-            location="Punta Cana, Dominican Republic"
-            >
-        </x-property-card>
-
-        <x-property-card
-            title="Ocupacion de Socios"
-            background="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2070&auto=format&fit=crop"
-            :partners=8
-            location="Punta Cana, Dominican Republic"
-            >
-        </x-property-card>
+        @endforeach
         
     </div>
 

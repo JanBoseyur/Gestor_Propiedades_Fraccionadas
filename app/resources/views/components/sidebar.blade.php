@@ -8,7 +8,7 @@
             <ul class = "space-y-1">
 
                 <li>
-                    <a href = "{{ route('AdminDashboard') }}"
+                    <a href = "{{ route('admin.dashboard') }}"
                         class = "flex items-center px-4 py-3 rounded-lg
                             {{ request()->routeIs('AdminDashboard')
                                 ? 'bg-[#2E6C6F] text-white'
