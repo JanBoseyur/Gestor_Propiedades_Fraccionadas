@@ -30,5 +30,15 @@ class PageController extends Controller
     {
         return view('admin.ManagePartners');
     }
+
+    public function ReservedWeeks()
+    {
+        return view('admin.ReservedWeeks');
+    }
+
+    public function BillingPage()
+    {
+        return view('admin.BillingPage');
+    }
 }
 

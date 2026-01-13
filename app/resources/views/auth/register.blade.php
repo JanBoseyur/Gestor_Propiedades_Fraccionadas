@@ -36,6 +36,15 @@
 
         <!-- Contenedor Formulario -->
         <div class = "relative z-10 w-full max-w-md"> 
+
+            <div class = "flex items-center justify-center h-40 ">
+                <img 
+                    src = "{{ asset('images/caribe-logo1.png') }}"
+                    class = "w-60"
+                    alt = "Logo"
+                />
+            </div>
+            
             <div class = "bg-black/20 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/10">
             
                 <div class = "text-center mb-8">
