@@ -14,12 +14,15 @@ Route::get('/home', [PageController::class, 'home'])->name('home');
 
 # Solo usar para debug /// Route::get('/AdminDashboard', [PageController::class, 'AdminDashboard'])->name('AdminDashboard');
 
-Route::get('/AdminPropertyDetails', [PageController::class, 'AdminPropertyDetails'])->name('AdminPropertyDetails');
-Route::get('/ManagePartners', [PageController::class, 'ManagePartners'])->name('ManagePartners');   
-
 # Consulta Propiedades
 Route::get('/admin/dashboard', [PropiedadesController::class, 'index'])
     ->name('admin.dashboard');
+
+# Consulta Propiedades
+Route::get('/admin/ManageProperties', [PropiedadesController::class, 'listado'])
+    ->name('admin.ManageProperties');
+
+Route::get('/ManagePartners', [PageController::class, 'ManagePartners'])->name('ManagePartners');   
 
 # Consulta Propiedades por ID
 Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])

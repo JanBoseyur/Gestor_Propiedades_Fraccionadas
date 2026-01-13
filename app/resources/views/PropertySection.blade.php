@@ -21,8 +21,40 @@
                     <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Descripción</h3>
                     <p class = "text-gray-700 dark:text-gray-300 mt-2 prose dark:prose-invert max-w-none">{{ $propiedad -> descripcion }}</p>
                 </div>
-            
+                
+                <div class = "mt-6 pt-6 border-t border-[#F2E8DE] dark:border-gray-700">
+                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Amenidades</h3>
+                    
+                    <ul class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
+                        
+                        @foreach ($propiedad->amenidades as $amenidad)
+                            <li class = "flex items-center text-gray-700 dark:text-gray-300">
+                                <span class = "text-[#2E6C6F] dark:text-[#B3D3D3]">{{ $amenidad -> icon }}</span>
+                                <span class = "ml-2">{{ $amenidad -> nombre}}</span>
+                            </li>
+                        @endforeach    
+
+                    </ul>
+
+                </div>
+
+                <div class = "mt-6 pt-6 border-t border-[#F2E8DE] dark:border-gray-700">
+                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Galería de Fotos</h3>
+                    
+                    <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
+                        <x-image-modal 
+                            src="{{ asset($propiedad -> imagen1) }}"
+                            alt="Foto de {{ $propiedad ->nombre }}"
+                        />
+                    </div>
+                                        
+                </div>
+
             </div>
+
+            </div>
+
+            
         </div>
 
         <div class = "grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -45,6 +77,7 @@
                     </li>
                 </ul>
             </div>
+            
         </div>
 
     </div>

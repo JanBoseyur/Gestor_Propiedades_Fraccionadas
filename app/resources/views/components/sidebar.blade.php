@@ -10,7 +10,7 @@
                 <li>
                     <a href = "{{ route('admin.dashboard') }}"
                         class = "flex items-center px-4 py-3 rounded-lg
-                            {{ request()->routeIs('AdminDashboard')
+                            {{ request()->routeIs('admin.dashboard')
                                 ? 'bg-[#2E6C6F] text-white'
                                 : 'text-gray-700 hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
 
@@ -24,9 +24,9 @@
                 </li>
 
                 <li>
-                    <a href = "{{ route('AdminPropertyDetails') }}"
+                    <a href = "{{ route('admin.ManageProperties') }}"
                         class = "flex items-center px-4 py-3 rounded-lg
-                            {{ request()->routeIs('AdminPropertyDetails')
+                            {{ request()->routeIs('admin.ManageProperties')
                                 ? 'bg-[#2E6C6F] text-white'
                                 : 'text-gray-700 hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
                                 

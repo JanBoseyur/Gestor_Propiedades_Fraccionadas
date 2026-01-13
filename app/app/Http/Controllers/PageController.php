@@ -21,9 +21,9 @@ class PageController extends Controller
         return view('admin.AdminDashboard');
     }
 
-    public function AdminPropertyDetails()
+    public function ManageProperties()
     {
-        return view('admin.AdminPropertyDetails');
+        return view('admin.ManageProperties');
     }
 
     public function ManagePartners()
