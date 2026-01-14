@@ -1,15 +1,15 @@
 
-<header class = "bg-[#2E6C6F] dark:border-gray-700 flex items-center justify-between px-6">
+<header class = "bg-[#2E6C6F] dark:border-gray-700 flex items-center justify-between">
 
-    <div class = "flex items-center justify-center h-20 ml-12">
+    <div class = "flex justify-center items-center w-64 h-20">
         <img 
             src = "{{ asset('images/caribe-logo1.png') }}"
-            class = "w-25"
+            class = "mt-5 w-26"
             alt = "Logo"
         />
     </div>
 
-    <div class = "flex items-center space-x-4">
+    <div class = "flex items-center space-x-4 px-5">
         <span class = "text-sm text-gray-600 dark:text-gray-300">
             Bienvenido, #
         </span>

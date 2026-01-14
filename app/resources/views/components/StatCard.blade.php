@@ -1,5 +1,5 @@
 
-<div class = "bg-[#F9F5F0] dark:bg-gray-800 p-6 rounded-xl shadow-lg flex items-center space-x-4 max-w-3xs">
+<div class = "bg-[#F9F5F0] dark:bg-gray-800 p-6 mx-5 rounded-xl shadow-lg flex items-center space-x-5 max-w-3xs">
     
     <div class = "p-3 rounded-full {{ $color }}">
         {{ $icon }}

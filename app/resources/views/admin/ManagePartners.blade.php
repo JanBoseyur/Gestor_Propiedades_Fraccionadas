@@ -4,9 +4,10 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class = "inset-0 bg-opacity-50 z-50 flex justify-center items-center p-4">
+
+    <div class = "flex ">
         
-        <div class = "container mx-auto">
+        <div class = "">
         <h2 class = "text-3xl font-bold text-[#2E6C6F] dark:text-black mb-8">Gestión de Socios</h2>
       
         <div class = "bg-[#F9F5F0] dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">

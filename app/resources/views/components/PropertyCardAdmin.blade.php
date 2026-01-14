@@ -25,7 +25,7 @@
 
           <ul class = "mt-2 space-y-2">
             <li key = {partner.id} class = "flex items-center justify-between bg-white dark:bg-gray-700 p-2 rounded-md">
-              <span class = "text-gray-800 dark:text-gray-200">{{ $location }}</span>
+              <span class = "text-gray-800 dark:text-gray-200">Hacer consulta de socios en BD</span>
               <button 
                 class = "text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-colors"
               >

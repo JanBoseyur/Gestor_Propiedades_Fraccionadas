@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <div class = "container mx-auto">
+    <div class = "">
         
-    <h2 class = "text-3xl font-bold text-[#2E6C6F] dark:text-white mb-8">
+    <h2 class = "text-3xl font-bold text-black mb-8">
             Gestión de Gasto Común
         </h2>
 

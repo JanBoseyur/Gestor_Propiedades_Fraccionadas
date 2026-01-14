@@ -5,9 +5,9 @@
 
 @section('content')
 
-    <h2 class = "text-2xl font-bold my-5">Admin Dashboard</h2>
+    <h2 class = "text-2xl font-bold ">Admin Dashboard</h2>
 
-    <div class = "flex flex-block">
+    <div class = "flex flex-block flex justify-center items-center">
 
         <!-- Componente de Carta -->
         <x-stat-card
