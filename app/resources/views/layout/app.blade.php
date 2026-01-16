@@ -20,10 +20,10 @@
 
 <body class = "bg-[#2E6C6F] h-screen overflow-hidden">
     
-    @include('components.Header')
+    @include('components.header')
 
     <div class = "flex h-[calc(100vh-4rem)]">
-        @include('components.Sidebar')
+        @include('components.sidebar')
 
         <main class = "bg-white rounded-xl flex-1 overflow-y-auto">
             @yield('content')
