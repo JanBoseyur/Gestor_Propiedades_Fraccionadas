@@ -10,7 +10,7 @@ class PropiedadesController extends Controller
     public function index()
     {
         $propiedades = Propiedades::all();
-        return view('admin.admin-Dashboard', compact('propiedades'));
+        return view('admin.admin-dashboard', compact('propiedades'));
     }
 
     # Consulta Tabla Propiedades
