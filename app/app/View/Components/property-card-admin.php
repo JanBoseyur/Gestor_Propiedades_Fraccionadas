@@ -21,6 +21,6 @@ class PropertyCardAdmin extends Component
 
     public function render()
     {
-        return view('components.PropertyCardAdmin');
+        return view('components.property-card-admin');
     }
 }

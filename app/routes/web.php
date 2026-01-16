@@ -26,10 +26,10 @@ Route::get('/admin/ManageProperties', [PropiedadesController::class, 'listado'])
 Route::get('/admin/ManagePartners', [PageController::class, 'ManagePartners'])->name('ManagePartners');
 
 # Consulta Propiedades
-Route::get('/admin/ReservedWeeks', [PageController::class, 'ReservedWeeks'])->name('ReservedWeeks');
+Route::get('/admin/reserved-weeks', [PageController::class, 'ReservedWeeks'])->name('ReservedWeeks');
 
 # Consulta Propiedades
-Route::get('/admin/BillingPage', [PageController::class, 'BillingPage'])->name('BillingPage');
+Route::get('/admin/billing-page', [PageController::class, 'BillingPage'])->name('BillingPage');
 
 # Consulta Propiedades por ID
 Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
