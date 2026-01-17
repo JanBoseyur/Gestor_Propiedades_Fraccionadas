@@ -26,6 +26,8 @@
     
 <body class = "">
 
+    <!-- Acceder a info usuario -->
+
     <div class = "relative min-h-screen flex items-center justify-center p-4">
 
         <!-- Fondo -->
@@ -53,16 +55,23 @@
                     <p class = "text-gray-300 mt-2">Inicia sesión para acceder a tu panel.</p>
                 </div>
 
+                @if ($errors->any())
+                    <div class = "text-center bg-red-100 text-red-700 p-2 mb-4 rounded">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <!-- Usuario -->
-                <form class = "space-y-6">
+                <form class = "space-y-6" method="POST" action = "{{ route('login') }}">
+                    @csrf
                     <div>
                         <label for = "username" class = "block text-sm font-medium text-gray-200">
                             Usuario
                         </label>
+                        
                         <input
-                            id = "username"
-                            name = "username"
-                            type = "text"
+                            name = "email"
+                            type = "email"
                             required
                             value = ""
                             placeholder = "ej: Ana García"
@@ -92,8 +101,7 @@
                     </div>
 
                     <!-- Botón -->
-                    <a
-                        href = ""
+                    <button type = "submit"
                         class = "inline-flex w-full justify-center py-3 px-4
                             rounded-md text-sm font-medium text-white
                             bg-[#2E6C6F] hover:bg-[#265a5c]
@@ -101,19 +109,7 @@
                             transition-colors no-underline"
                     >
                         Iniciar Sesión
-                    </a>
-
-                    <!-- Ir al Home -->
-                    <a
-                        href = "{{ route('admin.Dashboard') }}"
-                        class = "inline-flex w-full justify-center py-3 px-4
-                            rounded-md text-sm font-medium text-white
-                            bg-[#2E6C6F] hover:bg-[#265a5c]
-                            focus:outline-none focus:ring-2 focus:ring-[#2E6C6F]
-                            transition-colors no-underline"
-                    >
-                        Home
-                    </a>
+                    </button>
 
                 </form>
 
@@ -125,7 +121,6 @@
                         Regístrate
                     </a>
                 </p>
-
 
             </div> 
         </div> 

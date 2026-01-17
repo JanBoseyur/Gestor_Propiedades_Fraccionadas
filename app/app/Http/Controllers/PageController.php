@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -18,7 +19,8 @@ class PageController extends Controller
 
     public function AdminDashboard()
     {
-        return view('admin.admin-dashboard');
+        $user = Auth::user();
+        return view('admin.admin-dashboard', compact('user'));
     }
 
     public function ManageProperties()
@@ -28,7 +30,7 @@ class PageController extends Controller
 
     public function ManagePartners()
     {
-        return view('admin.manage-properties');
+        return view('admin.manage-partners');
     }
 
     public function ReservedWeeks()

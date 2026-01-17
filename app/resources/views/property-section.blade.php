@@ -5,31 +5,31 @@
 
 @section('content')
 
-    <div class = "container mx-auto">
+    <div class = "">
         
-        <div class = "bg-[#F9F5F0] dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden mb-8">
-            <img class = "h-64 w-full object-cover"
+        <div class = "overflow-hidden">
+            <img class = "h-90 w-full object-cover"
             src = "{{ $propiedad -> imagen1 }}"
             alt = "Exterior de {{ $propiedad->nombre }}"
             >
             
-            <div class = "p-6 md:p-8">
-                <h2 class = "text-4xl font-bold text-[#2E6C6F] dark:text-white">{{ $propiedad -> nombre }}</h2>
-                <p class = "mt-2 text-lg text-gray-600 dark:text-gray-400">{{ $propiedad -> ubicacion }}</p> 
+            <div class = "p-6 md:p-8 bg-[#2C7474]">
+                <h2 class = "text-4xl font-bold text-[#2E6C6F] text-white">{{ $propiedad -> nombre }}</h2>
+                <p class = "mt-2 text-lg text-white">{{ $propiedad -> ubicacion }}</p> 
 
-                <div class = "mt-6 pt-6 border-t border-[#F2E8DE] dark:border-gray-700">
-                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Descripción</h3>
-                    <p class = "text-gray-700 dark:text-gray-300 mt-2 prose dark:prose-invert max-w-none">{{ $propiedad -> descripcion }}</p>
+                <div class = "mt-6 pt-6 border-t border-white">
+                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] text-white">Descripción</h3>
+                    <p class = "text-white mt-2 prose dark:prose-invert max-w-none">{{ $propiedad -> descripcion }}</p>
                 </div>
                 
-                <div class = "mt-6 pt-6 border-t border-[#F2E8DE] dark:border-gray-700">
-                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Amenidades</h3>
+                <div class = "mt-6 pt-6 border-t border-white">
+                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] text-white">Amenidades</h3>
                     
                     <ul class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
                         
                         @foreach ($propiedad->amenidades as $amenidad)
-                            <li class = "flex items-center text-gray-700 dark:text-gray-300">
-                                <span class = "text-[#2E6C6F] dark:text-[#B3D3D3]">{{ $amenidad -> icon }}</span>
+                            <li class = "flex items-center text-white">
+                                <i class = ""></i>
                                 <span class = "ml-2">{{ $amenidad -> nombre}}</span>
                             </li>
                         @endforeach    
@@ -38,7 +38,7 @@
 
                 </div>
 
-                <div class = "mt-6 pt-6 border-t border-[#F2E8DE] dark:border-gray-700">
+                <div class = "mt-6 pt-6 border-t border-white">
                     <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Galería de Fotos</h3>
                     
                     <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">

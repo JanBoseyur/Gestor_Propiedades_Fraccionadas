@@ -5,72 +5,51 @@
 
 @section('content')
 
-    <h2 class = "text-2xl font-bold ">Admin Dashboard</h2>
+    <div>
+        <h2 class = "flex text-2xl font-bold items-center justify-center my-5">Dashboard de Administrador</h2>
+    <div>
 
-    <div class = "flex flex-block flex justify-center items-center">
+    <div class = "flex flex-block justify-center items-center">
 
         <!-- Componente de Carta -->
         <x-stat-card
         title="Total de Propiedades"
         :value="128"
-        color="bg-blue-500"
-        >
+        icon="ri-building-2-fill"
 
-            <x-slot:icon>
-                <svg class = "w-5 h-5 text-white">...</svg>
-            </x-slot:icon>
-
-        </x-stat-card>
+        x-stat-card/>
 
         <!-- Componente de Carta -->
         <x-stat-card
         title="Total de Socios"
         :value="128"
-        color="bg-blue-500"
-        >
+        icon="ri-group-2-fill"
 
-            <x-slot:icon>
-                <svg class = "w-5 h-5 text-white">...</svg>
-            </x-slot:icon>
-
-        </x-stat-card>
+        x-stat-card/>
 
         <!-- Componente de Carta -->
         <x-stat-card
         title="Semanas Reservadas"
         :value="128"
-        color="bg-blue-500"
-        >
+        icon="ri-calendar-check-fill"
 
-            <x-slot:icon>
-                <svg class = "w-5 h-5 text-white">...</svg>
-            </x-slot:icon>
-
-        </x-stat-card>
+        x-stat-card/>
 
         <!-- Componente de Carta -->
         <x-stat-card
-        title="Ocupacion de Socios"
+        title="Ocupación de Socios"
         :value="128"
-        color="bg-blue-500"
-        >
+        icon="ri-percent-fill"
 
-            <x-slot:icon>
-                <svg class = "w-5 h-5 text-white">...</svg>
-            </x-slot:icon>
+        x-stat-card/>
 
-        </x-stat-card>
     </div>
 
-    <!-- Componente de Propiedades -->  
-    <h2 class = "text-2xl font-bold my-5">Vista Rápida de Propiedades</h2>
-
     <!-- Controlar Separación y Posicionamiento --> 
-    <div class = "grid grid-cols-3 gap-6">
-
+    <div class = "mt-6">
+    
         <!-- Componente Propiedades con Datos Dinamicos --> 
         @foreach ($propiedades as $propiedad)
-            
             <a href = "{{ route('propiedades.show', $propiedad->id) }}">
                 <x-property-card 
                     :title="$propiedad->nombre"
@@ -79,7 +58,6 @@
                     :location="$propiedad->ubicacion"
                 />
             </a>
-
         @endforeach
         
     </div>

@@ -1,21 +1,22 @@
 
-<header class = "bg-[#2E6C6F] dark:border-gray-700 flex items-center justify-between">
-
-    <div class = "flex justify-center items-center w-64 h-20">
-        <img 
-            src = "{{ asset('images/caribe-logo1.png') }}"
-            class = "mt-5 w-26"
-            alt = "Logo"
-        />
-    </div>
+<header class = "flex justify-end bg-[red] items-center justify-between py-4">
 
     <div class = "flex items-center space-x-4 px-5">
-        <span class = "text-sm text-gray-600 dark:text-gray-300">
-            Bienvenido, #
+        <span class = "flex flex-col items-center justify-center text-sm text-[#2C7474]">
+            Bienvenido
+
+            <strong class = "flex flex-col text-lg">
+                @if(Auth::check())
+                    {{ Auth::user()->name }}
+                @endif
+            </strong>
+
         </span>
 
-        <div class = "h-8 w-8 rounded-full bg-[#2E6C6F] text-white flex items-center justify-center font-bold">
-            A
+        <div class = "h-8 w-8 rounded-full bg-[#2C7474] text-white flex items-center justify-center font-bold">
+            @if(Auth::check())
+               {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+            @endif
         </div>
     </div>
 

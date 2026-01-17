@@ -6,19 +6,19 @@ use Illuminate\View\Component;
 
 class StatCard extends Component
 {
-    public string $title;
-    public string|int $value;
-    public string $color;
+    public $title;
+    public $value;
+    public $icon;
 
-    public function __construct($title, $value, $color)
+    public function __construct($title, $value, $icon = null)
     {
         $this->title = $title;
         $this->value = $value;
-        $this->color = $color;
+        $this->icon = $icon;
     }
 
     public function render()
     {
-        return view('components.StatCard');
+        return view('components.statcard');
     }
 }

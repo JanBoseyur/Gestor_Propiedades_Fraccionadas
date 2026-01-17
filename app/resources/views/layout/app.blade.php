@@ -18,14 +18,14 @@
     @stack('head')
 </head>
 
-<body class = "bg-[#2E6C6F] h-screen overflow-hidden">
+<body class = "bg-[#FFF6E9] h-screen overflow-hidden">
     
     @include('components.header')
 
-    <div class = "flex h-[calc(100vh-4rem)]">
+    <div class = "bg-[#FFF6E9] flex h-[calc(100vh-4rem)]">
         @include('components.sidebar')
 
-        <main class = "bg-white rounded-xl flex-1 overflow-y-auto">
+        <main class = "bg-[#FFF6E9] flex-1 overflow-y-auto">
             @yield('content')
         </main>
     </div>

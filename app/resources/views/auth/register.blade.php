@@ -57,7 +57,7 @@
                     
                     <div>
                         <label for = "username" class = "block text-sm font-medium text-gray-200">
-                            Nombre Completo
+                            Nombre de Usuario
                         </label>
                         <input
                             id = "username"
@@ -66,6 +66,24 @@
                             required
                             value = ""
                             placeholder = "ej: Ana García"
+                            class = "mt-1 block w-full px-3 py-2 rounded-md
+                                    bg-white/10 text-white placeholder-gray-300
+                                    border border-white/20
+                                    focus:outline-none focus:ring-[#B3D3D3] focus:border-[#B3D3D3]"
+                        >
+                    </div>
+
+                    <div>
+                        <label for = "email" class = "block text-sm font-medium text-gray-200">
+                            Correo Eléctronico
+                        </label>
+                        <input
+                            id = "email"
+                            name = "email"
+                            type = "email"
+                            required
+                            value = ""
+                            placeholder = "ej: example@gmail.com"
                             class = "mt-1 block w-full px-3 py-2 rounded-md
                                     bg-white/10 text-white placeholder-gray-300
                                     border border-white/20
