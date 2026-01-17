@@ -39,4 +39,13 @@ class PropiedadesController extends Controller
     $propiedad = Propiedades::with('amenidades')->findOrFail($id);
     return view('property-section', compact('propiedad'));
     }
+
+    public function show4($id)
+    {
+        // Buscar la propiedad por su ID
+        $propiedad = Propiedades::with('socios')->findOrFail($id);
+
+        // Pasar la propiedad (ya trae los socios)
+        return view('admin.manage-partners', compact('propiedad'));
+    }
 }

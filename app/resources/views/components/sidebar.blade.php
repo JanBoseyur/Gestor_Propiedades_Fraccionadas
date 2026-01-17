@@ -1,15 +1,7 @@
 
 <!-- Contenedor Sidebar -->
-<aside class = "bg-[#FFF6E9] w-64 flex-shrink-0 h-[calc(100vh-5rem)] transform -translate-x-full transition-transform duration-300 ease-in-out fixed z-50" id = "sidebar">
+<aside class = "bg-[#FFF6E9] w-64 flex-shrink-0 h-[calc(100vh-5rem)]z-50">
     <div class = "flex flex-col h-full p-4">
-
-        <button id = "toggleSidebar" class = "p-2 text-[blue] md:hidden">
-            <!-- Icono tipo hamburger -->
-            <svg class = "w-6 h-6" fill = "none" stroke = "currentColor" viewBox = "0 0 24 24">
-                <path stroke-linecap = "round" stroke-linejoin = "round" stroke-width = "2"
-                    d = "M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        </button>
 
         <div class = "flex justify-center items-center p-3">
             <img 
@@ -137,19 +129,3 @@
         </div>
     </div>
 </aside>
-
-<div id = "overlay" class = "fixed inset-0 bg-black bg-opacity-25 hidden z-40"></div>
-
-<script>
-    const overlay = document.getElementById('overlay');
-
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full');
-        overlay.classList.toggle('hidden');
-    });
-
-    overlay.addEventListener('click', () => {
-        sidebar.classList.add('-translate-x-full');
-        overlay.classList.add('hidden');
-    });
-</script>

@@ -53,15 +53,16 @@
                 </div>
 
                 <!-- Nombre Completo -->
-                <form class = "space-y-6">
-                    
+                <form method="POST" action = "{{ route('register') }}" class = "space-y-6">
+                    @csrf
+
                     <div>
-                        <label for = "username" class = "block text-sm font-medium text-gray-200">
+                        <label for = "name" class = "block text-sm font-medium text-gray-200">
                             Nombre de Usuario
                         </label>
                         <input
-                            id = "username"
-                            name = "username"
+                            id = "name"
+                            name = "name"
                             type = "text"
                             required
                             value = ""
@@ -116,7 +117,7 @@
                         </label>
                         <input
                             id = "password"
-                            name = "password"
+                            name = "password_confirmation"
                             type = "password"
                             required
                             placeholder = "Vuelve a escribir tu contraseña"
@@ -128,8 +129,8 @@
                     </div>
 
                     <!-- Botón -->
-                    <a
-                        href = ""
+                    <button
+                        type = "submit"
                         class = "inline-flex w-full justify-center py-3 px-4
                             rounded-md text-sm font-medium text-white
                             bg-[#2E6C6F] hover:bg-[#265a5c]
@@ -137,7 +138,17 @@
                             transition-colors no-underline"
                     >
                         Registrarse
-                    </a>
+                    </button>
+
+                    @if ($errors->any())
+                        <div class = "bg-red-100 text-red-700 p-3 rounded mb-4">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>• {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif 
 
                 </form>
 

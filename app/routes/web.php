@@ -6,26 +6,39 @@ use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\PropiedadesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {return view('login');});
+Route::get('/', function () {return view('auth.login');});
 
-########################### Rutas login #########################################
+########################### Rutas Login #########################################
 
-Route::get('/login', function() {
+// Vista login
+Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('/login', [AuthController::class, 'login']);
+// Procesar login
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+// Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Rutas protegidas
 Route::middleware('auth')->group(function () {
-    Route::get('/AdminDashboard', [PropiedadesController::class, 'index'])->name('AdminDashboard');
-    Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])->name('propiedades.show');
+    Route::get('/AdminDashboard', [AdminController::class, 'index'])
+        ->name('AdminDashboard');
 });
+
+########################### Rutas Register #########################################
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+Route::post('/register', [AuthController::class, 'register']);
 
 ################################################################################# 
 
-Route::get('/register', [PageController::class, 'register'])->name('register');
 Route::get('/home', [PageController::class, 'home'])->name('home');
 
 # Solo usar para debug /// Route::get('/AdminDashboard', [PageController::class, 'AdminDashboard'])->name('AdminDashboard');
@@ -50,3 +63,7 @@ Route::get('/admin/billing-page', [PageController::class, 'BillingPage'])->name(
 # Consulta Propiedades por ID
 Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
     ->name('propiedades.show');
+
+Route::get('/propiedades/{id}/socios', [PropiedadesController::class, 'socios'])
+    ->middleware('auth')
+    ->name('propiedades.socios');

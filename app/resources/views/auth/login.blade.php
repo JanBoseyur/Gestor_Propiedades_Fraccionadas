@@ -62,7 +62,7 @@
                 @endif
 
                 <!-- Usuario -->
-                <form class = "space-y-6" method="POST" action = "{{ route('login') }}">
+                <form class = "space-y-6" method = "POST" action = "{{ route('login.post') }}">
                     @csrf
                     <div>
                         <label for = "username" class = "block text-sm font-medium text-gray-200">

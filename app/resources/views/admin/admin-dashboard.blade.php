@@ -14,7 +14,7 @@
         <!-- Componente de Carta -->
         <x-stat-card
         title="Total de Propiedades"
-        :value="128"
+        :value="$totalPropiedades"
         icon="ri-building-2-fill"
 
         x-stat-card/>
@@ -47,18 +47,23 @@
 
     <!-- Controlar Separación y Posicionamiento --> 
     <div class = "mt-6">
-    
-        <!-- Componente Propiedades con Datos Dinamicos --> 
-        @foreach ($propiedades as $propiedad)
-            <a href = "{{ route('propiedades.show', $propiedad->id) }}">
-                <x-property-card 
-                    :title="$propiedad->nombre"
-                    :background="$propiedad->imagen1"
-                    :partners="$propiedad->n_socios"
-                    :location="$propiedad->ubicacion"
-                />
-            </a>
-        @endforeach
+
+        @if($propiedades->isEmpty())
+            <p>No hay propiedades registradas</p>
+        
+        @else
+            <!-- Componente Propiedades con Datos Dinamicos --> 
+            @foreach ($propiedades as $propiedad)
+                <a href = "{{ route('propiedades.show', $propiedad->id) }}">
+                    <x-property-card 
+                        :title="$propiedad->nombre"
+                        :background="$propiedad->imagen1"
+                        :partners="$propiedad->n_socios"
+                        :location="$propiedad->ubicacion"
+                    />
+                </a>
+            @endforeach
+        @endif
         
     </div>
 
