@@ -6,23 +6,22 @@
 @section('content')
 
     <!-- Componente Propiedades con Datos Dinamicos --> 
-    @foreach ($propiedades as $propiedad)
-        <div class="mb-4">
-            <h3 class="font-bold">{{ $propiedad->nombre }}</h3>
+    <div class = "p-4 sm:p-6 lg:p-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <p class="text-sm text-gray-600">Socios:</p>
+        <!-- Componente Propiedades con Datos Dinamicos --> 
+        @foreach ($propiedades as $propiedad)
+            
+            <div href = "{{ route('propiedades.show', $propiedad->id) }}">
+                <x-property-card-admin 
+                    :title="$propiedad->nombre"
+                    :background="$propiedad->imagen1"
+                    :partners="$propiedad->n_socios"
+                    :location="$propiedad->ubicacion"
+                />
+            </div>
 
-            @if ($propiedad->socios->isEmpty())
-                <span class="text-xs text-gray-400">Sin socios</span>
-            @else
-                <ul class="list-disc ml-4">
-                    @foreach ($propiedad->socios as $socio)
-                        <li>{{ $socio->name }}</li>
-                    @endforeach
-                </ul>
-            @endif
-        </div>
-    @endforeach
-
+        @endforeach
+        
+    </div>
 
 @endsection

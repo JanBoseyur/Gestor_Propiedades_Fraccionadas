@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Propiedades;
+use App\Models\User;
 
 class PropiedadesController extends Controller
 {
@@ -11,6 +12,12 @@ class PropiedadesController extends Controller
     {
         $propiedades = Propiedades::all();
         return view('admin.admin-dashboard', compact('propiedades'));
+    }
+
+    public function manageProperties()
+    {
+        $propiedades = Propiedades::all();
+        return view('admin.manage-properties', compact('propiedades'));
     }
 
     # Consulta Tabla Propiedades
@@ -40,12 +47,11 @@ class PropiedadesController extends Controller
     return view('property-section', compact('propiedad'));
     }
 
-    public function show4($id)
+    # Consulta Tabla Propiedades
+    public function users()
     {
-        // Buscar la propiedad por su ID
-        $propiedad = Propiedades::with('socios')->findOrFail($id);
-
-        // Pasar la propiedad (ya trae los socios)
-        return view('admin.manage-partners', compact('propiedad'));
+        $users = User::all();
+        return view('admin.manage-partners', compact('users'));
     }
+
 }

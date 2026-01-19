@@ -6,7 +6,7 @@
 @section('content')
 
     <div>
-        <h2 class = "flex text-2xl font-bold items-center justify-center my-5">Dashboard de Administrador</h2>
+        <h2 class = "text-3xl font-extrabold text-[#2E6C6F] text-center mb-10">Dashboard de Administrador</h2>
     <div>
 
     <div class = "flex flex-block justify-center items-center">

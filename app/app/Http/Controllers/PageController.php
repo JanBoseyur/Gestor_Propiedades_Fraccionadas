@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -30,7 +32,8 @@ class PageController extends Controller
 
     public function ManagePartners()
     {
-        return view('admin.manage-partners');
+        $users = User::all();
+        return view('admin.manage-partners', compact('users'));
     }
 
     public function ReservedWeeks()

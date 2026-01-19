@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\PropiedadesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {return view('auth.login');});
 
@@ -52,7 +53,7 @@ Route::get('/admin/ManageProperties', [PropiedadesController::class, 'listado'])
     ->name('admin.ManageProperties');
 
 # Consulta Propiedades
-Route::get('/admin/manage-par{+ltners', [PageController::class, 'ManagePartners'])->name('ManagePartners');
+Route::get('/admin/manage-partners', [PageController::class, 'ManagePartners'])->name('ManagePartners');
 
 # Consulta Propiedades
 Route::get('/admin/reserved-weeks', [PageController::class, 'ReservedWeeks'])->name('ReservedWeeks');
@@ -67,3 +68,10 @@ Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
 Route::get('/propiedades/{id}/socios', [PropiedadesController::class, 'socios'])
     ->middleware('auth')
     ->name('propiedades.socios');
+
+# Modificar Usuarios
+Route::put('/admin/users/{user}', [UserController::class, 'update'])
+    ->name('users.update');
+
+Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])
+    ->name('users.destroy');
