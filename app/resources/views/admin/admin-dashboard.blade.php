@@ -9,39 +9,31 @@
         <h2 class = "text-3xl font-extrabold text-[#2E6C6F] text-center mb-10">Dashboard de Administrador</h2>
     <div>
 
-    <div class = "flex flex-block justify-center items-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center text-center">
 
-        <!-- Componente de Carta -->
         <x-stat-card
-        title="Total de Propiedades"
-        :value="$totalPropiedades"
-        icon="ri-building-2-fill"
+            title="Total de Propiedades"
+            :value="$totalPropiedades"
+            icon="ri-building-2-fill"
+        />
 
-        x-stat-card/>
-
-        <!-- Componente de Carta -->
         <x-stat-card
-        title="Total de Socios"
-        :value="128"
-        icon="ri-group-2-fill"
+            title="Total de Socios"
+            :value="128"
+            icon="ri-group-2-fill"
+        />
 
-        x-stat-card/>
-
-        <!-- Componente de Carta -->
         <x-stat-card
-        title="Semanas Reservadas"
-        :value="128"
-        icon="ri-calendar-check-fill"
+            title="Semanas Reservadas"
+            :value="128"
+            icon="ri-calendar-check-fill"
+        />
 
-        x-stat-card/>
-
-        <!-- Componente de Carta -->
         <x-stat-card
-        title="Ocupación de Socios"
-        :value="128"
-        icon="ri-percent-fill"
-
-        x-stat-card/>
+            title="Ocupación de Socios"
+            :value="128"
+            icon="ri-percent-fill"
+        />
 
     </div>
 

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src = "https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href = "https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel = "stylesheet">
+    @stack('styles')
 
     <title>@yield('title', 'Panel Admin')</title>
 
@@ -20,6 +21,7 @@
 
 <body class = "bg-[#FFF6E9] h-screen flex overflow-hidden">
 
+    @stack('scripts')
     @include('components.sidebar')
 
     <main class = "flex-1 overflow-y-auto bg-[#FFF6E9]">

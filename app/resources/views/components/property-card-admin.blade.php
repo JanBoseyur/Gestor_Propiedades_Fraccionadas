@@ -1,43 +1,61 @@
 
+@props([
+    'propiedad',
+    'socios',
+    'partners',
+    'title',
+    'location',
+    'background'
+])
+
 <!-- Contenedor Carta Propiedades -->
-<div class = "bg-[#2C7474] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+<div class = "bg-gradient-to-br from-[#2C7474] to-[#1E5F61] rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
 
-    <!-- Fondo -->
-    <div
-        class = "h-56 w-full bg-cover bg-center"
-        style = "background-image: url('{{ $background }}')">
+    <!-- Imagen -->
+    <div class = "h-56 w-full bg-cover bg-center relative">
+        <div class = "absolute inset-0 bg-black/25"></div>
+        <div class = "absolute inset-0 bg-cover bg-center" style="background-image: url('{{ $background }}')"></div>
     </div>
 
-    <!-- Container Descripción -->
-    <div class = "p-6">
+    <!-- Contenido -->
+    <div class = "p-6 space-y-4">
 
-        <h3 class = "text-2xl font-bold text-white">{{ $title }}</h3>
+        <!-- Título -->
+        <h3 class = "text-2xl font-bold text-white tracking-wide">{{ $title }}</h3>
 
-        <p class = "mt-2 text-md text-white flex items-center">
-          {{ $location}}
+        <!-- Ubicación -->
+        <p class = "text-sm text-teal-100 flex items-center gap-1">
+            <i class = "ri-map-pin-2-fill text-teal-200"></i>
+            {{ $location }}
         </p>
-        
-        <div class = "mt-4 flex-grow">
 
-          <p class = "font-semibold text-white">
+        <!-- Contador -->
+        <p class = "font-semibold text-teal-100">
             {{ $partners }} / 8 socios
-          </p>
+        </p>
 
-          <ul class = "mt-2 space-y-2">
-            <li key = {partner.id} class = "flex items-center justify-between bg-white p-2 rounded-md">
-              <span class = "font-bold text-[#2C7474]">Hacer consulta de socios en BD</span>
-              
-              <button 
-                class = "text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-colors cursor-pointer"
-              >
-                Eliminar
-              </button>
-              
-            </li>
-          </ul>
+        <!-- Lista de socios -->
+        <ul class = "space-y-2 pt-2">
 
-        </div>
+            @forelse ($socios as $usuario)
+                <li class = "flex items-center justify-between bg-white/90 px-3 py-2 rounded-lg shadow-sm">
+
+                    <span class = "font-medium text-[#2C7474]">{{ $usuario->name }}</span>
+
+                    <button
+                        @click = "$dispatch('open-delete-modal', { propiedadId: {{ $propiedad->id }}, usuarioId: {{ $usuario->id }}, usuarioName: '{{ $usuario->name }}' })"
+                        class = "text-xs bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-500 transition cursor-pointer"
+                    >
+                        Eliminar
+                    </button>
+
+                </li>
+            
+                @empty
+                <li class = "text-sm text-teal-100 italic">No hay socios registrados</li>
+            @endforelse
+
+        </ul>
 
     </div>
-
 </div>

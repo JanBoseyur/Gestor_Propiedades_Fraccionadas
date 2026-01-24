@@ -22,13 +22,15 @@
                                 ? 'bg-[#2C7474] text-white'
                                 : 'text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
 
-                        <i class = "{{ request()->routeIs('admin.Dashboard')
+                        <i class = "{{ request()->routeIs('AdminDashboard')
                             ? 'text-2xl mr-3 ri-dashboard-fill'
                             : 'text-2xl mr-3 ri-dashboard-line' }}">
                         </i>
                         Dashboard
                     </a>
                 </li>
+        
+        @role('admin')
 
                 <li>
                     <a href = "{{ route('admin.ManageProperties') }}"
@@ -61,13 +63,13 @@
                 </li>
 
                 <li>
-                    <a href = "{{ route('ReservedWeeks') }}"
+                    <a href = "{{ route('admin.reserved-weeks') }}"
                         class = "flex items-center px-4 py-3 rounded-lg
-                            {{ request()->routeIs('ReservedWeeks')
+                            {{ request()->routeIs('admin.reserved-weeks')
                                 ? 'bg-[#2C7474] text-white'
                                 : 'text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
 
-                        <i class = "{{ request()->routeIs('ReservedWeeks')
+                        <i class = "{{ request()->routeIs('admin.reserved-weeks')
                             ? 'text-2xl mr-3 ri-calendar-event-fill'
                             : 'text-2xl mr-3 ri-calendar-event-line' }}">
                         </i>
@@ -93,6 +95,8 @@
             </ul>
         </nav>
 
+    @endrole
+    
         <!-- Cuenta y Logout -->
         <div class = "p-4">
 
@@ -116,15 +120,21 @@
                 </div>
             </div>
 
-            <a href = "{{ route('login') }}"
-               class = "flex items-center px-2 py-3 rounded-lg text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]">
-                <svg class = "h-6 w-6 mr-3" fill = "none" viewBox = "0 0 24 24"
-                     stroke = "currentColor">
-                    <path stroke-linecap = "round" stroke-linejoin = "round" stroke-width = "2"
-                          d = "M17 16l4-4m0 0l-4-4m4 4H7" />
-                </svg>
-                Cerrar Sesión
-            </a>
+            <form method = "POST" action = "{{ route('logout') }}">
+                @csrf
+
+                <button type = "submit"
+                    class = "flex items-center w-full px-2 py-3 rounded-lg text-[#2C7474]
+                        hover:bg-[#B3D3D3] hover:text-[#2E6C6F] cursor-pointer">
+
+                    <i class = "{{ request()->routeIs('BillingPage')
+                        ? 'text-2xl mr-3 ri-logout-box-fill'
+                        : 'text-2xl mr-3 ri-logout-box-r-line' }}">
+                    </i>
+
+                    Cerrar Sesión
+                </button>
+            </form>
 
         </div>
     </div>

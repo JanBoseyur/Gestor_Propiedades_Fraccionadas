@@ -19,13 +19,29 @@ class Propiedades extends Model
         );
     }
 
-    public function socios()
+    public function usuarios()
     {
         return $this->belongsToMany(
             User::class,
             'usuario_propiedad',
-            'id_propiedad', 
-            'id_usuario'   
+            'id_propiedad',
+            'id_usuario'
         );
     }
+    
+    public function semanas()
+    {
+        return $this->hasMany(
+            \App\Models\PropiedadSemana::class,
+            'propiedad_id', 
+            'id'           
+        );
+    }
+
+    public function gastosComunes()
+    {
+        return $this->hasMany(GastoComun::class);
+    }
+
+
 }

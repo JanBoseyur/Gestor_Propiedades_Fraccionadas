@@ -28,7 +28,7 @@
 
     <!-- Acceder a info usuario -->
 
-    <div class = "relative min-h-screen flex items-center justify-center p-4">
+    <div class = "relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
         <!-- Fondo -->
         <div class = "absolute inset-0 w-full h-full bg-cover bg-center
@@ -38,35 +38,36 @@
         <div class = "absolute inset-0 bg-black/50"></div>
 
         <!-- Contenedor Formulario -->
-        <div class = "relative z-10 w-full max-w-md">
+        <div class = "relative z-10 w-full max-w-sm sm:max-w-md lg:max-w-lg">
             
-            <div class = "flex items-center justify-center h-40 ">
+            <div class = "flex items-center justify-center h-28 sm:h-36 lg:h-40">
                 <img 
                     src = "{{ asset('images/caribe-logo1.png') }}"
-                    class = "w-60"
+                    class = "w-40 sm:w-52 lg:w-60"
                     alt = "Logo"
                 />
             </div>
 
-            <div class = "bg-black/20 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/10">
+            <div class = "bg-black/20 backdrop-blur-lg rounded-2xl shadow-xl p-5 sm:p-6 lg:p-8 border border-white/10">
             
                 <div class = "text-center mb-8">
-                    <h2 class = "text-3xl font-bold text-white">Bienvenido de Nuevo</h2>
-                    <p class = "text-gray-300 mt-2">Inicia sesión para acceder a tu panel.</p>
+                    <h2 class = "text-2xl sm:text-3xl font-bold text-white">Bienvenido de Nuevo</h2>
+                    <p class = "text-sm sm:text-base text-gray-300 mt-2">Inicia sesión para acceder a tu panel.</p>
                 </div>
 
                 @if ($errors->any())
-                    <div class = "text-center bg-red-100 text-red-700 p-2 mb-4 rounded">
-                        {{ $errors->first() }}
-                    </div>
+                <div class = "text-center bg-red-100 text-red-700 p-2 mb-4 rounded">
+                    {{ $errors->first() }}
+                </div>
                 @endif
 
                 <!-- Usuario -->
                 <form class = "space-y-6" method = "POST" action = "{{ route('login.post') }}">
                     @csrf
+                    
                     <div>
-                        <label for = "username" class = "block text-sm font-medium text-gray-200">
-                            Usuario
+                        <label for = "email" class = "block text-sm font-medium text-gray-200">
+                            Correo
                         </label>
                         
                         <input
@@ -74,7 +75,7 @@
                             type = "email"
                             required
                             value = ""
-                            placeholder = "ej: Ana García"
+                            placeholder = "ej: ejemplo@example.com"
                             class = "mt-1 block w-full px-3 py-2 rounded-md
                                     bg-white/10 text-white placeholder-gray-300
                                     border border-white/20
@@ -84,6 +85,7 @@
 
                     <!-- Contraseña -->
                     <div>
+
                         <label for = "password" class = "block text-sm font-medium text-gray-200">
                             Contraseña
                         </label>
@@ -93,20 +95,23 @@
                             type = "password"
                             required
                             placeholder = "********"
-                            class = "mt-1 block w-full px-3 py-2 rounded-md
+                            class = "mt-1 block w-full px-3 py-2 sm:py-2.5 rounded-md
                                 bg-white/10 text-white placeholder-gray-300
                                 border border-white/20
                                 focus:outline-none focus:ring-[#B3D3D3] focus:border-[#B3D3D3]"
                         >
+
                     </div>
 
                     <!-- Botón -->
-                    <button type = "submit"
-                        class = "inline-flex w-full justify-center py-3 px-4
-                            rounded-md text-sm font-medium text-white
+                    <button
+                        class = "inline-flex w-full justify-center
+                            py-2.5 sm:py-3 px-4
+                            text-sm sm:text-base
+                            rounded-md font-medium text-white
                             bg-[#2E6C6F] hover:bg-[#265a5c]
                             focus:outline-none focus:ring-2 focus:ring-[#2E6C6F]
-                            transition-colors no-underline"
+                            transition-colors cursor-pointer"
                     >
                         Iniciar Sesión
                     </button>
@@ -114,7 +119,7 @@
                 </form>
 
                 <!-- Registro -->
-                <p class = "mt-6 text-center text-sm text-gray-300">
+                <p class = "mt-6 text-center text-xs sm:text-sm text-gray-300">
                     ¿No tienes una cuenta?
                     <a href = "{{ route('register') }}"
                     class = "font-medium text-[#B3D3D3] hover:text-white">

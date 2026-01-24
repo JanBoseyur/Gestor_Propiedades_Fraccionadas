@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -60,8 +60,26 @@ class User extends Authenticatable
         'usuario_propiedad',
         'id_usuario',
         'id_propiedad'
-    );
-    
+    );   
 }
+    public function semanas()
+    {
+        return $this->hasMany(PropiedadSemana::class, 'usuario_id');
+    }
+
+    public function propiedadesAsignadas()
+    {
+        return $this->hasMany(PropiedadSemana::class, 'usuario_id');
+    }
+
+    public function semanasAsignadas()
+    {
+        return $this->hasMany(PropiedadSemana::class, 'usuario_id');
+    }
+
+    public function gastosComunes()
+    {
+        return $this->hasMany(GastoComun::class);
+    }
     
 }

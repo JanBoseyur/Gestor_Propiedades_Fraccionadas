@@ -135,7 +135,7 @@
                             rounded-md text-sm font-medium text-white
                             bg-[#2E6C6F] hover:bg-[#265a5c]
                             focus:outline-none focus:ring-2 focus:ring-[#2E6C6F]
-                            transition-colors no-underline"
+                            transition-colors no-underline cursor-pointer"
                     >
                         Registrarse
                     </button>
