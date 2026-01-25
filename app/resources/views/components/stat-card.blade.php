@@ -16,9 +16,9 @@
 >
 
     <!-- Icono -->
-    <div class="p-2 sm:p-3 rounded-full bg-white flex items-center justify-center">
+    <div class = "p-2 sm:p-3 rounded-full bg-white flex items-center justify-center">
         @isset($icon)
-            <i class="{{ $icon }} text-lg sm:text-xl text-[#2C7474]"></i>
+            <i class = "{{ $icon }} text-lg sm:text-xl text-[#2C7474]"></i>
         @endisset
 
         @isset($iconSlot)
@@ -28,10 +28,10 @@
 
     <!-- Texto -->
     <div>
-        <p class="text-sm sm:text-base font-medium text-white">
+        <p class = "text-sm sm:text-base font-medium text-white">
             {{ $title }}
         </p>
-        <p class="text-xl sm:text-2xl font-bold text-white">
+        <p class = "text-xl sm:text-2xl font-bold text-white">
             {{ $value }}
         </p>
     </div>
