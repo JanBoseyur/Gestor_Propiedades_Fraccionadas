@@ -10,21 +10,12 @@ return new class extends Migration
     {
         Schema::create('gastos_comunes', function (Blueprint $table) {
             $table->id();
-            
-            // Columna que referencia a propiedades.id
-            $table->unsignedBigInteger('propiedad_id');
-            
-            $table->decimal('monto', 10, 2);
-            $table->string('descripcion')->nullable();
-            $table->date('fecha_pago')->nullable();
-            $table->boolean('pagado')->default(false);
-
+            $table->foreignId('propiedad_id')->constrained('propiedades');
+            $table->foreignId('user_id')->constrained('users');
+            $table->integer('monto');
+            $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
+            $table->timestamp('fecha_pago')->nullable();
             $table->timestamps();
-
-            // Clave foránea con nombre único
-            $table->foreign('propiedad_id', 'fk_gastos_propiedad')
-                  ->references('id')->on('propiedades')
-                  ->onDelete('cascade');
         });
     }
 

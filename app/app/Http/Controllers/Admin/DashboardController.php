@@ -12,19 +12,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // =====================
-        // MÉTRICAS PRINCIPALES
-        // =====================
-
         $totalPropiedades = Propiedades::count();
         $totalSocios = User::where('rol', 'socio')->count();
         $totalSemanas = Semana::count();
         $semanasReservadas = PropiedadSemana::count();
         $semanasDisponibles = $totalSemanas - $semanasReservadas;
-
-        // =====================
-        // CÁLCULOS
-        // =====================
 
         $porcentajeOcupacion = $totalSemanas > 0
             ? round(($semanasReservadas / $totalSemanas) * 100)
@@ -36,9 +28,6 @@ class DashboardController extends Controller
             ? round($semanasReservadas / $totalSocios, 1)
             : 0;
 
-        // =====================
-        // LISTADO DE PROPIEDADES
-        // =====================
 
         $propiedades = Propiedades::select(
                 'id',
@@ -50,9 +39,6 @@ class DashboardController extends Controller
             ->orderBy('nombre')
             ->get();
 
-        // =====================
-        // ENVÍO A LA VISTA
-        // =====================
 
         return view('admin.admin-dashboard', compact(
             'totalPropiedades',

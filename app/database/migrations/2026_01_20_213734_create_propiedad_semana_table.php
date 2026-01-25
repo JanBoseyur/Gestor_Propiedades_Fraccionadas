@@ -13,7 +13,22 @@ return new class extends Migration
     {
         Schema::create('propiedad_semana', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('propiedad_id')
+                ->constrained('propiedades')
+                ->cascadeOnDelete();
+
+            $table->foreignId('semana_id')
+                ->constrained('semanas')
+                ->cascadeOnDelete();
+
+            $table->foreignId('usuario_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
             $table->timestamps();
+
+            $table->unique(['propiedad_id', 'semana_id']);
         });
     }
 

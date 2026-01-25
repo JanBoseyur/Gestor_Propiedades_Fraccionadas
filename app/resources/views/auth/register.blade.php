@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Nombre Completo -->
-                <form method="POST" action = "{{ route('register') }}" class = "space-y-6">
+                <form method = "POST" action = "{{ route('register') }}" class = "space-y-6">
                     @csrf
 
                     <div>

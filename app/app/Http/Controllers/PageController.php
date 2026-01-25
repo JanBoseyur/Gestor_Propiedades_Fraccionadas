@@ -25,6 +25,12 @@ class PageController extends Controller
         return view('admin.admin-dashboard', compact('user'));
     }
 
+    public function UserDashboard()
+    {
+        $user = Auth::user(); 
+        return view('user.user-dashboard', compact('user'));
+    }
+
     public function ManageProperties()
     {
         return view('admin.manage-properties');

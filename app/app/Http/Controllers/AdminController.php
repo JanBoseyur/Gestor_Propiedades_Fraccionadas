@@ -9,7 +9,7 @@ class AdminController extends Controller
     public function index()
     {
         $totalPropiedades = Propiedades::count();
-        $propiedades = Propiedades::all(); // 👈 FALTABA ESTO
+        $propiedades = Propiedades::all(); 
 
         return view('admin.admin-dashboard', [
             'totalPropiedades' => $totalPropiedades,
