@@ -38,6 +38,13 @@ class PropiedadesController extends Controller
         return view('property-section', compact('propiedad'));
     }
 
+    # Consulta Tabla Propiedades por ID
+    public function mostrar_propiedades()
+    {
+        $propiedades = Propiedades::all();
+        return view('user.properties', compact('propiedades'));
+    }
+
     # Consulta Tabla Amenidad Propiedad segun el ID de la consulta de propiedades
     public function show2($id)
     {

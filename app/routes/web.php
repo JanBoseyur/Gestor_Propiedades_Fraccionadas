@@ -104,6 +104,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
         ->name('propiedades.show');
 
+    Route::get('/propiedades', [PropiedadesController::class, 'mostrar_propiedades'])
+        ->name('propiedades');
+        
     Route::get('/propiedades/{id}/socios', [PropiedadesController::class, 'socios'])
         ->name('propiedades.socios');
 
