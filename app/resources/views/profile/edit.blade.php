@@ -15,7 +15,7 @@
     @endif
 
     <div class = "max-w-2xl mx-auto bg-[#FFF6E9] p-8 rounded-2xl shadow-xl transition duration-300 hover:shadow-2xl">
-        <div class = "flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
+        <div class = "flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6 mb-8">
             
             <div class = "w-24 h-24 rounded-full bg-[#2C7474] flex items-center justify-center text-white text-3xl font-bold shadow-md">
                 {{ strtoupper(substr($user->name, 0, 1)) }}
@@ -88,7 +88,7 @@
             </div>
 
             <div class = "flex justify-end pt-4">
-                <button type = "submit" class="px-10 py-3 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300">
+                <button type = "submit" class = "px-10 py-3 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300">
                     Guardar Cambios
                 </button>
             </div>
