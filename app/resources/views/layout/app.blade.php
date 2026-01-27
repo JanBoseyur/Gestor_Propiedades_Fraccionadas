@@ -4,19 +4,29 @@
 <html lang = "es">
 
 <head>
-    <meta charset = "UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src = "https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href = "https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel = "stylesheet">
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     @stack('styles')
 
+    <!-- Primero frameworks globales opcionales -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind -->
+    @vite(['resources/css/app.css'])
+
+    <!-- CSS específicos de librerías como Flatpickr -->
+    <link rel="stylesheet" href="flatpickr.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet" />
+
+
     <title>@yield('title', 'Panel Admin')</title>
-
-    {{-- CSS / JS --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- Head extra por vista --}}
-    @stack('head')
 </head>
 
 <body class = "bg-[#FFF6E9] h-screen flex overflow-hidden">
@@ -32,8 +42,9 @@
 
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    @stack('scripts')
+
 </body>
-
-
 
 </html>

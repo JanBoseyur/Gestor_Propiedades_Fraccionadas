@@ -1,0 +1,52 @@
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+
+.week {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.week.available {
+    background: #f9f5f0;
+    color: #2e6c6f;
+    border: 1px solid #b3d3d3;
+}
+
+.week.available:hover {
+    background: #ebc999;
+}
+
+.week.selected {
+    background: #2e6c6f;
+    color: white;
+}
+
+.week.occupied {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+.flatpickr-day.selected-week {
+    background: #26a69a !important;
+    color: white;
+    border-radius: 6px;
+}
+
+.flatpickr-weekwrapper {
+    background: #f8f9fa;
+}

@@ -9,13 +9,14 @@
     </button>
 
     <!-- Contenedor Sidebar -->
-    <aside 
-        :class = "open ? 'translate-x-0' : '-translate-x-full'"
-        class = "bg-[#FFF6E9] w-62 flex-shrink-0 h-screen z-50 fixed md:relative top-0 left-0 transform transition-transform duration-300 ease-in-out md:translate-x-0">
+    <aside
+        :class="open ? 'translate-x-0' : '-translate-x-full'"
+        style = "height: 100vh; height: 100dvh;"
+        class = "overflow-y-auto bg-[#FFF6E9] w-64 max-w-full flex-shrink-0 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col">
+            
+    <div class = "flex flex-col h-full overflow-hidden p-4">
 
-        <div class = "flex flex-col h-full p-4">
-
-            <div class = "flex justify-center items-center p-3">
+            <div class = "flex justify-center items-center p-3 flex-shrink-0">
                 <img 
                     src = "{{ asset('images/caribe-logo2.png') }}"
                     class = " w-26"
@@ -24,7 +25,7 @@
             </div>
 
             <!-- Navegación -->
-            <nav class = "flex-1 p-4 overflow-y-auto">
+            <nav class = "flex-1 overflow-y-auto p-4">
                 <ul class = "space-y-2">
                 
                 @role('admin')
@@ -133,11 +134,11 @@
                     <li>
                         <a href = "{{ route('propiedades') }}"
                             class = "flex items-center px-4 py-3 rounded-lg
-                                {{ request()->routeIs('propiedades')
+                                {{ request()->routeIs('propiedades', 'propiedades.show')
                                     ? 'bg-[#2C7474] text-white'
                                     : 'text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
 
-                            <i class = "{{ request()->routeIs('propiedades')
+                            <i class = "{{ request()->routeIs('propiedades', 'propiedades.show')
                                 ? 'text-2xl mr-3 ri-home-fill'
                                 : 'text-2xl mr-3 ri-home-line' }}">
                             </i>
@@ -168,7 +169,7 @@
             </nav>
         
             <!-- Cuenta y Logout -->
-            <div class = "p-4">
+            <div class = "flex-shrink-0 p-4">
 
                 <div class = "flex items-center mb-4">
                     

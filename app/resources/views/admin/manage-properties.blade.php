@@ -35,7 +35,7 @@
         @foreach ($propiedades as $prop)
             <x-property-card-admin
                 :title="$prop->nombre"
-                :background="$prop->imagen1"
+                :background="$prop->primera_foto"
                 :location="$prop->ubicacion"
                 :partners="$prop->usuarios_count"
                 :socios="$prop->usuarios"  

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Propiedades;
+use App\Models\Selection;
 use App\Models\User;
 use App\Models\PropiedadSemana;
 use App\Models\Anio;
@@ -24,28 +25,60 @@ class PropiedadesController extends Controller
         return view('admin.manage-properties', compact('propiedades'));
     }
 
-    # Consulta Tabla Propiedades
     public function listado()
     {
         $propiedades = Propiedades::all();
         return view('admin.manage-properties', compact('propiedades'));
     }
     
-    # Consulta Tabla Propiedades por ID
     public function show($id)
     {
         $propiedad = Propiedades::findOrFail($id);
-        return view('property-section', compact('propiedad'));
+        $year = now()->year;
+
+        // Traer todas las selecciones del año actual
+        $selections = Selection::where('propiedad_id', $id)
+            ->where('anio', $year)
+            ->get();
+
+        $events = [];
+        $takenWeeks = [];
+
+        foreach ($selections as $sel) {
+            $weeks = is_array($sel->semana) ? $sel->semana : json_decode($sel->semana, true);
+            if (!$weeks) continue;
+
+            // Si quieres, almacenar las semanas ya ocupadas para bloquear selección
+            $takenWeeks = array_merge($takenWeeks, $weeks);
+
+            foreach ($weeks as $week) {
+                $range = $this->weekToDateRange($sel->anio, $week);
+                $events[] = [
+                    'title' => 'No disponible',
+                    'start' => $range['start'],
+                    'end'   => $range['end'],
+                    'display' => 'background',
+                    'backgroundColor' => '#EBC999',
+                ];
+            }
+        }
+
+        // Quitar duplicados
+        $takenWeeks = array_unique($takenWeeks);
+
+        return view('property-section', [
+            'propiedad'  => $propiedad,
+            'events'     => json_encode($events),
+            'takenWeeks' => $takenWeeks
+        ]);
     }
 
-    # Consulta Tabla Propiedades por ID
     public function mostrar_propiedades()
     {
         $propiedades = Propiedades::all();
         return view('user.properties', compact('propiedades'));
     }
 
-    # Consulta Tabla Amenidad Propiedad segun el ID de la consulta de propiedades
     public function show2($id)
     {
         $propiedad = Propiedades::with('amenidades')->findOrFail($id);
@@ -58,7 +91,6 @@ class PropiedadesController extends Controller
         return view('property-section', compact('propiedad'));
     }
 
-    # Consulta Tabla Propiedades
     public function users()
     {
         $users = User::all();
@@ -138,7 +170,7 @@ class PropiedadesController extends Controller
             $eventos[] = [
                 'title' => $a->propiedad->nombre . ' | ' . $a->usuario->name,
                 'start' => $inicio->toDateString(),
-                'end'   => $fin->addDay()->toDateString(), // FullCalendar end exclusivo
+                'end'   => $fin->addDay()->toDateString(), 
             ];
         }
 
@@ -200,6 +232,46 @@ class PropiedadesController extends Controller
         $propiedad->usuarios()->detach($usuarioId);
 
         return redirect()->back()->with('success', 'Socio eliminado correctamente.');
+    }
+
+    public function calendario_propiedad($id)
+    {
+        $propiedad = Propiedad::findOrFail($id);
+
+        $selecciones = Selection::where('property_id', $propiedad->id)
+            ->where('year', now()->year)
+            ->get()
+            ->groupBy('partner_id')
+            ->map(fn ($rows) => $rows->pluck('week'));
+
+        return view('propiedades.show', [
+            'propiedad'   => $propiedad,
+            'selecciones' => $selecciones,
+        ]);
+    }
+
+    private function weekToDateRange(int $year, int $week): array
+    {
+        $start = Carbon::now()
+            ->setISODate($year, $week)
+            ->startOfWeek(Carbon::MONDAY);
+
+        $end = (clone $start)->addWeek();
+
+        return [
+            'start' => $start->toDateString(),
+            'end'   => $end->toDateString(),
+        ];
+    }
+
+    public function partner()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'usuario_propiedad',
+            'id_propiedad',
+            'id_usuario'
+        );
     }
 
 }

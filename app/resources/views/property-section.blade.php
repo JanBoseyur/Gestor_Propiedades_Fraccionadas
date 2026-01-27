@@ -3,13 +3,17 @@
 
 @section('title', 'Dashboard')
 
+<head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+
 @section('content')
 
     <div class = "">
         
         <div class = "overflow-hidden">
             <img class = "h-90 w-full object-cover"
-            src = "{{ $propiedad -> imagen1 }}"
+            src = "{{ $propiedad -> primera_foto }}"
             alt = "Exterior de {{ $propiedad->nombre }}"
             >
             
@@ -22,65 +26,79 @@
                     <p class = "text-white mt-2 prose dark:prose-invert max-w-none">{{ $propiedad -> descripcion }}</p>
                 </div>
                 
-                <div class = "mt-6 pt-6 border-t border-white">
-                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] text-white">Amenidades</h3>
+                <ul class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
                     
-                    <ul class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
-                        
-                        @foreach ($propiedad->amenidades as $amenidad)
-                            <li class = "flex items-center text-white">
-                                <i class = ""></i>
-                                <span class = "ml-2">{{ $amenidad -> nombre}}</span>
-                            </li>
-                        @endforeach    
+                    @foreach ($propiedad->amenidades as $amenidad)
+                        <li class = "flex items-center text-white">
+                            <i class = ""></i>
+                            <span class = "ml-2">{{ $amenidad }}</span>
+                        </li>
+                    @endforeach
 
-                    </ul>
-
-                </div>
-
-                <div class = "mt-6 pt-6 border-t border-white">
-                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] dark:text-white">Galería de Fotos</h3>
-                    
-                    <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
-                        <x-image-modal 
-                            src="{{ asset($propiedad -> imagen1) }}"
-                            alt="Foto de {{ $propiedad ->nombre }}"
-                        />
-                    </div>
-                                        
-                </div>
-
-            </div>
-
-            </div>
-
-            
-        </div>
-
-        <div class = "grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <div class = "lg:col-span-2">
-                <Calendar
-                    year = {currentYear}
-                    propertyId = {property.id}
-                    selections = {selections}
-                />
-            </div>
-
-            <div class = "bg-[#F9F5F0] dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <h3 class = "text-xl font-bold mb-4 text-[#2E6C6F] dark:text-white">Socios ({{ $propiedad -> n_socios }}/8)</h3>
-                <ul class = "space-y-3">
-                    <li key = {partner.id} class = "flex items-center p-2 bg-white dark:bg-gray-700 rounded-md">
-                        <div class = "flex-shrink-0 h-8 w-8 rounded-full bg-[#B3D3D3] dark:bg-[#2E6C6F] text-[#2E6C6F] dark:text-[#B3D3D3] flex items-center justify-center font-bold">
-                        </div>
-                        <span class = "ml-3 font-medium text-gray-700 dark:text-gray-300">{{ $propiedad -> socios }}</span>
-                    </li>
                 </ul>
+
+                <div class = "mt-6 pt-6 border-t border-white">
+                    
+                    <h3 class = "text-2xl font-semibold text-[#2E6C6F] text-white">Galería de Fotos</h3>
+                    
+                    @foreach ($propiedad->fotos as $foto)
+                        <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
+                            @foreach ($propiedad->fotos as $foto)
+                                <x-image-modal
+                                    src = "{{ asset($foto) }}"
+                                    alt = "Foto de {{ $propiedad->nombre }}"
+                                />
+                            @endforeach
+                        </div>
+                    @endforeach
+
+                </div>
+
+                <!-- Modal con Tailwind -->
+                <div x-data = "{ open: false }">
+                    
+                    <button @click = "open = true" class = "px-10 py-3 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300">
+                        Agendar
+                    </button>
+
+                    <div 
+                        x-show = "open" 
+                        class = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                        x-transition
+                    >
+                        <div class = "bg-white p-6 rounded-lg w-96">
+                            <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
+                            <div id = "calendar" class = ""></div>
+                            <div id = "selected-weeks" class = "mt-4 flex flex-wrap gap-2 text-gray-500 text-sm"></div>
+
+                            <div class = "mt-6 flex justify-end gap-2">
+                                <button @click = "open = false" class = "px-4 py-2 bg-gray-300 rounded">Cerrar</button>
+                                <button id = "saveSelections" class = "px-10 py-3 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300">Guardar semanas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JS del calendario -->
+                <script src = "{{ asset('js/calendar.js') }}"></script>
+
             </div>
-            
         </div>
-
     </div>
-    
-
+            
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="{{ asset('js/calendar.js') }}"></script>
+
+    <script>
+        const propertyId = {{ $propiedad->id }};
+        const events = {!! $events !!}; 
+        const takenWeeks = @json($takenWeeks ?? []);
+    </script>
+@endpush

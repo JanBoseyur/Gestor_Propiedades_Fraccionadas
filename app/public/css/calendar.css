@@ -1,0 +1,38 @@
+
+.jidox-calendar-wrapper {
+    background: #F9F5F0;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.fc {
+    font-family: inherit;
+}
+
+.fc-toolbar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2E6C6F;
+}
+
+.fc-daygrid-day {
+    cursor: pointer;
+}
+
+.fc-bg-event {
+    opacity: 0.7;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #f1f5f9;
+    cursor: pointer;
+}
+
+.fc-day-today {
+    background-color: #e6f4f4 !important;
+}
+
+#calendar {
+    width: 100%;
+    min-height: 400px;
+}

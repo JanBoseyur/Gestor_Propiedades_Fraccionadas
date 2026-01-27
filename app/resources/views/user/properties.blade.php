@@ -1,7 +1,7 @@
 
 @extends('layout.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Propiedades')
 
 @section('content')
 
@@ -11,17 +11,19 @@
             <p>No hay propiedades registradas</p>
         
         @else
+
             <!-- Componente Propiedades con Datos Dinamicos --> 
             @foreach ($propiedades as $propiedad)
                 <a href = "{{ route('propiedades.show', $propiedad->id) }}">
                     <x-property-card 
                         :title="$propiedad->nombre"
-                        :background="$propiedad->imagen1"
+                        :background="$propiedad->primera_foto"
                         :partners="$propiedad->n_socios"
                         :location="$propiedad->ubicacion"
                     />
                 </a>
             @endforeach
+
         @endif
         
     </div>

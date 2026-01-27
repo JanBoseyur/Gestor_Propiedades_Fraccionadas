@@ -7,26 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class GastoComun extends Model
 {
-    use HasFactory;
-
     protected $table = 'gastos_comunes';
 
     protected $fillable = [
         'propiedad_id',
-        'user_id',
         'anio',
         'mes',
+        'user_id',
         'monto',
         'estado',
+        'fecha_pago',
     ];
-
-    public function propiedad()
-    {
-        return $this->belongsTo(Propiedades::class, 'propiedad_id');
-    }
-
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

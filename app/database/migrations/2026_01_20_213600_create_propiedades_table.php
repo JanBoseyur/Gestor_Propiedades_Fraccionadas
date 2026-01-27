@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('nombre', 150)->nullable();
             $table->string('ubicacion', 100);
             $table->string('descripcion', 200);
-            $table->integer('n_socios');
-            $table->string('imagen1', 200);
-            $table->string('imagen2', 100)->nullable();
+            $table->json('fotos')->nullable();
+            $table->timestamps();
         });
     }
 

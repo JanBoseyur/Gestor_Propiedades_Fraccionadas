@@ -12,6 +12,7 @@ use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\GastoComunController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SelectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,15 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
+
+        Route::get('/propiedades/{id}/socios', [PropiedadesController::class, 'socios'])
+            ->name('propiedades.socios');
+
+        Route::get('/propiedades/{id}/gastos', [GastoComunController::class, 'index'])
+            ->name('gastos.index');
+
+        Route::post('/gastos', [GastoComunController::class, 'store'])
+            ->name('gastos.store');
     });
 
     /*
@@ -106,17 +116,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/propiedades', [PropiedadesController::class, 'mostrar_propiedades'])
         ->name('propiedades');
-        
-    Route::get('/propiedades/{id}/socios', [PropiedadesController::class, 'socios'])
-        ->name('propiedades.socios');
-
-    Route::get('/propiedades/{id}/gastos', [GastoComunController::class, 'index'])
-        ->name('gastos.index');
-
-    Route::post('/gastos', [GastoComunController::class, 'store'])
-        ->name('gastos.store');
     
     Route::get('/mi-perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mi-perfil', [ProfileController::class, 'update'])->name('profile.update');
-    
+
+    Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
+        ->name('selections.save')
+        ->middleware('auth');
+
 });
