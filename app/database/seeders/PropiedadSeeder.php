@@ -9,7 +9,6 @@ class PropiedadSeeder extends Seeder
 {
     public function run()
     {
-        // Ejemplo 1
         Propiedades::create([
             'nombre' => 'Casa Vista al Mar',
             'ubicacion' => 'Viña del Mar',

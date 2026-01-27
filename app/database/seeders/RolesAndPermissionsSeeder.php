@@ -27,7 +27,6 @@ class RolesAndPermissionsSeeder extends Seeder
             ]);
         }
 
-        // Roles
         $admin = Role::firstOrCreate([
             'name' => 'admin',
             'guard_name' => 'web',
@@ -38,7 +37,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
-        // Asignar permisos
         $admin->givePermissionTo(Permission::all());
         $user->givePermissionTo([
             'ver dashboard',
