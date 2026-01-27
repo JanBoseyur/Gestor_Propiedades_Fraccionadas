@@ -13,14 +13,8 @@ class PropiedadSeeder extends Seeder
             'nombre' => 'Casa Vista al Mar',
             'ubicacion' => 'Viña del Mar',
             'descripcion' => 'Hermosa casa con vista al mar y piscina',
-            'fotos' => json_encode([
-                'fotos/casa1_1.jpg',
-            ]),
-            'amenidades' => json_encode([
-                'Piscina',
-                'Jardín',
-                'Estacionamiento'
-            ]),
+            'fotos' => ['fotos/casa1_1.jpg'],  
+            'amenidades' => ['Piscina', 'Gym', 'Estacionamiento'], 
         ]);
 
         Propiedades::create([
@@ -30,11 +24,7 @@ class PropiedadSeeder extends Seeder
             'fotos' => json_encode([
                 'fotos/depto1_1.jpg',
             ]),
-            'amenidades' => json_encode([
-                'Ascensor',
-                'WiFi',
-                'Seguridad 24h'
-            ]),
+            'amenidades' => ['Piscina', 'Cancha de Tenis'], 
         ]);
     }
 }
