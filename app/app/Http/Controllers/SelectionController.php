@@ -56,7 +56,8 @@ class SelectionController extends Controller
                 'propiedad_id' => $propiedad,
                 'anio' => $year,
                 'mes' => $mes,
-                'user_id' => $userId,
+                'semana' => $week,        // ✅ usar $week
+                'usuario_id' => $userId,
             ])->first();
 
             if (!$existsGasto) {
@@ -65,16 +66,18 @@ class SelectionController extends Controller
                     'propiedad_id' => $propiedad,
                     'anio' => $year,
                     'mes' => $mes,
-                    'user_id' => $userId,
+                    'usuario_id' => $userId,
                     'monto' => 250,
+                    'semana' => $week        // ✅ usar $week
                 ]);
 
                 GastoComun::create([
                     'propiedad_id' => $propiedad,
                     'anio' => $year,
                     'mes' => $mes,
-                    'user_id' => $userId,
+                    'usuario_id' => $userId,
                     'monto' => 250,
+                    'semana' => $week,       // ✅ usar $week
                     'estado' => 'pendiente',
                     'fecha_pago' => null,
                 ]);

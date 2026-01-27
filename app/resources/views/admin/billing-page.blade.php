@@ -33,7 +33,7 @@
 
         {{-- Mes --}}
         <div>
-            <label class="block text-sm font-medium mb-1">Mes</label>
+            <label class = "block text-sm font-medium mb-1">Mes</label>
             <select name = "mes"
                 class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 
@@ -131,8 +131,8 @@
             <thead class = "bg-[#2E6C6F] text-white">
                 
                 <tr>
-                    <th class = "px-6 py-4 text-left">Propiedad</th>
-                    <th class = "px-6 py-4 text-left">Socio</th>
+                    <th class = "px-6 py-4 text-center">Propiedad</th>
+                    <th class = "px-6 py-4 text-center">Socio</th>
                     <th class = "px-6 py-4 text-center">Periodo</th>
                     <th class = "px-6 py-4 text-center">Monto</th>
                     <th class = "px-6 py-4 text-center">Estado</th>
@@ -147,12 +147,12 @@
 
                 <tr class = "hover:bg-[#F3FAFA] transition">
 
-                    <td class = "px-6 py-4 font-medium">
+                    <td class = "px-6 py-4 text-center">
                         {{ $pago->propiedad->nombre }}
                     </td>
 
-                    <td class = "px-6 py-4">
-                        {{ $pago->usuario->name }}
+                    <td class = "px-6 py-4 text-center">
+                        {{ $pago->usuario?->name ?? 'Sin usuario' }}
                     </td>
 
                     <td class = "px-6 py-4 text-center">
@@ -215,12 +215,12 @@
 
             <div>
                 <p class = "text-xs text-gray-500">Propiedad</p>
-                <p class = "font-medium">{{ $pago->propiedad->nombre }}</p>
+                <p class = "font-medium">{{ $pago->usuario?->name ?? 'Sin usuario' }}</p>
             </div>
 
             <div>
                 <p class = "text-xs text-gray-500">Socio</p>
-                <p>{{ $pago->usuario->name }}</p>
+                <p>{{ $pago->usuario?->name ?? 'Sin usuario' }}</p>
             </div>
 
             <div>

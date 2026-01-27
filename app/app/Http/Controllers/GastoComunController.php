@@ -21,7 +21,7 @@ class GastoComunController extends Controller
                 $q->where('estado', $request->estado)
             )
             ->where('anio', $anio)
-            ->where('mes', $mes)
+            // ->where('mes', $mes)   <-- COMENTAR ESTA LÍNEA TEMPORALMENTE
             ->orderBy('propiedad_id')
             ->get();
 
@@ -44,28 +44,46 @@ class GastoComunController extends Controller
 
         $creados = 0;
 
-        $propiedades = Propiedades::with('socios')->get();
+        // Traemos todas las propiedades con sus usuarios y selecciones
+        $propiedades = Propiedades::with(['usuarios', 'selections'])->get();
 
         foreach ($propiedades as $propiedad) {
-            foreach ($propiedad->socios as $socio) {
+            foreach ($propiedad->usuarios as $socio) {
 
-                $existe = GastoComun::where([
-                    'propiedad_id' => $propiedad->id,
-                    'user_id' => $socio->id,
-                    'anio' => $request->anio,
-                    'mes' => $request->mes,
-                ])->exists();
+                // Obtenemos las semanas seleccionadas para este socio y propiedad en el año
+                $semanas = $socio->selections()
+                    ->where('propiedad_id', $propiedad->id)
+                    ->where('anio', $request->anio)
+                    ->pluck('semana'); // esto devuelve un array de semanas
 
-                if (!$existe) {
-                    GastoComun::create([
+                foreach ($semanas as $semana) {
+
+                    // Calculamos el mes real de esa semana
+                    $startOfWeek = \Carbon\Carbon::now()->setISODate($request->anio, $semana)->startOfWeek();
+                    $mesReal = $startOfWeek->month;
+
+                    // Verificamos si ya existe el registro
+                    $existe = GastoComun::where([
                         'propiedad_id' => $propiedad->id,
-                        'user_id' => $socio->id,
+                        'usuario_id' => $socio->id,
                         'anio' => $request->anio,
-                        'mes' => $request->mes,
-                        'monto' => $propiedad->gasto_comun,
-                        'estado' => 'pendiente',
-                    ]);
-                    $creados++;
+                        'mes' => $mesReal,
+                        'semana' => $semana
+                    ])->exists();
+
+                    if (!$existe) {
+                        // Creamos el gasto común
+                        GastoComun::create([
+                            'propiedad_id' => $propiedad->id,
+                            'usuario_id' => $socio->id,
+                            'anio' => $request->anio,
+                            'mes' => $mesReal,
+                            'semana' => $semana,
+                            'monto' => $propiedad->gasto_comun,
+                            'estado' => 'pendiente',
+                        ]);
+                        $creados++;
+                    }
                 }
             }
         }

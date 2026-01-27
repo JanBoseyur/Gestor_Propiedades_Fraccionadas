@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GastoComun extends Model
@@ -11,11 +10,21 @@ class GastoComun extends Model
 
     protected $fillable = [
         'propiedad_id',
+        'usuario_id', 
         'anio',
         'mes',
-        'user_id',
+        'semana',
         'monto',
         'estado',
-        'fecha_pago',
     ];
+
+    public function propiedad()
+    {
+        return $this->belongsTo(\App\Models\Propiedades::class, 'propiedad_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'usuario_id');
+    }
 }

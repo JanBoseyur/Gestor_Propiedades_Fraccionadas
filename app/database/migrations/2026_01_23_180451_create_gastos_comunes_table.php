@@ -11,10 +11,12 @@ return new class extends Migration
         Schema::create('gastos_comunes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('propiedad_id')->constrained('propiedades');
-            $table->foreignId('user_id')->constrained('users');
-            $table->integer('monto');
-            $table->enum('estado', ['pendiente', 'pagado'])->default('pendiente');
-            $table->timestamp('fecha_pago')->nullable();
+            $table->foreignId('usuario_id')->constrained('users'); 
+            $table->smallInteger('anio')->unsigned();
+            $table->tinyInteger('mes')->unsigned();
+            $table->integer('semana')->nullable(); 
+            $table->decimal('monto', 10, 2);
+            $table->enum('estado', ['pendiente','pagado'])->default('pendiente');
             $table->timestamps();
         });
     }
