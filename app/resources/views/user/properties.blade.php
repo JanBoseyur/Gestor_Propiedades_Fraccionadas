@@ -12,7 +12,6 @@
         
         @else
 
-            <!-- Componente Propiedades con Datos Dinamicos --> 
             @foreach ($propiedades as $propiedad)
                 <a href = "{{ route('propiedades.show', $propiedad->id) }}">
                     <x-property-card 
@@ -28,5 +27,4 @@
         
     </div>
     
-
 @endsection

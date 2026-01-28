@@ -8,20 +8,23 @@ use Illuminate\Http\Request;
 
 class GastoComunController extends Controller
 {
+
     public function index(Request $request)
     {
         $anio = $request->anio ?? now()->year;
-        $mes  = $request->mes  ?? now()->month;
 
         $pagos = GastoComun::with(['propiedad','usuario'])
+            ->where('anio', $anio)
+            ->when($request->mes, fn($q) =>
+                $q->where('mes', $request->mes)
+            )
             ->when($request->propiedad_id, fn($q) =>
                 $q->where('propiedad_id', $request->propiedad_id)
             )
             ->when($request->estado, fn($q) =>
                 $q->where('estado', $request->estado)
             )
-            ->where('anio', $anio)
-            // ->where('mes', $mes)   <-- COMENTAR ESTA LÍNEA TEMPORALMENTE
+            ->orderBy('mes')
             ->orderBy('propiedad_id')
             ->get();
 
@@ -31,7 +34,6 @@ class GastoComunController extends Controller
             'pagos',
             'propiedades',
             'anio',
-            'mes'
         ));
     }
 
@@ -44,25 +46,21 @@ class GastoComunController extends Controller
 
         $creados = 0;
 
-        // Traemos todas las propiedades con sus usuarios y selecciones
         $propiedades = Propiedades::with(['usuarios', 'selections'])->get();
 
         foreach ($propiedades as $propiedad) {
             foreach ($propiedad->usuarios as $socio) {
 
-                // Obtenemos las semanas seleccionadas para este socio y propiedad en el año
                 $semanas = $socio->selections()
                     ->where('propiedad_id', $propiedad->id)
                     ->where('anio', $request->anio)
-                    ->pluck('semana'); // esto devuelve un array de semanas
+                    ->pluck('semana'); 
 
                 foreach ($semanas as $semana) {
 
-                    // Calculamos el mes real de esa semana
                     $startOfWeek = \Carbon\Carbon::now()->setISODate($request->anio, $semana)->startOfWeek();
                     $mesReal = $startOfWeek->month;
 
-                    // Verificamos si ya existe el registro
                     $existe = GastoComun::where([
                         'propiedad_id' => $propiedad->id,
                         'usuario_id' => $socio->id,
@@ -72,7 +70,6 @@ class GastoComunController extends Controller
                     ])->exists();
 
                     if (!$existe) {
-                        // Creamos el gasto común
                         GastoComun::create([
                             'propiedad_id' => $propiedad->id,
                             'usuario_id' => $socio->id,

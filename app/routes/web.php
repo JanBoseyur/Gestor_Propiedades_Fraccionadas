@@ -13,6 +13,7 @@ use App\Http\Controllers\GastoComunController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectionController;
+use App\Http\Controllers\MisGastosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:user')->group(function () {
         Route::get('/dashboard', [UserDashboardController::class, 'index'])
             ->name('user.dashboard');
+
+        Route::get('/mis-gastos', [MisGastosController::class, 'index'])
+            ->name('user.billing');
+        
+        Route::get('/mis-semanas', [UserController::class, 'misSemanas'])
+            ->name('user.mis-semanas');
+
     });
 
     /*

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Selection;
 
 class UserController extends Controller
 {
@@ -24,5 +25,15 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('success', 'Usuario eliminado');
+    }
+
+    public function misSemanas()
+    {
+        $selections = Selection::with('propiedad')
+            ->where('id_usuario', auth()->id())
+            ->orderBy('anio', 'desc')
+            ->get();
+        
+        return view('user.semanas', compact('selections'));
     }
 }

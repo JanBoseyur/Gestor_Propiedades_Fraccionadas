@@ -9,10 +9,8 @@ use App\Models\GastoComun;
 
 class SelectionController extends Controller
 {
-    // Guardar selección de semanas
     public function save(Request $request, $propiedad)
     {
-        // Debug
         \Log::info('Request recibido', $request->all());
 
         $data = $request->validate([
@@ -24,7 +22,6 @@ class SelectionController extends Controller
         $year = $request->anio;
         $semanas = $request->semana;
 
-        // Traemos selección existente
         $existing = Selection::where('propiedad_id', $propiedad)
             ->where('id_usuario', $userId)
             ->where('anio', $year)
@@ -33,7 +30,6 @@ class SelectionController extends Controller
         $oldWeeks = $existing ? json_decode($existing->semana, true) : [];
         $allWeeks = array_unique(array_merge($oldWeeks, $semanas));
 
-        // Guardamos la selección
         if ($existing) {
             $existing->semana = json_encode($allWeeks);
             $existing->save();
@@ -47,7 +43,6 @@ class SelectionController extends Controller
             ]);
         }
 
-        // Creamos gastos comunes para las semanas nuevas
         foreach ($semanas as $week) {
             $startOfWeek = \Carbon\Carbon::now()->setISODate($year, $week)->startOfWeek();
             $mes = $startOfWeek->month;
@@ -56,19 +51,18 @@ class SelectionController extends Controller
                 'propiedad_id' => $propiedad,
                 'anio' => $year,
                 'mes' => $mes,
-                'semana' => $week,        // ✅ usar $week
+                'semana' => $week,     
                 'usuario_id' => $userId,
             ])->first();
 
             if (!$existsGasto) {
-                // DEBUG: mostrar valores
                 \Log::info('Creando GastoComun', [
                     'propiedad_id' => $propiedad,
                     'anio' => $year,
                     'mes' => $mes,
                     'usuario_id' => $userId,
                     'monto' => 250,
-                    'semana' => $week        // ✅ usar $week
+                    'semana' => $week       
                 ]);
 
                 GastoComun::create([
@@ -77,7 +71,7 @@ class SelectionController extends Controller
                     'mes' => $mes,
                     'usuario_id' => $userId,
                     'monto' => 250,
-                    'semana' => $week,       // ✅ usar $week
+                    'semana' => $week,     
                     'estado' => 'pendiente',
                     'fecha_pago' => null,
                 ]);
@@ -88,6 +82,16 @@ class SelectionController extends Controller
             'message' => '¡Selecciones y gastos guardados correctamente!',
             'selection' => $selection
         ]);
+    }
+
+    public function misSemanas()
+    {
+        $selections = Selection::with('propiedad')
+            ->where('id_usuario', auth()->id())
+            ->orderBy('anio', 'desc')
+            ->get();
+
+        return view('user.mis-semanas', compact('selections'));
     }
 
 }

@@ -16,6 +16,21 @@ class Selection extends Model
     ];
 
     protected $casts = [
-        'semana' => 'array', 
+        'semana' => 'array',
     ];
+
+    public function propiedad()
+    {
+        return $this->belongsTo(Propiedades::class, 'propiedad_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    public function getSemanaAttribute($value)
+    {
+        return is_array($value) ? $value : json_decode($value, true) ?? [];
+    }
 }

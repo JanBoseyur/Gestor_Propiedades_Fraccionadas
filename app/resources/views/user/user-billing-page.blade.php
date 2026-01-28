@@ -17,15 +17,15 @@
         class = "bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4 sm:p-6 mb-8 flex flex-wrap gap-6">
 
         {{-- Año --}}
-        <div>
+        <div class = "text-center">
             <label class = "block text-sm font-medium mb-1">Año</label>
-            <select name="anio"
-                class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+            <select name = "anio"
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
-                <option value="">Todos</option>
+                <option value = "">Todos</option>
 
                 @for($y = now()->year - 5; $y <= now()->year + 1; $y++)
-                    <option value="{{ $y }}" @selected(request('anio') == $y)>
+                    <option value = "{{ $y }}" @selected(request('anio') == $y)>
                         {{ $y }}
                     </option>
                 @endfor
@@ -33,15 +33,15 @@
         </div>
 
         {{-- Mes --}}
-        <div>
+        <div class = "text-center">
             <label class = "block text-sm font-medium mb-1">Mes</label>
-            <select name="mes"
-                class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+            <select name = "mes"
+                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
                 <option value="">Todos</option>
 
                 @foreach(range(1,12) as $m)
-                    <option value="{{ $m }}" @selected(request('mes') == $m)>
+                    <option value = "{{ $m }}" @selected(request('mes') == $m)>
                         {{ ucfirst(\Carbon\Carbon::create()->month($m)->locale('es')->monthName) }}
                     </option>
                 @endforeach
@@ -49,10 +49,10 @@
         </div>
 
         {{-- Propiedad --}}
-        <div>
+        <div class = "text-center"> 
             <label class = "block text-sm font-medium mb-1">Propiedad</label>
             <select name = "propiedad_id"
-                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 
                 <option value = "">Todas</option>
                 
@@ -69,11 +69,10 @@
         </div>
 
         {{-- Estado --}}
-        <div>
-
+        <div class = "text-center">
             <label class = "block text-sm font-medium mb-1">Estado</label>
             <select name = "estado"
-                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 <option value = "">Todos</option>
                 
                 <option value = "pendiente" @selected(request('estado') == 'pendiente')>
@@ -130,8 +129,7 @@
             <thead class = "bg-[#2E6C6F] text-white">
                 
                 <tr>
-                    <th class = "px-6 py-4 text-left">Propiedad</th>
-                    <th class = "px-6 py-4 text-left">Socio</th>
+                    <th class = "px-6 py-4 text-center">Propiedad</th>
                     <th class = "px-6 py-4 text-center">Periodo</th>
                     <th class = "px-6 py-4 text-center">Monto</th>
                     <th class = "px-6 py-4 text-center">Estado</th>
@@ -146,12 +144,8 @@
 
                 <tr class = "hover:bg-[#F3FAFA] transition">
 
-                    <td class = "px-6 py-4 font-medium">
+                    <td class = "px-6 py-4 text-center">
                         {{ $pago->propiedad->nombre }}
-                    </td>
-
-                    <td class = "px-6 py-4">
-                        {{ $pago->usuario->name }}
                     </td>
 
                     <td class = "px-6 py-4 text-center">
@@ -183,9 +177,9 @@
                                 @csrf
                                 @method('PUT')
 
-                                <button class = "px-3 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer">
-                                    Marcar como Pagado
-                                </button>
+                            <button class = "px-3 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer">
+                                Agendar
+                            </button>
                                 
                             </form>
                         @endif
@@ -215,11 +209,6 @@
             <div>
                 <p class = "text-xs text-gray-500">Propiedad</p>
                 <p class = "font-medium">{{ $pago->propiedad->nombre }}</p>
-            </div>
-
-            <div>
-                <p class = "text-xs text-gray-500">Socio</p>
-                <p>{{ $pago->usuario->name }}</p>
             </div>
 
             <div>
@@ -256,7 +245,7 @@
 
                     <div class = "flex justify-center">
                         <button class = "justify-center align-center text-center mt-2 px-3 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer">
-                            Marcar como Pagado
+                            Pagar
                         </button>
                     </div>
 
@@ -277,3 +266,4 @@
 </div>
 
 @endsection
+

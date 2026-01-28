@@ -17,9 +17,6 @@
     <!-- Primero frameworks globales opcionales -->
     <link href="bootstrap.min.css" rel="stylesheet">
 
-    <!-- Tailwind -->
-    @vite(['resources/css/app.css'])
-
     <!-- CSS específicos de librerías como Flatpickr -->
     <link rel="stylesheet" href="flatpickr.min.css">
 
@@ -27,6 +24,8 @@
 
 
     <title>@yield('title', 'Panel Admin')</title>
+    <!-- Tailwind -->
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class = "bg-[#FFF6E9] h-screen flex overflow-hidden">

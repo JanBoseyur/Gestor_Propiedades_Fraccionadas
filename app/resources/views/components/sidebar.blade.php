@@ -149,6 +149,40 @@
 
                 @role('user')
                     <li>
+                        <a href = "{{ route('user.billing') }}"
+                            class = "flex items-center px-4 py-3 rounded-lg
+                                {{ request()->routeIs('user.billing')
+                                    ? 'bg-[#2C7474] text-white'
+                                    : 'text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
+
+                            <i class = "{{ request()->routeIs('user.billing')
+                                ? 'text-2xl mr-3 ri-cash-fill'
+                                : 'text-2xl mr-3 ri-cash-line' }}">
+                            </i>
+                            Mis Pagos
+                        </a>
+                    </li>
+                @endrole
+
+                @role('user')
+                    <li>
+                        <a href = "{{ route('user.mis-semanas') }}"
+                            class = "flex items-center px-4 py-3 rounded-lg
+                                {{ request()->routeIs('user.mis-semanas')
+                                    ? 'bg-[#2C7474] text-white'
+                                    : 'text-[#2C7474] hover:bg-[#B3D3D3] hover:text-[#2E6C6F]' }}">
+
+                            <i class = "{{ request()->routeIs('user.mis-semanas')
+                                ? 'text-2xl mr-3 ri-cash-fill'
+                                : 'text-2xl mr-3 ri-cash-line' }}">
+                            </i>
+                            Mis Pagos
+                        </a>
+                    </li>
+                @endrole
+
+                @role('user')
+                    <li>
                         <a href = "{{ route('profile.edit') }}"
                             class = "flex items-center px-4 py-3 rounded-lg
                                 {{ request()->routeIs('profile.edit')
