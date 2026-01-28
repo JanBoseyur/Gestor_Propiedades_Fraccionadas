@@ -1,38 +1,37 @@
 
-.jidox-calendar-wrapper {
-    background: #F9F5F0;
-    padding: 1rem;
-    border-radius: 12px;
+/* Padding y borde de cada celda */
+.fc .fc-daygrid-day-frame {
+    padding: 0.4rem;       /* reduce el padding */
+    border-radius: 0.5rem; /* bordes redondeados */
 }
 
-.fc {
-    font-family: inherit;
+/* Borde de cada día */
+.fc .fc-daygrid-day {
+    border: 1px solid #e2e8f0; /* gris suave */
 }
 
-.fc-toolbar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+/* Número del día */
+.fc .fc-daygrid-day-number {
+    font-size: 0.85rem;
+    font-weight: bold;
     color: #2E6C6F;
 }
 
-.fc-daygrid-day {
+/* Días de otros meses */
+.fc .fc-day-other {
+    background-color: #f9fafb; /* fondo más claro */
+}
+
+/* Hover de celdas */
+.fc .fc-daygrid-day:hover {
+    background-color: #e0f7fa;
     cursor: pointer;
 }
 
-.fc-bg-event {
-    opacity: 0.7;
-}
-
-.fc-daygrid-day:hover {
-    background-color: #f1f5f9;
-    cursor: pointer;
-}
-
-.fc-day-today {
-    background-color: #e6f4f4 !important;
-}
-
-#calendar {
-    width: 100%;
-    min-height: 400px;
+/* Evento tipo user (día seleccionado) */
+.fc .fc-event-user {
+    background-color: #FFD700 !important;
+    border: 2px solid #FFA500 !important;
+    border-radius: 0.5rem !important;
+    opacity: 0.9;
 }

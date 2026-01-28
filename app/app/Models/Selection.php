@@ -31,6 +31,14 @@ class Selection extends Model
 
     public function getSemanaAttribute($value)
     {
-        return is_array($value) ? $value : json_decode($value, true) ?? [];
+        if (is_array($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            return json_decode($value, true) ?? [];
+        }
+
+        return [];
     }
 }

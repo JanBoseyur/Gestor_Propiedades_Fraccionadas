@@ -52,9 +52,10 @@ class GastoComunController extends Controller
             foreach ($propiedad->usuarios as $socio) {
 
                 $semanas = $socio->selections()
-                    ->where('propiedad_id', $propiedad->id)
-                    ->where('anio', $request->anio)
-                    ->pluck('semana'); 
+                    ->get()
+                    ->flatMap(fn ($sel) => $sel->semana)
+                    ->unique()
+                    ->values();
 
                 foreach ($semanas as $semana) {
 

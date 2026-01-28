@@ -14,6 +14,7 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectionController;
 use App\Http\Controllers\MisGastosController;
+use App\Http\Controllers\UserSemanaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
     | ADMIN
     |--------------------------------------------------------------------------
     */
+
     Route::middleware('role:admin')->prefix('admin')->group(function () {
 
         Route::get('/admin-dashboard', [AdminController::class, 'index'])
@@ -108,8 +110,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/mis-gastos', [MisGastosController::class, 'index'])
             ->name('user.billing');
-        
-        Route::get('/mis-semanas', [UserController::class, 'misSemanas'])
+
+        Route::get('/mis-semanas', [UserSemanaController::class, 'index'])
             ->name('user.mis-semanas');
 
     });

@@ -36,4 +36,16 @@ class UserController extends Controller
         
         return view('user.semanas', compact('selections'));
     }
+
+    public function semanas()
+    {
+        $userId = Auth::id();
+
+        $selections = Selection::with('propiedad')
+            ->where('id_usuario', $userId)  
+            ->orderBy('anio', 'desc')
+            ->get();
+
+        return view('user.semanas', compact('selections'));
+    }
 }

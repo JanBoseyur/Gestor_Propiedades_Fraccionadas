@@ -37,7 +37,7 @@ class SelectionController extends Controller
         } else {
             $selection = Selection::create([
                 'propiedad_id' => $propiedad,
-                'id_usuario' => $userId,
+                'id_usuario' => auth()->id(),
                 'anio' => $year,
                 'semana' => json_encode($allWeeks),
             ]);
@@ -91,7 +91,7 @@ class SelectionController extends Controller
             ->orderBy('anio', 'desc')
             ->get();
 
-        return view('user.mis-semanas', compact('selections'));
+        return view('user.semanas', compact('selections'));
     }
 
 }

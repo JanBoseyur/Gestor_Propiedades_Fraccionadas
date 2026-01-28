@@ -11,8 +11,6 @@
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
-    @stack('styles')
 
     <!-- Primero frameworks globales opcionales -->
     <link href="bootstrap.min.css" rel="stylesheet">
@@ -26,6 +24,7 @@
     <title>@yield('title', 'Panel Admin')</title>
     <!-- Tailwind -->
     @vite(['resources/css/app.css'])
+    @stack('styles')
 </head>
 
 <body class = "bg-[#FFF6E9] h-screen flex overflow-hidden">
