@@ -15,11 +15,8 @@ function initCalendar() {
         fixedWeekCount: false,
         showNonCurrentDates: false,
         height: 'auto',
-        contentHeight: 'auto',
-        aspectRatio: 1.8,
         headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
         events: events,
-
         dateClick(info) { toggleWeek(info.date); },
         eventDidMount(info) {
             if(info.event.extendedProps.type === 'user'){
@@ -91,6 +88,16 @@ function initCalendar() {
             const start = new Date(range.start);
             const end = new Date(range.end);
             const month = start.toLocaleDateString('es-CL',{month:'long'});
+
+            const chip = document.createElement('span');
+            chip.style.backgroundColor = '#FFD700';
+            chip.style.color = '#000';
+            chip.style.borderRadius = '12px';
+            chip.style.padding = '4px 12px';
+            chip.style.fontSize = '13px';
+            chip.style.fontWeight = 'bold';
+            chip.style.marginRight = '4px';
+            chip.style.marginBottom = '4px';
             chip.innerText = `Semana ${week} · ${capitalize(month)} (${formatDate(start)} – ${formatDate(end)})`;
 
             container.appendChild(chip);
