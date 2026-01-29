@@ -72,19 +72,16 @@
                     >
                         <div 
                             @click.away = "open = false"
-                            class = "bg-white w-full rounded-2xl shadow-xl p-6"
+                            class = "bg-white rounded-2xl shadow-xl"
                         >
-                            <h2 class = "text-xl font-bold text-gray-800 mb-4">
-                                Título del Modal
-                            </h2>
 
-                            <div class = "bg-white p-6 rounded-lg w-full">
+                            <div class = "bg-white">
                             
                             <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
                             
                             <div id = "calendar" class = ""></div>
 
-                            <!-- Botones -->
+                            <!-- Contenedor Selected Weeks y Botones -->
                             <div class = "flex flex-row items-center justify-between mt-4 flex-wrap gap-2">
                                 
                                 <div id = "selected-weeks" class = "flex flex-wrap gap-2 text-gray-500 text-sm flex-1"></div>
