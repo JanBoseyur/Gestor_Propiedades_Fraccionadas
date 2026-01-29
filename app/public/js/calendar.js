@@ -18,14 +18,18 @@ function initCalendar() {
         fixedWeekCount: false,
         showNonCurrentDates: false,
         height: 'auto',
-        aspectRatio: 1.35,
+        aspectRatio: 2,
         headerToolbar: {
             left: 'prev,next',
             center: '',
             right: 'title'
         },
         events: events,
-        dateClick(info) { toggleWeek(info.date); }
+        dateClick(info) { toggleWeek(info.date); },
+        eventDidMount(info) {
+            if(info.event.extendedProps.type === 'user'){
+            }
+        }
     });
 
     calendarInstance.render();
@@ -33,10 +37,10 @@ function initCalendar() {
     setTimeout(() => {
         calendarInstance.updateSize();
 
+        // mostrar suavemente cuando ya está bien
         calendarEl.classList.remove('opacity-0');
         calendarEl.classList.add('opacity-100');
     }, 200);
-
 
     // Botón guardar
     const saveBtn = document.getElementById('saveSelections');
@@ -73,7 +77,7 @@ function initCalendar() {
         } else {
             selectedWeeks.push(week);
         }
-        renderSelectedWeeks(calendar);
+        renderSelectedWeeks(calendarInstance);
     }
 
     function renderSelectedWeeks(calendar){

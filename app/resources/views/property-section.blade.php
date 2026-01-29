@@ -65,14 +65,24 @@
                     </button>
 
                     <!-- Modal -->
-                    <div 
-                        x-show = "open" 
-                        x-transition
-                        class = "fixed inset-0 z-50 bg-black/50"
+                    <div
+                        x-show = "open"
+                        x-transition.opacity
+                        class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                        x-init = "
+                            $watch('open', value => {
+                                if(value){
+                                    $nextTick(() => {
+                                        initCalendar();
+                                        calendarInstance.updateSize();
+                                    })
+                                }
+                            })"
+                        @click.self="open = false"
                     >
                         <div 
                             @click.away = "open = false"
-                            class = "bg-white rounded-2xl shadow-xl"
+                            class = "bg-white rounded-2xl shadow-xl p-4"
                         >
 
                             <div class = "bg-white">
@@ -80,7 +90,10 @@
                             <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
                             
                             <div class = "flex justify-center">
-                                <div id = "calendar" class = "w-full max-w-md opacity-0 transition-opacity duration-200"></div>
+                                <div 
+                                    id = "calendar" 
+                                    class = "w-full max-w-md opacity-0 transition-opacity duration-200"
+                                ></div>
                             </div>
 
                             <!-- Contenedor Selected Weeks y Botones -->
@@ -92,14 +105,14 @@
                                 <div class = "flex gap-2 mt-2 md:mt-0"> 
                                     <button 
                                         @click = "open = false" 
-                                        class="px-4 py-2 bg-gray-300 font-semibold rounded-xl hover:scale-105 transition transform duration-300"
+                                        class = "px-2 py-2 bg-gray-300 font-semibold rounded-xl hover:scale-105 transition transform duration-300"
                                     >
                                         Cerrar
                                     </button>
                                     
                                     <button 
                                         id = "saveSelections" 
-                                        class = "px-10 py-3 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300"
+                                        class = "px-2 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300"
                                     >
                                         Guardar semanas
                                     </button>
