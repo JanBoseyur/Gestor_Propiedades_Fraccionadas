@@ -1,31 +1,42 @@
+
 let selectedWeeks = [];
 const year = new Date().getFullYear();
+let calendarInstance = null;
 
 function initCalendar() {
     const calendarEl = document.getElementById('calendar');
 
-    // Evitar inicializar varias veces
-    if(calendarEl.dataset.initialized) return;
-    calendarEl.dataset.initialized = true;
+    if (calendarInstance) {
+        calendarInstance.updateSize();
+        return;
+    }
 
-    const calendar = new FullCalendar.Calendar(calendarEl, {
+    calendarInstance = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'es',
         firstDay: 1,
         fixedWeekCount: false,
         showNonCurrentDates: false,
         height: 'auto',
-        headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
+        aspectRatio: 1.35,
+        headerToolbar: {
+            left: 'prev,next',
+            center: '',
+            right: 'title'
+        },
         events: events,
-        dateClick(info) { toggleWeek(info.date); },
-        eventDidMount(info) {
-            if(info.event.extendedProps.type === 'user'){
-            }
-        }
+        dateClick(info) { toggleWeek(info.date); }
     });
 
-    calendar.render();
-    calendar.updateSize(); // recalcula tamaño ya visible
+    calendarInstance.render();
+
+    setTimeout(() => {
+        calendarInstance.updateSize();
+
+        calendarEl.classList.remove('opacity-0');
+        calendarEl.classList.add('opacity-100');
+    }, 200);
+
 
     // Botón guardar
     const saveBtn = document.getElementById('saveSelections');
@@ -90,14 +101,6 @@ function initCalendar() {
             const month = start.toLocaleDateString('es-CL',{month:'long'});
 
             const chip = document.createElement('span');
-            chip.style.backgroundColor = '#FFD700';
-            chip.style.color = '#000';
-            chip.style.borderRadius = '12px';
-            chip.style.padding = '4px 12px';
-            chip.style.fontSize = '13px';
-            chip.style.fontWeight = 'bold';
-            chip.style.marginRight = '4px';
-            chip.style.marginBottom = '4px';
             chip.innerText = `Semana ${week} · ${capitalize(month)} (${formatDate(start)} – ${formatDate(end)})`;
 
             container.appendChild(chip);

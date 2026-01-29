@@ -79,7 +79,9 @@
                             
                             <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
                             
-                            <div id = "calendar" class = ""></div>
+                            <div class = "flex justify-center">
+                                <div id = "calendar" class = "w-full max-w-md opacity-0 transition-opacity duration-200"></div>
+                            </div>
 
                             <!-- Contenedor Selected Weeks y Botones -->
                             <div class = "flex flex-row items-center justify-between mt-4 flex-wrap gap-2">
@@ -125,6 +127,5 @@
         const propertyId = {{ $propiedad->id }};
         const events = {!! $events !!}; 
         const takenWeeks = @json($takenWeeks ?? []);
-        initCalendar();
     </script>
 @endpush
