@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\GastoComun;
 use App\Models\Propiedades;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MisGastosController extends Controller
 {
     public function index(Request $request)
     {
+
     $pagos = GastoComun::with(['propiedad', 'usuario'])
+    ->where('usuario_id', Auth::id())
 
         ->when($request->filled('anio'), fn ($q) =>
             $q->where('anio', $request->anio)
