@@ -41,16 +41,14 @@
                     
                     <h3 class = "text-2xl font-semibold text-[#2E6C6F] text-white">Galería de Fotos</h3>
                     
-                    @foreach ($propiedad->fotos as $foto)
-                        <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
-                            @foreach ($propiedad->fotos as $foto)
-                                <x-image-modal
-                                    src = "{{ asset($foto) }}"
-                                    alt = "Foto de {{ $propiedad->nombre }}"
-                                />
-                            @endforeach
-                        </div>
-                    @endforeach
+                    <div class = "mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 items-center justify-center">
+                        @foreach ($propiedad->fotos as $foto)
+                            <x-image-modal
+                                src="{{ $foto }}"
+                                alt="Foto de {{ $propiedad->nombre }}"
+                            />
+                        @endforeach
+                    </div>        
 
                 </div>
 
@@ -85,7 +83,7 @@
                     >
                         <div class = "bg-white rounded-2xl shadow-xl p-4">
 
-                            <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
+                            <h2 class = "text-center text-lg font-bold mb-4 p-2">Selecciona semanas</h2>
 
                             <div class = "flex justify-center">
                                 <div id = "calendar" class = "opacity-0 transition-opacity duration-200"></div>
@@ -164,13 +162,13 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
-    <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
+    <link rel = "stylesheet" href = "{{ asset('css/calendar.css') }}">
 @endpush
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script src="{{ asset('js/calendar.js') }}"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src = "{{ asset('js/calendar.js') }}"></script>
 
     <script>
         const propertyId = {{ $propiedad->id }};

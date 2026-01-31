@@ -20,10 +20,17 @@ function initCalendar() {
         height: 'auto',
         aspectRatio: 2,
         headerToolbar: {
-            left: 'prev,next',
-            center: '',
-            right: 'title'
+            left: 'prev',       
+            center: 'title', 
+            right: 'next'      
         },
+
+        buttonIcons: true,  
+        buttonText: {
+            prev: '‹',          
+            next: '›'
+        },
+
         events: events,
             dateClick(info) {
                 const week = getISOWeek(info.date);
@@ -33,6 +40,45 @@ function initCalendar() {
     });
 
     calendarInstance.render();
+
+    // ====================
+    // SWIPE con mouse (desktop)
+    // ====================
+    let isDown = false;
+    let startX = 0;
+
+    calendarEl.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX;
+    });
+
+    calendarEl.addEventListener('mouseup', e => {
+        if (!isDown) return;
+        isDown = false;
+
+        const diff = startX - e.pageX;
+
+        if (Math.abs(diff) > 80) {
+            slideChange(diff > 0 ? 'next' : 'prev');
+        }
+    });
+
+    // ====================
+    // SWIPE táctil (mobile)
+    // ====================
+    calendarEl.addEventListener('touchstart', e => {
+        startX = e.changedTouches[0].screenX;
+    });
+
+    calendarEl.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].screenX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            slideChange(diff > 0 ? 'next' : 'prev');
+        }
+    });
+
     renderTakenWeeks();
 
     setTimeout(() => {
@@ -155,4 +201,21 @@ function initCalendar() {
 
     function formatDate(date){ return date.toLocaleDateString('es-CL',{ day:'2-digit', month:'2-digit' }); }
     function capitalize(text){ return text.charAt(0).toUpperCase() + text.slice(1); }
+}
+
+function slideChange(direction) {
+    const view = document.querySelector('.fc-view');
+    if (!view || !calendarInstance) return;
+
+    view.classList.add(
+        direction === 'next' ? 'slide-next' : 'slide-prev'
+    );
+
+    setTimeout(() => {
+        direction === 'next'
+            ? calendarInstance.next()
+            : calendarInstance.prev();
+
+        view.classList.remove('slide-next', 'slide-prev');
+    }, 300);
 }

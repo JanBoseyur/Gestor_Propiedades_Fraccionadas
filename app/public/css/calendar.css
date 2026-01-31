@@ -1,22 +1,166 @@
 
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
 #calendar {
     font-size: 0.8rem;
+    font-family: Inter, system-ui, sans-serif;
+    cursor: grab;
+    max-width: 100%; /* evita desbordes */
+}
+#calendar:active {
+    cursor: grabbing;
 }
 
-.fc .fc-daygrid-day-frame {
-    min-height: 60px;
-}
-
-.fc .fc-toolbar-title {
-    font-size: 1rem;
+/* =========================
+   TOOLBAR / TÍTULO
+========================= */
+.fc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .fc-toolbar-title {
-    text-align: right;
+    flex: 1;
+    text-align: center;
     font-size: 1rem;
     font-weight: 600;
+    color: #2C7474;
 }
 
+.fc .fc-button {
+    background-color: #2C7474 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 6px 10px !important;
+    color: white;
+    transition: background-color 0.2s ease;
+    min-width: 32px;
+    font-size: 0.9rem;
+}
+
+.fc .fc-button:hover {
+    background-color: #245f5f !important;
+}
+
+.fc-toolbar-title::first-letter {
+    text-transform: uppercase;
+}
+
+/* =========================
+   CELDAS DEL CALENDARIO
+========================= */
+.fc .fc-daygrid-day-frame {
+    min-height: 50px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: center;
+    padding: 4px 2px;
+    transition: background-color 0.2s ease;
+}
+
+.fc-daygrid-day-number {
+    font-size: 0.75rem;
+    font-weight: 250;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+/* Hover solo en días válidos */
+.fc-daygrid-day:not(.fc-day-disabled):hover {
+    background-color: #f0fdfa;
+    cursor: pointer;
+}
+
+/* =========================
+   SEMANAS BLOQUEADAS
+========================= */
 .fc-bg-event {
-    opacity: 0.6;
+    pointer-events: none;
+    opacity: 0.45;
+}
+
+.fc-bg-event.taken-week {
+    background-color: #ebe5e5 !important;
+}
+
+.fc-daygrid-day.fc-day-disabled,
+.fc-daygrid-day.blocked {
+    cursor: not-allowed;
+}
+
+/* =========================
+   SEMANAS SELECCIONADAS
+========================= */
+.fc-bg-event.user-week {
+    background-color: rgba(44, 116, 116, 0.35) !important;
+}
+
+/* =========================
+   DÍAS FUERA DE MES
+========================= */
+.fc-day-other {
+    opacity: 0.35;
+}
+
+/* =========================
+   ANIMACIONES DE TRANSICIÓN SWIPE
+========================= */
+.slide-next {
+    animation: slideLeft 0.3s ease;
+}
+
+.slide-prev {
+    animation: slideRight 0.3s ease;
+}
+
+@keyframes slideLeft {
+    from { transform: translateX(40px); opacity: 0.6; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+    from { transform: translateX(-40px); opacity: 0.6; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+/* =========================
+   EVENTOS DENTRO DE CELDAS
+========================= */
+.fc-event {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    background-color: #2C7474;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 640px) {
+    #calendar {
+        font-size: 0.7rem;
+    }
+    .fc-toolbar-title {
+        font-size: 0.9rem;
+    }
+    .fc .fc-button {
+        font-size: 0.65rem;
+        padding: 4px 6px !important;
+    }
+    .fc-daygrid-day-number {
+        width: 20px;
+        height: 20px;
+        font-size: 0.65rem;
+    }
 }
