@@ -67,7 +67,7 @@ class Propiedades extends Model
 
     public function selections()
     {
-        return $this->hasMany(Selection::class);
+        return $this->hasMany(Selection::class, 'propiedad_id', 'id');
     }
 
 }

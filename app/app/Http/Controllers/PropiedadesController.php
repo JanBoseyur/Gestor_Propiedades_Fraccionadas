@@ -9,6 +9,7 @@ use App\Models\PropiedadSemana;
 use App\Models\Anio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PropiedadesController extends Controller
 {
@@ -63,7 +64,6 @@ class PropiedadesController extends Controller
             }
         }
 
-        // Quitar duplicados
         $takenWeeks = array_unique($takenWeeks);
 
         return view('property-section', [
@@ -75,7 +75,12 @@ class PropiedadesController extends Controller
 
     public function mostrar_propiedades()
     {
-        $propiedades = Propiedades::all();
+        $propiedades = Propiedades::withCount([
+            'selections as n_socios' => function ($query) {
+                $query->select(DB::raw('count(distinct id_usuario)'));
+            }
+        ])->get();
+
         return view('user.properties', compact('propiedades'));
     }
 

@@ -3,14 +3,14 @@
 <div x-data = "{ open: false }" class = "relative">
 
     <!-- Botón para móviles -->
-    <button @click="open = !open"
+    <button @click = "open = !open"
         class = "md:hidden fixed top-4 left-4 z-50 bg-[#2C7474] text-white p-2 rounded-md shadow-md">
         <i class = "ri-menu-line text-2xl"></i>
     </button>
 
     <!-- Contenedor Sidebar -->
     <aside
-        :class="open ? 'translate-x-0' : '-translate-x-full'"
+        :class = "open ? 'translate-x-0' : '-translate-x-full'"
         style = "height: 100vh; height: 100dvh;"
         class = "overflow-y-auto bg-[#FFF6E9] w-64 max-w-full flex-shrink-0 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col">
             
@@ -260,15 +260,17 @@
     </aside>
 
     <!-- Fondo overlay para móviles -->
-    <div x-show="open" @click="open = false"
-        x-transition:enter="transition ease-out duration-300"
+    <div
+        x-show="open"
+        @click="open = false"
+        x-transition:enter="transition-opacity ease-out duration-300"
         x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-70"
-        x-transition:leave="transition ease-in duration-300"
-        x-transition:leave-start="opacity-70"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-in duration-300"
+        x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-black z-40 md:hidden">
-    </div>
+        class="fixed inset-0 z-40 md:hidden bg-transparent"
+    ></div>
 
 </div>
 

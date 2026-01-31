@@ -54,77 +54,113 @@
 
                 </div>
 
-                <div x-data="{ open: false }" class = "relative">
+                <div x-data = "{ openCalendar: false, openConfirm: false }" class = "relative">
 
-                    <!-- Botón para abrir modal -->
+                    <div x-data = "{ openCalendar: false, openConfirm: false }">
+
+                    <!-- BOTÓN ABRIR MODAL CALENDARIO -->
                     <button 
-                        @click = "open = true; $nextTick(() => initCalendar())"
+                        @click = "openCalendar = true; $nextTick(() => initCalendar())"
                         class = "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
                     >
                         Abrir Modal
                     </button>
 
-                    <!-- Modal -->
+                    <!-- MODAL CALENDARIO -->
                     <div
-                        x-show = "open"
+                        x-show = "openCalendar"
                         x-transition.opacity
-                        class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                        class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5"
+                        @click.self = "openCalendar = false"
                         x-init = "
-                            $watch('open', value => {
+                            $watch('openCalendar', value => {
                                 if(value){
                                     $nextTick(() => {
                                         initCalendar();
-                                        calendarInstance.updateSize();
+                                        calendarInstance?.updateSize();
                                     })
                                 }
-                            })"
-                        @click.self="open = false"
+                            })
+                        "
                     >
-                        <div 
-                            @click.away = "open = false"
-                            class = "bg-white rounded-2xl shadow-xl p-4"
-                        >
+                        <div class = "bg-white rounded-2xl shadow-xl p-4">
 
-                            <div class = "bg-white">
-                            
                             <h2 class = "text-lg font-bold mb-4">Selecciona semanas</h2>
-                            
+
                             <div class = "flex justify-center">
-                                <div 
-                                    id = "calendar" 
-                                    class = "w-full max-w-md opacity-0 transition-opacity duration-200"
-                                ></div>
+                                <div id = "calendar" class = "opacity-0 transition-opacity duration-200"></div>
                             </div>
 
-                            <!-- Contenedor Selected Weeks y Botones -->
-                            <div class = "flex flex-row items-center justify-between mt-4 flex-wrap gap-2">
-                                
-                                <div id = "selected-weeks" class = "flex flex-wrap gap-2 text-gray-500 text-sm flex-1"></div>
+                            <div class = "flex flex-row items-center justify-center mt-4 flex-wrap gap-2">
 
-                                <!-- Botones -->
-                                <div class = "flex gap-2 mt-2 md:mt-0"> 
+                                <div class = "flex justify-center items-center gap-3">
                                     <button 
-                                        @click = "open = false" 
-                                        class = "px-2 py-2 bg-gray-300 font-semibold rounded-xl hover:scale-105 transition transform duration-300"
+                                        @click = "openCalendar = false"
+                                        class = "flex justify-center items-center px-2 py-2 bg-gray-300 rounded-xl"
                                     >
                                         Cerrar
                                     </button>
-                                    
+
                                     <button 
-                                        id = "saveSelections" 
-                                        class = "px-2 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300"
+                                        @click = "openConfirm = true"
+                                        class = "px-2 py-2 bg-[#2C7474] text-white rounded-xl"
                                     >
-                                        Guardar semanas
+                                        Seleccionar
                                     </button>
                                 </div>
+                                
                             </div>
+
+                        </div>
                     </div>
+
+                    <!-- MODAL CONFIRMACIÓN -->
+                    <div
+                        x-show = "openConfirm"
+                        x-transition.opacity
+                        class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5"
+                        @click.self = "openConfirm = false"
+                    >
+                        <div class = "bg-white rounded-2xl shadow-xl p-4">
+                            <h2 class = "text-lg font-bold mb-4 text-center">Semanas Seleccionadas</h2>
+
+                            <ul 
+                                id = "selected-weeks" 
+                                class = "list-disc list-inside space-y-2 text-sm text-gray-700 bg-gray-50 rounded-xl p-4 mb-4 text-center">
+                            </ul>
+
+                            <p class = "text-center text-sm text-gray-600 mb-6">
+                                ¿Son correctas las selecciones?
+                            </p>
+
+                            <div class = "flex justify-center items-center gap-4">
+                                <button 
+                                    @click = "openConfirm = false"
+                                    class = "px-4 py-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                                >
+                                    Cerrar
+                                </button>
+
+                                <button
+                                    id = "saveSelections"
+                                    @click = "openConfirm = false"
+                                    class = "px-4 py-2 rounded-xl bg-[#2C7474] text-white hover:bg-[#245f5f] transition shadow-md"
+                                >
+                                    Confirmar
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
                 </div>
 
             </div>
         </div>
     </div>
-            
+
 @endsection
 
 @push('styles')

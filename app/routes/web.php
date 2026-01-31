@@ -113,7 +113,16 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/mis-semanas', [UserSemanaController::class, 'index'])
             ->name('user.mis-semanas');
+        
+        Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
+            ->name('propiedades.show');
 
+        Route::get('/propiedades', [PropiedadesController::class, 'mostrar_propiedades'])
+            ->name('propiedades');
+        
+        Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
+            ->name('selections.save')
+            ->middleware('auth');
     });
 
     /*
@@ -121,17 +130,9 @@ Route::middleware('auth')->group(function () {
     | Rutas compartidas
     |--------------------------------------------------------------------------
     */
-    Route::get('/propiedades/{id}', [PropiedadesController::class, 'show'])
-        ->name('propiedades.show');
 
-    Route::get('/propiedades', [PropiedadesController::class, 'mostrar_propiedades'])
-        ->name('propiedades');
-    
     Route::get('/mi-perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mi-perfil', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
-        ->name('selections.save')
-        ->middleware('auth');
 
 });

@@ -25,24 +25,23 @@ function initCalendar() {
             right: 'title'
         },
         events: events,
-        dateClick(info) { toggleWeek(info.date); },
-        eventDidMount(info) {
-            if(info.event.extendedProps.type === 'user'){
-            }
-        }
+            dateClick(info) {
+                const week = getISOWeek(info.date);
+                if (takenWeeks.includes(week)) return;
+                toggleWeek(info.date);
+            },
     });
 
     calendarInstance.render();
+    renderTakenWeeks();
 
     setTimeout(() => {
         calendarInstance.updateSize();
 
-        // mostrar suavemente cuando ya está bien
         calendarEl.classList.remove('opacity-0');
         calendarEl.classList.add('opacity-100');
     }, 200);
 
-    // Botón guardar
     const saveBtn = document.getElementById('saveSelections');
     saveBtn.addEventListener('click', function () {
         if(selectedWeeks.length === 0){
@@ -68,31 +67,57 @@ function initCalendar() {
 
     function toggleWeek(date){
         const week = getISOWeek(date);
-        if(takenWeeks.includes(week)){
-            alert(`La semana ${week} está ocupada.`);
+
+        if (takenWeeks.includes(week)) {
+            alert(`La semana ${week} ya está pedida`);
             return;
         }
-        if(selectedWeeks.includes(week)){
+
+        if (selectedWeeks.includes(week)) {
             selectedWeeks = selectedWeeks.filter(w => w !== week);
         } else {
             selectedWeeks.push(week);
         }
+
         renderSelectedWeeks(calendarInstance);
     }
 
+    function renderTakenWeeks(){
+
+        calendarInstance.getEvents().forEach(e => {
+            if (e.extendedProps.type === 'taken') e.remove();
+        });
+
+        takenWeeks.forEach(week => {
+            const range = getWeekRange(year, week);
+
+            calendarInstance.addEvent({
+                start: range.start,
+                end: range.end,
+                display: 'background',
+                backgroundColor: '#e5e7eb',
+                overlap: false,
+                extendedProps: { type: 'taken' }
+            });
+        });
+    }
+
     function renderSelectedWeeks(calendar){
-        calendar.getEvents().forEach(e => { if(e.extendedProps.type==='user') e.remove(); });
+        calendar.getEvents().forEach(e => {
+            if(e.extendedProps.type === 'user') e.remove();
+        });
 
         const container = document.getElementById('selected-weeks');
         container.innerHTML = '';
 
         if(selectedWeeks.length === 0){
-            container.innerHTML = `<span class="text-gray-500 text-sm">Selecciona semanas</span>`;
+            container.innerHTML = `<li class="text-gray-500 text-sm">Selecciona semanas</li>`;
             return;
         }
 
         selectedWeeks.forEach(week => {
             const range = getWeekRange(year, week);
+
             calendar.addEvent({
                 start: range.start,
                 end: range.end,
@@ -102,16 +127,15 @@ function initCalendar() {
 
             const start = new Date(range.start);
             const end = new Date(range.end);
-            const month = start.toLocaleDateString('es-CL',{month:'long'});
+            const month = start.toLocaleDateString('es-CL', { month: 'long' });
 
-            const chip = document.createElement('span');
-            chip.innerText = `Semana ${week} · ${capitalize(month)} (${formatDate(start)} – ${formatDate(end)})`;
+            const li = document.createElement('li');
+            li.textContent = `Semana ${week} · ${capitalize(month)} (${formatDate(start)} – ${formatDate(end)})`;
 
-            container.appendChild(chip);
+            container.appendChild(li);
         });
     }
 
-    // Helpers
     function getISOWeek(date){ 
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
