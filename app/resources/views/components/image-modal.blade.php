@@ -22,10 +22,11 @@
         ></div>
 
         <!-- Contenido -->
-        <div class = "relative z-50 max-w-4xl w-full p-4">
+        <div class = "relative z-50 max-w-4xl p-4">
             <img src = "{{ $src }}" alt = "{{ $alt }}"
             class = "w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
             >
         </div>
+        
     </div>
 </div>

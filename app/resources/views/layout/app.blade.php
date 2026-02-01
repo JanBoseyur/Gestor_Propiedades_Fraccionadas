@@ -9,8 +9,13 @@
     
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="stripe-key" content="{{ env('STRIPE_KEY') }}">
+
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- Primero frameworks globales opcionales -->
     <link href="bootstrap.min.css" rel="stylesheet">

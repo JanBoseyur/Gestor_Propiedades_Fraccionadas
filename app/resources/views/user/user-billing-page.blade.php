@@ -17,8 +17,9 @@
         class = "bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4 sm:p-6 mb-8 flex flex-wrap gap-6">
 
         {{-- Año --}}
-        <div class = "text-center">
+        <div class = "">
             <label class = "block text-sm font-medium mb-1">Año</label>
+            
             <select name = "anio"
                 class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
@@ -30,13 +31,15 @@
                     </option>
                 @endfor
             </select>
+
         </div>
 
         {{-- Mes --}}
-        <div class = "text-center">
+        <div class = "">
             <label class = "block text-sm font-medium mb-1">Mes</label>
+            
             <select name = "mes"
-                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
                 <option value="">Todos</option>
 
@@ -46,13 +49,15 @@
                     </option>
                 @endforeach
             </select>
+
         </div>
 
         {{-- Propiedad --}}
-        <div class = "text-center"> 
+        <div class = ""> 
             <label class = "block text-sm font-medium mb-1">Propiedad</label>
+            
             <select name = "propiedad_id"
-                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 
                 <option value = "">Todas</option>
                 
@@ -66,13 +71,15 @@
                 @endforeach
 
             </select>
+
         </div>
 
         {{-- Estado --}}
-        <div class = "text-center">
+        <div class = "">
             <label class = "block text-sm font-medium mb-1">Estado</label>
+            
             <select name = "estado"
-                class = "text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 <option value = "">Todos</option>
                 
                 <option value = "pendiente" @selected(request('estado') == 'pendiente')>
@@ -149,8 +156,13 @@
                     </td>
 
                     <td class = "px-6 py-4 text-center">
-                        {{ ucfirst(\Carbon\Carbon::create()->month($pago->mes)->locale('es')->monthName) }}
-                        {{ $pago->anio }}
+                        Semana {{ $pago->semana }} <br>
+                        
+                        <span class = "text-xs text-gray-500">
+                            {{ $pago->fecha_inicio->format('d/m') }} —
+                            {{ $pago->fecha_fin->format('d/m') }}
+                        </span>
+
                     </td>
 
                     <td class = "px-6 py-4 text-center">
@@ -169,19 +181,85 @@
                     </td>
 
                     <td class = "px-6 py-4 text-center">
-
+                    
                         @if($pago->estado === 'pendiente')
-                            <form method = "POST"
-                                  action = "{{ route('gastos.marcarPagado',$pago->id) }}">
-                                
-                                @csrf
-                                @method('PUT')
 
-                            <button class = "px-3 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer">
-                                Agendar
-                            </button>
-                                
-                            </form>
+                            <!-- MODAL -->
+                            <div x-data = "{ open: false }">
+
+                                <!-- BOTÓN ABRIR -->
+                                <button
+                                    @click = "open = true"
+                                    class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
+                                >
+                                    Pagar
+                                </button>
+
+                                <!-- OVERLAY -->
+                                <div
+                                    x-show = "open"
+                                    x-transition.opacity
+                                    class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+                                    @click.self = "open = false"
+                                >
+                                    <!-- MODAL BOX -->
+                                    <div class = "bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+                                        <!-- HEADER -->
+                                        <h2 class = "text-xl font-bold text-gray-800 text-center">
+                                            Pagando Gastos en {{ $pago->propiedad->nombre }}
+                                        </h2>
+
+                                        <div class = "mt-1 mb-5 inline-block px-4 py-1 bg-[#2C7474]/10 text-[#2C7474] rounded-full text-sm font-medium">
+                                            {{ $pago->fecha_inicio->format('d/m/Y') }}
+                                            —
+                                            {{ $pago->fecha_fin->format('d/m/Y') }}
+                                        </div>
+
+                                        <!-- CONTENIDO -->
+                                        @if($pago->estado === 'pendiente')
+                                            
+                                            <div
+                                                id = "stripe-container-{{ $pago->id }}"
+                                                class = "space-y-4"
+                                            >
+                                                <div
+                                                    id = "card-element-{{ $pago->id }}"
+                                                    class = "border border-gray-300 rounded-lg p-3 bg-white"
+                                                ></div>
+
+                                                <!-- Botones -->
+                                                <div class = "flex flex-row items-center justify-center gap-4">
+                                                    
+                                                    <button
+                                                        @click = "open = false"
+                                                        class = "px-4 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition"
+                                                    >
+                                                        Cerrar
+                                                    </button>
+
+                                                    <button
+                                                        type = "button"
+                                                        onclick = "pagarGasto({{ $pago->id }})"
+                                                        class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
+                                                    >
+                                                        Pagar
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        @else
+                                            <p class = "text-center text-gray-600">
+                                                Este gasto ya fue pagado.
+                                            </p>
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+                            
                         @endif
 
                     </td>
@@ -235,21 +313,84 @@
                     {{ ucfirst($pago->estado) }}
                 </span>
             </div>
-
+    
             @if($pago->estado === 'pendiente')
 
-                <form method = "POST"
-                      action = "{{ route('gastos.marcarPagado',$pago->id) }}">
-                    @csrf
-                    @method('PUT')
+                <!-- MODAL -->
+                <div x-data = "{ open: false }">
 
-                    <div class = "flex justify-center">
-                        <button class = "justify-center align-center text-center mt-2 px-3 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer">
-                            Pagar
-                        </button>
+                    <!-- BOTÓN ABRIR -->
+                    <button
+                        @click = "open = true"
+                        class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
+                    >
+                        Pagar
+                    </button>
+
+                    <!-- OVERLAY -->
+                    <div
+                        x-show = "open"
+                        x-transition.opacity
+                        class = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+                        @click.self = "open = false"
+                    >
+                        <!-- MODAL BOX -->
+                        <div class = "bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+                            <!-- HEADER -->
+                            <h2 class = "text-xl font-bold text-gray-800 text-center">
+                                Pagando Gastos en {{ $pago->propiedad->nombre }}
+                            </h2>
+
+                            <div class = "mt-1 mb-5 inline-block px-4 py-1 bg-[#2C7474]/10 text-[#2C7474] rounded-full text-sm font-medium">
+                                {{ $pago->fecha_inicio->format('d/m/Y') }}
+                                —
+                                {{ $pago->fecha_fin->format('d/m/Y') }}
+                            </div>
+
+                            <!-- CONTENIDO -->
+                            @if($pago->estado === 'pendiente')
+                                
+                                <div
+                                    id = "stripe-container-{{ $pago->id }}"
+                                    class = "space-y-4"
+                                >
+                                    <div
+                                        id = "card-element-{{ $pago->id }}"
+                                        class = "border border-gray-300 rounded-lg p-3 bg-white"
+                                    ></div>
+
+                                    <!-- Botones -->
+                                    <div class = "flex flex-row items-center justify-center gap-4">
+                                        
+                                        <button
+                                            @click = "open = false"
+                                            class = "px-4 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition"
+                                        >
+                                            Cerrar
+                                        </button>
+
+                                        <button
+                                            type = "button"
+                                            onclick = "pagarGasto({{ $pago->id }})"
+                                            class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
+                                        >
+                                            Pagar
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            @else
+                                <p class = "text-center text-gray-600">
+                                    Este gasto ya fue pagado.
+                                </p>
+                            @endif
+
+                        </div>
                     </div>
-
-                </form>
+                </div>
                 
             @endif
 
@@ -266,4 +407,9 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ asset('js/stripe-pagos.js') }}"></script>
+@endpush
 

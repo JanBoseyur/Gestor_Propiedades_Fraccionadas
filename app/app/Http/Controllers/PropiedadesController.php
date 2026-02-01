@@ -135,12 +135,12 @@ class PropiedadesController extends Controller
             $anio = $asignacion->semana->anio->anio;
             $numeroSemana = $asignacion->semana->numero_semana;
 
-            $inicio = Carbon::now()
+            $inicio = Carbon::create()
                 ->setISODate($anio, $numeroSemana)
-                ->startOfWeek();
+                ->startOfWeek(Carbon::MONDAY);
 
-            $fin = (clone $inicio)->endOfWeek();
-
+            $fin = (clone $inicio)->addDays(6);
+            
             $eventos[] = [
                 'title' => 'Ocupada - ' . $asignacion->usuario->name,
                 'start' => $inicio->toDateString(),
@@ -163,19 +163,19 @@ class PropiedadesController extends Controller
 
         foreach ($asignaciones as $a) {
 
-            $inicio = Carbon::now()
+            $inicio = Carbon::create()
                 ->setISODate(
                     $a->semana->anio->anio,
                     $a->semana->numero_semana
                 )
                 ->startOfWeek(Carbon::MONDAY);
 
-            $fin = (clone $inicio)->endOfWeek(Carbon::SUNDAY);
+            $fin = (clone $inicio)->addDays(6);
 
             $eventos[] = [
                 'title' => $a->propiedad->nombre . ' | ' . $a->usuario->name,
                 'start' => $inicio->toDateString(),
-                'end'   => $fin->addDay()->toDateString(), 
+                'end'   => $fin->addDay()->toDateString(),
             ];
         }
 
@@ -257,15 +257,15 @@ class PropiedadesController extends Controller
 
     private function weekToDateRange(int $year, int $week): array
     {
-        $start = Carbon::now()
+        $start = Carbon::create()
             ->setISODate($year, $week)
             ->startOfWeek(Carbon::MONDAY);
 
-        $end = (clone $start)->addWeek();
+        $end = (clone $start)->addDays(7);
 
         return [
             'start' => $start->toDateString(),
-            'end'   => $end->toDateString(),
+            'end'   => $end->addDay()->toDateString(),
         ];
     }
 

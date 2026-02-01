@@ -64,9 +64,9 @@
 
 .fc-daygrid-day-number {
     font-size: 0.75rem;
-    font-weight: 250;
-    width: 24px;
-    height: 24px;
+    font-weight: 400;
+    width: 10px;
+    height: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

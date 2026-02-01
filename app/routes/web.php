@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectionController;
 use App\Http\Controllers\MisGastosController;
 use App\Http\Controllers\UserSemanaController;
+use App\Http\Controllers\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,10 +101,11 @@ Route::middleware('auth')->group(function () {
     });
 
     /*
-    |--------------------------------------------------------------------------
+    |-----------------------------------------------------------------------------
     | USER
-    |--------------------------------------------------------------------------
+    |-----------------------------------------------------------------------------
     */
+
     Route::middleware('role:user')->group(function () {
         Route::get('/dashboard', [UserDashboardController::class, 'index'])
             ->name('user.dashboard');
@@ -121,8 +123,13 @@ Route::middleware('auth')->group(function () {
             ->name('propiedades');
         
         Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
-            ->name('selections.save')
-            ->middleware('auth');
+            ->name('selections.save');
+
+        Route::post('/pago/iniciar/{gasto}', [PagoController::class, 'crearPago'])
+            ->name('pago.iniciar');
+            
+        Route::get('/pagar-gasto/{gasto}', [PagoController::class, 'crearPago']);
+        Route::post('/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado']);
     });
 
     /*
