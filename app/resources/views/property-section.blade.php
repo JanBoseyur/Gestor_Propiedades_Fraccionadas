@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class = "w-full min-h-screen bg-gray-50">
+<div class = "bg-[white]">
 
     <!-- IMAGEN PRINCIPAL -->
     <div class = "relative w-full overflow-hidden">
