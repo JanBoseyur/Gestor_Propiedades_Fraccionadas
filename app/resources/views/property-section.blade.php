@@ -139,7 +139,7 @@
             >
 
                 <!-- CARRUSEL -->
-                <div class = "flex animate-carousel">
+                <div class = "flex animate-carousel overflow-x-hidden">
                     
                     @foreach ($propiedad->fotos as $foto)
                         <div class = "w-1/2 sm:w-1/3 flex-shrink-0 p-2">
