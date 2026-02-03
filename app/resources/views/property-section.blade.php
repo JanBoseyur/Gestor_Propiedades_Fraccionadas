@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class = "bg-[white]">
+<div class = "bg-white overflow-x-hidden">
 
     <!-- IMAGEN PRINCIPAL -->
     <div class = "relative w-full overflow-hidden">
