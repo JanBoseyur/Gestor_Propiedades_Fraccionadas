@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class = "a">
+<div class = "overflow-x-hidden w-full min-h-screen bg-gray-50">
 
     <!-- IMAGEN PRINCIPAL -->
     <div class = "relative w-full overflow-hidden">
@@ -139,7 +139,7 @@
             >
 
                 <!-- CARRUSEL -->
-                <div class = "flex animate-carousel overflow-x-hidden">
+                <div class = "flex animate-carousel">
                     
                     @foreach ($propiedad->fotos as $foto)
                         <div class = "w-1/2 sm:w-1/3 flex-shrink-0 p-2">
