@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class = "min-h-screen flex flex-col items-center bg-gray-50 p-4 sm:p-6">
+<div class = "min-h-screen max-w-screen flex flex-col items-center justify-start bg-gray-50 p-4 sm:p-6">
 
     <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] mb-8 text-center">
         Mis semanas inscritas

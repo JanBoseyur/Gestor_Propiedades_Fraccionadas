@@ -35,20 +35,25 @@
         <div class = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
             @foreach($propiedades as $prop)
-                <x-property-card-admin 
-                    :propiedad="$prop['propiedad']"
-                    :socios="$prop['socios']"
-                    :partners="$prop['partners']"
-                    :title="$prop['title']"
-                    :location="$prop['location']"
-                    :background="$prop['background']"
-                />
-  
-                <!-- Botón de editar que aparece al hacer hover -->
-                <a href = "{{ route('propiedades.edit', $prop['propiedad']->id) }}" 
-                class = "group-hover:opacity-100 bg-blue-500 text-white px-2 py-1 rounded shadow-sm text-xs sm:text-sm transition-opacity duration-200">
-                    Editar
-                </a>
+
+                <div class = "relative group inline-block">
+                    <x-property-card-admin 
+                        :propiedad="$prop['propiedad']"
+                        :socios="$prop['socios']"
+                        :partners="$prop['partners']"
+                        :title="$prop['title']"
+                        :location="$prop['location']"
+                        :background="$prop['background']"
+                    />
+    
+                    <!-- Botón de editar que aparece al hacer hover -->
+                    <a href =   "{{ route('propiedades.edit', $prop['propiedad']->id) }}" 
+                    class = "absolute top-2 right-2 opacity-0 hover:opacity-100 sm:opacity-0 sm:group-hover:opacity-100
+                            bg-[#2C7474] text-white px-2 py-1 rounded shadow-sm text-xs sm:text-sm transition-opacity duration-200 z-10">
+                        Editar
+                    </a>
+                </div>
+                
             @endforeach
 
         </div>

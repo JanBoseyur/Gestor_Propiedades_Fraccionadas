@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Propiedades;
+use App\Models\GastoComun;
+use App\Models\Selection;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $totalPropiedades = Propiedades::count();
-        $propiedades = Propiedades::all(); 
+        $propiedades = Propiedades::all();
 
-        return view('admin.admin-dashboard', [
-            'totalPropiedades' => $totalPropiedades,
-            'propiedades' => $propiedades,
-        ]);
+        // Por ejemplo, si quieres estadísticas de gastos
+        $gastos = GastoComun::selectRaw("estado, COUNT(*) as total")
+                    ->groupBy('estado')
+                    ->pluck('total', 'estado');
+
+        return view('admin.admin-dashboard', compact('propiedades', 'gastos'));
     }
 }
