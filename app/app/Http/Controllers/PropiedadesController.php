@@ -25,12 +25,6 @@ class PropiedadesController extends Controller
         $propiedades = Propiedades::all();
         return view('admin.manage-properties', compact('propiedades'));
     }
-
-    public function listado()
-    {
-        $propiedades = Propiedades::all();
-        return view('admin.manage-properties', compact('propiedades'));
-    }
     
     public function show($id)
     {
@@ -82,18 +76,6 @@ class PropiedadesController extends Controller
         ])->get();
 
         return view('user.properties', compact('propiedades'));
-    }
-
-    public function show2($id)
-    {
-        $propiedad = Propiedades::with('amenidades')->findOrFail($id);
-        return view('property-section', compact('propiedad'));
-    }
-
-    public function show3($id)
-    {
-        $propiedad = Propiedades::with('amenidades')->findOrFail($id);
-        return view('property-section', compact('propiedad'));
     }
 
     public function users()
@@ -277,6 +259,91 @@ class PropiedadesController extends Controller
             'id_propiedad',
             'id_usuario'
         );
+    }
+
+    public function semanasDisponibles($id, Request $request)
+    {
+        $anio = $request->get('anio', now()->year);
+
+        // 1. Traer selecciones del año
+        $selections = Selection::where('propiedad_id', $id)
+            ->where('anio', $anio)
+            ->get();
+
+        // 2. Unir semanas ocupadas
+        $semanasOcupadas = [];
+
+        foreach ($selections as $sel) {
+            if (is_array($sel->semana)) {
+                $semanasOcupadas = array_merge($semanasOcupadas, $sel->semana);
+            }
+        }
+
+        $semanasOcupadas = array_unique($semanasOcupadas);
+
+        // 3. Todas las semanas del año
+        $todasLasSemanas = range(1, 52);
+
+        // 4. Calcular disponibles
+        $semanasDisponibles = array_values(
+            array_diff($todasLasSemanas, $semanasOcupadas)
+        );
+
+        return response()->json([
+            'anio'        => $anio,
+            'ocupadas'    => $semanasOcupadas,
+            'disponibles' => $semanasDisponibles,
+        ]);
+    }
+
+    public function semanasDetalle($id, Request $request)
+    {
+        $anio = $request->get('anio', now()->year);
+
+        // Selecciones ocupadas
+        $selections = Selection::where('propiedad_id', $id)
+            ->where('anio', $anio)
+            ->get();
+
+        $ocupadas = [];
+
+        foreach ($selections as $s) {
+            $semanas = is_array($s->semana)
+                ? $s->semana
+                : json_decode($s->semana, true);
+
+            if ($semanas) {
+                $ocupadas = array_merge($ocupadas, $semanas);
+            }
+        }
+
+        $ocupadas = array_unique($ocupadas);
+
+        $resultado = [];
+
+        foreach (range(1, 52) as $numSemana) {
+
+            // ✅ ISO WEEK: lunes a domingo
+            $inicio = Carbon::now()
+                ->setISODate($anio, $numSemana)
+                ->startOfWeek(Carbon::MONDAY);
+
+            $fin = (clone $inicio)->endOfWeek(Carbon::SUNDAY);
+
+            $resultado[] = [
+                'semana_id' => $numSemana,
+                'inicio'    => $inicio->toDateString(),
+                'fin'       => $fin->toDateString(),
+                'estado'    => in_array($numSemana, $ocupadas)
+                    ? 'ocupada'
+                    : 'disponible',
+            ];
+        }
+
+        return response()->json([
+            'anio'    => $anio,
+            'semanas' => $resultado
+        ]);
     }
 
 }

@@ -12,3 +12,14 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.animate-carousel {
+    animation: carousel 15s linear infinite;
+    will-change: transform;
+}
+
+@keyframes carousel {
+    to {
+        transform: translateX(-100%);
+    }
+}

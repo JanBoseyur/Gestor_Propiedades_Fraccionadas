@@ -130,6 +130,9 @@ Route::middleware('auth')->group(function () {
             
         Route::get('/pagar-gasto/{gasto}', [PagoController::class, 'crearPago']);
         Route::post('/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado']);
+
+        Route::get('/propiedad/{id}/semanas-detalle', [PropiedadesController::class, 'semanasDetalle'])
+            ->name('propiedad.semanas.detalle');
     });
 
     /*
@@ -140,6 +143,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/mi-perfil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/mi-perfil', [ProfileController::class, 'update'])->name('profile.update');
-
 
 });

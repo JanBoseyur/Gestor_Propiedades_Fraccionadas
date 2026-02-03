@@ -10,8 +10,8 @@
         
         <img 
             class = "w-full h-96 md:h-[500px] object-cover" 
-            src="{{ $propiedad->primera_foto }}" 
-            alt="Exterior de {{ $propiedad->nombre }}"
+            src = "{{ $propiedad->primera_foto }}" 
+            alt = "Exterior de {{ $propiedad->nombre }}"
         >
 
         <div class = "absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -21,57 +21,22 @@
             <p class = "mt-2 text-lg md:text-xl">{{ $propiedad->ubicacion }}</p>
         </div>
 
-    </div>
-
-    <!-- CONTENIDO -->
-    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-        <!-- DESCRIPCIÓN -->
-        <section class = "bg-[#2C7474] rounded-2xl p-6 md:p-8 text-white shadow-md">
-            <h3 class = "text-2xl md:text-3xl font-semibold mb-4">Descripción</h3>
-            <p class = "prose dark:prose-invert max-w-none">{{ $propiedad->descripcion }}</p>
-        </section>
-
-        <!-- AMENIDADES -->
-        <section class = "mt-8">
-            <h3 class = "text-2xl md:text-3xl font-semibold mb-4 text-gray-800">Amenidades</h3>
-            <ul class = "grid grid-cols-2 md:grid-cols-3 gap-4 text-gray-700">
-                
-                @foreach ($propiedad->amenidades as $amenidad)
-                    <li class = "flex items-center gap-2 p-2 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <i class = "{{ amenidadIcon($amenidad) }} text-[#2C7474] p-2" style = "font-size: 19px;"></i>
-                        <span>{{ $amenidad }}</span>
-                    </li>
-                @endforeach
-
-            </ul>
-        </section>
-
-        <!-- GALERÍA -->
-        <section class = "mt-8">
-            <h3 class = "text-2xl md:text-3xl font-semibold mb-4 text-gray-800">Galería de Fotos</h3>
-            
-            <div class = "grid grid-cols-2 md:grid-cols-3 gap-4">
-                @foreach ($propiedad->fotos as $foto)
-                    <x-image-modal 
-                        src="{{ $foto }}" 
-                        alt="Foto de {{ $propiedad->nombre }}" 
-                        class="rounded-lg shadow hover:scale-105 transition"
-                    />
-                @endforeach
-            </div>
-        
-        </section>
-
         <!-- MODALES -->
-        <div x-data = "{ openCalendar: false, openConfirm: false }" class="mt-8">
+        <div 
+            x-data = "{ openCalendar: false, openConfirm: false }"
+            class = "absolute 
+            
+            bottom-78 right-4 
+            md:bottom-8 md:right-8 z-10"
+        >
 
             <!-- BOTÓN ABRIR CALENDARIO -->
             <button 
                 @click = "openCalendar = true; $nextTick(() => initCalendar())"
-                class = "px-6 py-3 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition shadow-md cursor-pointer"
+                class = "px-6 py-3 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition shadow-md content-end cursor-pointer"
             >
-                Abrir Calendario
+                <i class = "fa-solid fa-calendar" style = "font-size: 24px;"></i>
+
             </button>
 
             <!-- MODAL CALENDARIO -->
@@ -119,20 +84,130 @@
         </div>
 
     </div>
+
+    <!-- CONTENIDO -->
+    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4">
+
+        <!-- DESCRIPCIÓN -->
+        <section class = "
+            bg-white
+            rounded-2xl
+            p-6 md:p-8
+            shadow-sm
+            border border-gray-100
+        ">
+            <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474]">
+                Descripción
+            </h3>
+
+            <p class = "text-gray-700 leading-relaxed whitespace-pre-line">
+                {{ $propiedad->descripcion }}
+            </p>
+
+            <!-- AMENIDADES -->
+            <h3 class = "text-2xl md:text-3xl font-semibold mt-8 mb-2 text-[#2C7474]">
+                Amenidades
+            </h3>
+
+            <p class = "text-sm text-gray-600 mb-4 max-w-2xl">
+                Esta propiedad cuenta con las siguientes amenidades:
+            </p>
+
+            <ul class = "flex flex-wrap gap-2 text-gray-700">
+                @foreach ($propiedad->amenidades as $amenidad)
+                    <li class="
+                        flex items-center gap-2
+                        px-3 py-1.5
+                        rounded-full
+                        bg-[#2C7474]/10
+                        text-[#2C7474]
+                        text-sm
+                    ">
+                        <i class="{{ amenidadIcon($amenidad) }} text-base md:text-lg"></i>
+                        <span>{{ $amenidad }}</span>
+                    </li>
+                @endforeach
+            </ul>
+
+            <!-- GALERÍA CARRUSEL -->
+            <section
+                x-data = "{
+                    activeImage: null,
+                    open: false
+                }"
+                class = "overflow-hidden max-w-6xl mx-auto mt-10"
+            >
+
+                <!-- CARRUSEL -->
+                <div class = "flex animate-carousel">
+                    
+                    @foreach ($propiedad->fotos as $foto)
+                        <div class = "w-1/2 sm:w-1/3 flex-shrink-0 p-2">
+                            <img
+                                src = "{{ $foto }}"
+                                class = "w-full h-56 sm:h-64 object-cover rounded-2xl cursor-pointer transition-transform duration-300 hover:scale-110"
+                                @click = "
+                                    activeImage = '{{ $foto }}';
+                                    open = true;
+                                "
+                            >
+                        </div>
+                    @endforeach
+
+                    @foreach ($propiedad->fotos as $foto)
+                        <div class = "w-1/2 sm:w-1/3 flex-shrink-0 p-2">
+                            <img
+                                src = "{{ $foto }}"
+                                class = "w-full h-56 sm:h-64 object-cover rounded-2xl cursor-pointer transition-transform duration-300 hover:scale-105"
+                                @click = "
+                                    activeImage = '{{ $foto }}';
+                                    open = true;
+                                "
+                            >
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- MODAL -->
+                <template x-if = "open">
+                    @include('components.image-modal')
+                </template>
+    </div> 
+    
+    <!-- Seccion Semanas -->
+    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4"> 
+
+        <section class = "
+            bg-white
+            rounded-2xl
+            p-6
+            shadow-sm
+            border border-gray-100">
+
+            <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474] mb-5">Calendario {{ now()->year }}</h3>
+
+            <div id = "semanas-por-mes" class = ""
+                data-url = "{{ route('propiedad.semanas.detalle', $propiedad->id) }}?anio={{ now()->year }}">
+            </div>
+        </section>
+        
+    </div>
+
 </div>
 
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
-<link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
+    <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
 @endpush
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-<script src="{{ asset('js/calendar.js') }}"></script>
-<script>
-    const propertyId = {{ $propiedad->id }};
-    const takenWeeks = @json($takenWeeks ?? []);
-</script>
+    <script src = "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src = "{{ asset('js/calendar.js') }}"></script>
+    <script src = "{{ asset('js/semanas.js') }}"></script>
+    <script>
+        const propertyId = {{ $propiedad->id }};
+        const takenWeeks = @json($takenWeeks ?? []);
+    </script>
 @endpush
