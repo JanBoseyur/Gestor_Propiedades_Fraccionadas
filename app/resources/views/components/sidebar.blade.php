@@ -1,4 +1,5 @@
 
+
 <!-- Contenedor Sidebar -->
 <div x-data = "{ open: false }" class = "relative">
 
@@ -11,11 +12,12 @@
     <!-- Contenedor Sidebar -->
     <aside
         :class = "open ? 'translate-x-0' : '-translate-x-full'"
-        class = "h-screen min-h-[100dvh] overflow-y-auto bg-[white] w-64 max-w-full flex-shrink-0 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col">
+        style = "height: 100vh; height: 100dvh;"
+        class = "overflow-y-auto bg-[white] w-64 max-w-full flex-shrink-0 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col">
             
-    <div class = "flex flex-col h-full">
+    <div class = "flex flex-col h-full overflow-hidden p-4">
 
-            <div class = "flex justify-center items-center p-6 flex-shrink-0">
+            <div class = "flex justify-center items-center p-3 flex-shrink-0">
                 <img 
                     src = "{{ asset('images/caribe-logo2.png') }}"
                     class = " w-26"
@@ -24,7 +26,7 @@
             </div>
 
             <!-- Navegación -->
-            <nav class = "flex-1 overflow-y-auto p-8">
+            <nav class = "flex-1 overflow-y-auto p-4">
                 <ul class = "space-y-2">
                 
                 @role('admin')
@@ -202,9 +204,9 @@
             </nav>
         
             <!-- Cuenta y Logout -->
-            <div class = "flex-shrink-0 p-4 border-t-1 border-[#2C7474]">
+            <div class = "flex-shrink-0 p-4">
 
-                <div class = "flex items-center mb-4 ">
+                <div class = "flex items-center mb-4">
                     
                     @if(Auth::check())
                         
@@ -255,7 +257,6 @@
                 </form>
 
             </div>
-            
         </div>
     </aside>
 
@@ -273,4 +274,3 @@
     ></div>
 
 </div>
-
