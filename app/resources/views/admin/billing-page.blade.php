@@ -5,7 +5,7 @@
 
 @section('content')
 
-<div class = "p-4 sm:p-6 max-w-7xl mx-auto">
+<div class = "p-4 sm:p-6 max-w-7xl mx-auto w-full min-h-screen bg-gray-50">
 
     <!-- TÍTULO -->
     <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">
@@ -19,7 +19,7 @@
         {{-- Año --}}
         <div>
             <label class = "block text-sm font-medium mb-1">Año</label>
-            <select name="anio"
+            <select name = "anio"
                 class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
                 <option value="">Todos</option>
@@ -36,12 +36,12 @@
         <div>
             <label class = "block text-sm font-medium mb-1">Mes</label>
             <select name="mes"
-                class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
 
                 <option value="">Todos</option>
 
                 @foreach(range(1,12) as $m)
-                    <option value="{{ $m }}" @selected(request('mes') == $m)>
+                    <option value = "{{ $m }}" @selected(request('mes') == $m)>
                         {{ ucfirst(\Carbon\Carbon::create()->month($m)->locale('es')->monthName) }}
                     </option>
                 @endforeach

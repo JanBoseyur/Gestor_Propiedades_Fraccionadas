@@ -96,12 +96,23 @@ class PropiedadesController extends Controller
         return view('admin.manage-properties', compact('propiedades'));
     }
 
-
     public function socios_propiedades()
     {
-        $propiedades = Propiedades::with('usuarios')->get();
+        $propiedades = Propiedades::with('socios')->get();
+
+        $propiedades = $propiedades->map(function ($prop) {
+            return [
+                'propiedad' => $prop,
+                'socios'    => $prop->socios, 
+                'partners'  => $prop->socios->count(),
+                'title'     => $prop->nombre,
+                'location'  => $prop->ubicacion,
+                'background'=> $prop->primeraFoto ?? asset('images/default-property.jpg')
+            ];
+        });
+
         return view('admin.manage-properties', compact('propiedades'));
-    }
+}
 
     public function show_semanas($id)
     {
@@ -169,61 +180,70 @@ class PropiedadesController extends Controller
         $anioFiltro = $request->get('anio');
         $propiedadFiltro = $request->get('propiedad');
 
-        $query = PropiedadSemana::with([
-            'propiedad',
-            'usuario',
-            'semana.anio'
-        ]);
+        // Traemos todas las selecciones con la propiedad y el usuario
+        $query = Selection::with(['propiedad', 'usuario'])
+            ->orderBy('anio', 'desc');
 
         if ($anioFiltro) {
-            $query->whereHas('semana.anio', function ($q) use ($anioFiltro) {
-                $q->where('anio', $anioFiltro);
-            });
+            $query->where('anio', $anioFiltro);
         }
 
         if ($propiedadFiltro) {
             $query->where('propiedad_id', $propiedadFiltro);
         }
 
-        $asignaciones = $query->get();
+        $selecciones = $query->get();
 
-        $reservas = $asignaciones->groupBy(function ($a) {
-            return
-                $a->propiedad->id . '-' .
-                $a->usuario->id . '-' .
-                $a->semana->anio->anio;
+        // Agrupar por propiedad, usuario y año
+        $reservas = $selecciones->groupBy(function ($item) {
+            return $item->propiedad_id . '-' . $item->id_usuario . '-' . $item->anio;
         })->map(function ($items) {
-
             $primero = $items->first();
+
+            // Unir todas las semanas de ese usuario en esa propiedad y año
+            $semanas = [];
+            foreach ($items as $s) {
+                $ws = is_array($s->semana) ? $s->semana : json_decode($s->semana, true);
+                if ($ws) $semanas = array_merge($semanas, $ws);
+            }
+
+            $semanas = array_unique($semanas);
+            sort($semanas);
 
             return [
                 'propiedad' => $primero->propiedad->nombre,
                 'usuario'   => $primero->usuario->name,
-                'anio'      => $primero->semana->anio->anio,
-                'semanas'   => $items->pluck('semana.numero_semana')->sort()->values()
+                'anio'      => $primero->anio,
+                'semanas'   => $semanas,
             ];
-        });
+        })->values(); // Reset keys
+
+        // Traemos filtros para el formulario
+        $anios = Selection::select('anio')->distinct()->orderBy('anio', 'desc')->get();
+        $propiedades = \App\Models\Propiedades::all();
 
         return view('admin.reserved-weeks', [
-            'reservas'    => $reservas,
-            'anios'       => Anio::orderBy('anio', 'desc')->get(),
-            'propiedades' => Propiedades::all(),
-            'anioFiltro'  => $anioFiltro,
-            'propiedadFiltro' => $propiedadFiltro
+            'reservas'       => $reservas,
+            'anios'          => $anios,
+            'propiedades'    => $propiedades,
+            'anioFiltro'     => $anioFiltro,
+            'propiedadFiltro'=> $propiedadFiltro
         ]);
     }
 
     public function eliminarSocio($propiedadId, $usuarioId)
     {
+        Selection::where('id_usuario', $usuarioId)->delete();
+
         $propiedad = Propiedades::findOrFail($propiedadId);
         $propiedad->usuarios()->detach($usuarioId);
 
-        return redirect()->back()->with('success', 'Socio eliminado correctamente.');
+        return redirect()->back()->with('success', 'Socio y sus semanas eliminadas correctamente.');
     }
 
     public function calendario_propiedad($id)
     {
-        $propiedad = Propiedad::findOrFail($id);
+        $propiedad = Propiedades::findOrFail($id);
 
         $selecciones = Selection::where('property_id', $propiedad->id)
             ->where('year', now()->year)
@@ -323,7 +343,6 @@ class PropiedadesController extends Controller
 
         foreach (range(1, 52) as $numSemana) {
 
-            // ✅ ISO WEEK: lunes a domingo
             $inicio = Carbon::now()
                 ->setISODate($anio, $numSemana)
                 ->startOfWeek(Carbon::MONDAY);
@@ -344,6 +363,41 @@ class PropiedadesController extends Controller
             'anio'    => $anio,
             'semanas' => $resultado
         ]);
+    }
+
+    public function edit(Propiedades $propiedad)
+    {
+        return view('admin.edit-property', compact('propiedad'));
+    }
+
+    public function update(Request $request, Propiedades $propiedad)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:150',
+            'ubicacion' => 'required|string|max:100',
+            'descripcion' => 'required|string|max:200',
+            'fotos.*' => 'image|mimes:jpg,jpeg,png,gif,webp',
+            'amenidades' => 'nullable|string',
+        ]);
+
+        $data = $request->only(['nombre', 'ubicacion', 'descripcion']);
+
+        // Amenidades
+        $data['amenidades'] = $request->amenidades ? json_encode(array_map('trim', explode(',', $request->amenidades))) : null;
+
+        // Fotos
+        if ($request->hasFile('fotos')) {
+            $fotos = [];
+            foreach ($request->file('fotos') as $file) {
+                $path = $file->store('propiedades', 'public');
+                $fotos[] = asset('storage/' . $path);
+            }
+            $data['fotos'] = json_encode($fotos);
+        }
+
+        $propiedad->update($data);
+
+        return redirect()->route('admin.manage-properties')->with('success', 'Propiedad actualizada.');
     }
 
 }

@@ -98,6 +98,13 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/gastos', [GastoComunController::class, 'store'])
             ->name('gastos.store');
+
+        Route::get('/propiedades/{propiedad}/edit', [PropiedadesController::class, 'edit'])
+            ->name('propiedades.edit');
+        
+        Route::put('/propiedades/{propiedad}', [PropiedadesController::class, 'update'])
+            ->name('propiedades.update');
+
     });
 
     /*
@@ -133,6 +140,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/propiedad/{id}/semanas-detalle', [PropiedadesController::class, 'semanasDetalle'])
             ->name('propiedad.semanas.detalle');
+
+        Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
+            ->name('selections.save');
+
     });
 
     /*

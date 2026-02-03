@@ -1,11 +1,11 @@
 
 @extends('layout.app')
 
-@section('title', 'Gestión de Gasto Común')
+@section('title', 'Gastos Comunes')
 
 @section('content')
 
-<div class = "p-4 sm:p-6 max-w-7xl mx-auto">
+<div class = "p-4 sm:p-6 max-w-7xl mx-auto bg-gray-50">
 
     <!-- TÍTULO -->
     <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">

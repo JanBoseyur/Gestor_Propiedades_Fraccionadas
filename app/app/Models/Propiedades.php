@@ -8,6 +8,14 @@ use App\Models\User;
 class Propiedades extends Model
 {
     protected $table = 'propiedades';
+        
+    protected $fillable = [
+        'nombre',
+        'ubicacion',
+        'descripcion',
+        'fotos',
+        'amenidades',
+    ];
 
     public function up(): void
     {
@@ -68,6 +76,16 @@ class Propiedades extends Model
     public function selections()
     {
         return $this->hasMany(Selection::class, 'propiedad_id', 'id');
+    }
+
+    public function socios()
+    {
+        return $this->belongsToMany(
+            \App\Models\User::class,
+            'selections',   
+            'propiedad_id', 
+            'id_usuario'    
+        )->distinct();
     }
 
 }

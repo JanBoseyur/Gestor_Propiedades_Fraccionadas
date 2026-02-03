@@ -4,14 +4,14 @@
 
 @section('content')
 
-<div class = "max-w-6xl mx-auto p-4 sm:p-6">
+<div class = "min-h-screen flex flex-col items-center bg-gray-50 p-4 sm:p-6">
 
     <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] mb-8 text-center">
         Mis semanas inscritas
     </h2>
 
     @forelse($selecciones as $seleccion)
-        <div class = "bg-white rounded-2xl shadow-md ring-1 ring-gray-200 p-6 mb-6 hover:shadow-lg transition-shadow duration-300">
+        <div class = "bg-white rounded-2xl shadow-md ring-1 ring-gray-200 p-4 sm:p-6 mb-6 hover:shadow-lg transition-shadow duration-300">
 
             <!-- Propiedad -->
             <div class = "sm:flex-row sm:items-center sm:justify-between">
@@ -23,10 +23,11 @@
                 </div>
 
                 <div>
-                    <h3 class = "text-lg sm:text-xl font-bold text-gray-800">
+                    <h3 class = "text-base sm:text-lg font-bold text-gray-800">
                         {{ $seleccion->propiedad->nombre }}
                     </h3>
-                    <p class = "text-sm sm:text-base text-gray-500">
+
+                    <p class = "text-xs sm:text-sm text-gray-500">
                         {{ $seleccion->propiedad->ubicacion }}
                     </p>
                 </div>
@@ -39,12 +40,14 @@
                     Semanas inscritas
                 </p>
 
-                <div class = "flex flex-wrap sm:flex-row gap-2 overflow-x-auto">
+                <div class = "flex flex-wrap sm:flex-row gap-2 ">
                     
                     @foreach ($seleccion->semanasFechas as $semana)
-                        <span class = "flex-none px-3 py-1 bg-[#E0F2F1] rounded-full text-sm sm:text-base whitespace-nowrap shadow-sm">
+                        
+                        <span class = "flex-none px-3 py-1 bg-[#E0F2F1] rounded-full text-xs md:text-base whitespace-nowrap shadow-sm hover:scale-105 transform transition-all duration-200">
                             Semana {{ $semana['numero'] }}: {{ $semana['inicio'] }} - {{ $semana['fin'] }}
                         </span>
+
                     @endforeach
 
                 </div>

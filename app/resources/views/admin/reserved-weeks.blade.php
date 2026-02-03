@@ -5,48 +5,52 @@
 
 @section('content')
 
-<div class="p-4 sm:p-6 max-w-7xl mx-auto">
+<div class = "p-4 sm:p-6 max-w-7xl mx-auto w-full min-h-screen bg-gray-50">
 
     <!-- TÍTULO -->
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">
+    <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">
         Semanas Reservadas
     </h2>
 
     <!-- ================= FILTROS ================= -->
-    <form method="GET"
-        class="bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4 sm:p-6 mb-8 flex flex-wrap gap-6">
+    <form method = "GET"
+        class = "bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 p-4 sm:p-6 mb-8 flex flex-wrap gap-6">
 
         <div>
-            <label class="block text-sm font-medium mb-1">Filtrar por Año</label>
-            <select name="anio"
-                class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+            <label class = "block text-sm font-medium mb-1">Filtrar por Año</label>
+            <select name = "anio"
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 <option value="">Todos</option>
+                
                 @foreach ($anios as $anio)
                     <option value="{{ $anio->anio }}"
                         @selected($anioFiltro == $anio->anio)>
                         {{ $anio->anio }}
                     </option>
                 @endforeach
+
             </select>
         </div>
 
         <div>
-            <label class="block text-sm font-medium mb-1">Filtrar por Propiedad</label>
-            <select name="propiedad"
-                class="rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
+            <label class = "block text-sm font-medium mb-1">Filtrar por Propiedad</label>
+            <select name = "propiedad"
+                class = "rounded-lg border-gray-300 focus:ring-2 focus:ring-[#2E6C6F]">
                 <option value="">Todas</option>
+                
                 @foreach ($propiedades as $prop)
-                    <option value="{{ $prop->id }}"
+                    <option value = "{{ $prop->id }}"
                         @selected($propiedadFiltro == $prop->id)>
                         {{ $prop->nombre }}
                     </option>
                 @endforeach
+
             </select>
         </div>
 
-        <div class="flex items-end">
+        <div class = "flex items-end">
             <button
-                class="bg-[#2E6C6F] text-white px-6 py-2 rounded-lg hover:bg-[#25585B] transition cursor-pointer">
+                class = "bg-[#2E6C6F] text-white px-6 py-2 rounded-lg hover:bg-[#25585B] transition cursor-pointer">
                 Filtrar
             </button>
         </div>
@@ -54,38 +58,39 @@
     </form>
 
     <!-- ================= TABLA DESKTOP ================= -->
-    <div class="hidden md:block bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 overflow-x-auto">
+    <div class = "hidden md:block bg-white rounded-2xl shadow-xl ring-1 ring-gray-200 overflow-x-auto">
 
-        <table class="min-w-full text-sm text-gray-700">
+        <table class = "min-w-full text-sm text-gray-700">
 
-            <thead class="bg-[#2E6C6F] text-white">
+            <thead class = "bg-[#2E6C6F] text-white">
                 <tr>
-                    <th class="px-6 py-4 text-left">Propiedad</th>
-                    <th class="px-6 py-4 text-left">Socio</th>
-                    <th class="px-6 py-4 text-left">Año</th>
-                    <th class="px-6 py-4 text-left">Semanas Reservadas</th>
+                    <th class = "px-6 py-4 text-left">Propiedad</th>
+                    <th class = "px-6 py-4 text-left">Socio</th>
+                    <th class = "px-6 py-4 text-left">Año</th>
+                    <th class = "px-6 py-4 text-left">Semanas Reservadas</th>
                 </tr>
             </thead>
 
-            <tbody class="divide-y">
+            <tbody class = "divide-y">
 
                 @forelse ($reservas as $reserva)
-                <tr class="hover:bg-[#F3FAFA] transition">
+                <tr class = "hover:bg-[#F3FAFA] transition">
 
-                    <td class="px-6 py-4 font-medium">
+                    <td class = "px-6 py-4 font-medium">
                         {{ $reserva['propiedad'] }}
                     </td>
 
-                    <td class="px-6 py-4">
+                    <td class = "px-6 py-4">
                         {{ $reserva['usuario'] }}
                     </td>
 
-                    <td class="px-6 py-4">
+                    <td class = "px-6 py-4">
                         {{ $reserva['anio'] }}
                     </td>
 
-                    <td class="px-6 py-4">
-                        <div class="flex flex-wrap gap-2">
+                    <td class = "px-6 py-4">
+                        <div class = "flex flex-wrap gap-2">
+                            
                             @foreach ($reserva['semanas'] as $semana)
                                 @php
                                     $inicio = \Carbon\Carbon::now()
@@ -100,9 +105,10 @@
                                 @endphp
 
                                 <span
-                                    class="px-3 py-1 bg-[#B3D3D3] text-[#2E6C6F] text-xs rounded-full font-medium">
+                                    class = "px-3 py-1 bg-[#B3D3D3] text-[#2E6C6F] text-xs rounded-full font-medium">
                                     S{{ $semana }} ({{ $inicio }} - {{ $fin }})
                                 </span>
+
                             @endforeach
                         </div>
                     </td>
@@ -110,7 +116,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center py-16 text-gray-500">
+                    <td colspan = "4" class = "text-center py-16 text-gray-500">
                         No hay reservas con los filtros seleccionados
                     </td>
                 </tr>
@@ -121,29 +127,30 @@
     </div>
 
     <!-- ================= CARDS MÓVIL ================= -->
-    <div class="md:hidden space-y-4">
+    <div class = "md:hidden space-y-4">
 
         @forelse ($reservas as $reserva)
-        <div class="bg-white rounded-2xl shadow p-4 space-y-3">
+        <div class = "bg-white rounded-2xl shadow p-4 space-y-3">
 
             <div>
-                <p class="text-xs text-gray-500">Propiedad</p>
-                <p class="font-medium">{{ $reserva['propiedad'] }}</p>
+                <p class = "text-xs text-gray-500">Propiedad</p>
+                <p class = "font-medium">{{ $reserva['propiedad'] }}</p>
             </div>
 
             <div>
-                <p class="text-xs text-gray-500">Socio</p>
+                <p class = "text-xs text-gray-500">Socio</p>
                 <p>{{ $reserva['usuario'] }}</p>
             </div>
 
             <div>
-                <p class="text-xs text-gray-500">Año</p>
+                <p class = "text-xs text-gray-500">Año</p>
                 <p>{{ $reserva['anio'] }}</p>
             </div>
 
             <div>
-                <p class="text-xs text-gray-500 mb-1">Semanas</p>
-                <div class="flex flex-wrap gap-2">
+                <p class = "text-xs text-gray-500 mb-1">Semanas</p>
+                <div class = "flex flex-wrap gap-2">
+                    
                     @foreach ($reserva['semanas'] as $semana)
                         @php
                             $inicio = \Carbon\Carbon::now()
@@ -158,16 +165,18 @@
                         @endphp
 
                         <span
-                            class="px-3 py-1 bg-[#B3D3D3] text-[#2E6C6F] text-xs rounded-full">
+                            class = "px-3 py-1 bg-[#B3D3D3] text-[#2E6C6F] text-xs rounded-full">
                             S{{ $semana }} ({{ $inicio }} - {{ $fin }})
                         </span>
                     @endforeach
+
                 </div>
             </div>
 
         </div>
+
         @empty
-        <div class="text-center py-16 text-gray-500">
+        <div class = "text-center py-16 text-gray-500">
             No hay reservas con los filtros seleccionados
         </div>
         @endforelse

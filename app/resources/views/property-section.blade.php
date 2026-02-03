@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Dashboard')
+@section('title', $propiedad->nombre)
 
 @section('content')
 <div class = "overflow-x-hidden w-full min-h-screen bg-gray-50">
@@ -86,7 +86,7 @@
     </div>
 
     <!-- CONTENIDO -->
-    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4">
+    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
 
         <!-- DESCRIPCIÓN -->
         <section class = "
@@ -173,24 +173,55 @@
                     @include('components.image-modal')
                 </template>
     </div> 
-    
-    <!-- Seccion Semanas -->
-    <div class = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4"> 
 
-        <section class = "
-            bg-white
-            rounded-2xl
-            p-6
-            shadow-sm
-            border border-gray-100">
+    <!-- Contenedor Contenido 2 -->
+    <div class = "flex flex-col md:flex-row justify-center my-8">
 
-            <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474] mb-5">Calendario {{ now()->year }}</h3>
+        <!-- Seccion Semanas -->
+        <div class = "max-w-2xl px-4"> 
 
-            <div id = "semanas-por-mes" class = ""
-                data-url = "{{ route('propiedad.semanas.detalle', $propiedad->id) }}?anio={{ now()->year }}">
-            </div>
-        </section>
-        
+            <section class = "
+                bg-white
+                rounded-2xl
+                p-6
+                shadow-sm
+                border border-gray-100">
+
+                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474] mb-5">Calendario {{ now()->year }}</h3>
+
+                <div id = "semanas-por-mes" data-url = "{{ route('propiedad.semanas.detalle', $propiedad->id) }}?anio={{ now()->year }}"></div>
+            </section>
+            
+        </div>
+
+        <!-- Seccion Selecciones -->
+        <div class = "max-w-2xs"> 
+
+            <section class = "
+                bg-white
+                rounded-2xl
+                p-6
+                shadow-sm
+                border border-gray-100">
+
+                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474]">Mis Selecciones</h3>
+                
+                <div id = "mis-selecciones" class = "list-disc list-inside text-gray-700 text-sm">
+                    <p class = "text-gray-700 leading-relaxed whitespace-pre-line">
+                        Haz clic en las semanas disponibles del calendario para seleccionarlas
+                    </p>
+                </div>
+
+                <!-- Botón Guardar -->
+                <button id = "guardar-selecciones" 
+                    class = "mt-4 px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition">
+                    Guardar Selecciones
+                </button>
+                    
+            </section>
+            
+        </div>
+
     </div>
 
 </div>
