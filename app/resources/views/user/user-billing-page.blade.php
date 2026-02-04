@@ -5,12 +5,19 @@
 
 @section('content')
 
-<div class = "p-4 sm:p-6 max-w-7xl mx-auto bg-gray-50">
+<div class = "w-full min-h-screen bg-white p-6">
 
-    <!-- TÍTULO -->
-    <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">
-        Gestión de Gasto Común
-    </h2>
+    <div class = "">
+
+        {{-- TÍTULO --}}
+        <div class = "mb-10 text-center md:text-left">
+            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+                Gestión de Pagos
+            </h2>
+            <p class = "mt-2 text-gray-500">
+                Revisa tus pagos y mantén todo en orden
+            </p>
+        </div>
 
     <!-- ================= FILTROS ================= -->
     <form method = "GET"
@@ -113,14 +120,14 @@
     <div class = "grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
         <div class = "p-6 rounded-2xl bg-[#2E6C6F] text-white shadow">
-            <p class = "text-sm">Total Recaudado</p>
+            <p class = "">Gastos Restantes</p>
             <p class = "text-2xl font-bold">
                 ${{ number_format($totalPagado,0,',','.') }}
             </p>
         </div>
 
         <div class = "p-6 rounded-2xl bg-[#D89C83] text-white shadow">
-            <p clas = "text-sm">Total Pendiente</p>
+            <p class = "">Total Pendiente</p>
             <p class = "text-2xl font-bold">
                 ${{ number_format($totalPendiente,0,',','.') }}
             </p>
@@ -189,7 +196,7 @@
 
                                 <!-- BOTÓN ABRIR -->
                                 <button
-                                    @click = "open = true"
+                                    @click="open = true; $nextTick(() => initStripe({{ $pago->id }}))"
                                     class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
                                 >
                                     Pagar
@@ -317,11 +324,11 @@
             @if($pago->estado === 'pendiente')
 
                 <!-- MODAL -->
-                <div x-data = "{ open: false }">
+                <div x-data="{ open: false }" class = "md:hidden">
 
                     <!-- BOTÓN ABRIR -->
                     <button
-                        @click = "open = true"
+                        button @click="open = true; $nextTick(() => initStripe({{ $pago->id }}))"
                         class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
                     >
                         Pagar

@@ -16,6 +16,9 @@ use App\Http\Controllers\SelectionController;
 use App\Http\Controllers\MisGastosController;
 use App\Http\Controllers\UserSemanaController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ChartController;
+use App\Http\Controllers\Admin\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +107,18 @@ Route::middleware('auth')->group(function () {
         
         Route::put('/propiedades/{propiedad}', [PropiedadesController::class, 'update'])
             ->name('propiedades.update');
+
+        /*
+        |-----------------------------------------------------------------------------
+        | CHARTS Y CARDS
+        |-----------------------------------------------------------------------------
+        */
+
+        Route::get('/charts', [ChartController::class, 'index'])
+            ->name('charts');
+
+        Route::get('/admin/admin-dashboard', [StatsController::class, 'index'])
+            ->name('admin.dashboard');
 
     });
 

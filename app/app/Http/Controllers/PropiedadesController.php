@@ -372,6 +372,7 @@ class PropiedadesController extends Controller
 
     public function update(Request $request, Propiedades $propiedad)
     {
+        // Validación de datos
         $request->validate([
             'nombre' => 'required|string|max:150',
             'ubicacion' => 'required|string|max:100',
@@ -382,22 +383,28 @@ class PropiedadesController extends Controller
 
         $data = $request->only(['nombre', 'ubicacion', 'descripcion']);
 
-        // Amenidades
-        $data['amenidades'] = $request->amenidades ? json_encode(array_map('trim', explode(',', $request->amenidades))) : null;
+        // Amenidades como JSON
+        $data['amenidades'] = $request->filled('amenidades')
+            ? json_encode(array_map('trim', explode(',', $request->amenidades)))
+            : null;
 
-        // Fotos
+        // Fotos como JSON
         if ($request->hasFile('fotos')) {
+            \Log::info('Archivos detectados: ', [$request->file('fotos')]); // <-- muestra los archivos subidos
             $fotos = [];
             foreach ($request->file('fotos') as $file) {
                 $path = $file->store('propiedades', 'public');
+                \Log::info('Archivo guardado en: '.$path); // <-- muestra el path relativo
                 $fotos[] = asset('storage/' . $path);
             }
-            $data['fotos'] = json_encode($fotos);
+            $data['fotos'] = $fotos;
+        } else {
+            \Log::info('No se detectaron archivos.');
         }
 
-        $propiedad->update($data);
+        $propiedad->update($data); // actualizar todo de una vez
 
-        return redirect()->route('admin.manage-properties')->with('success', 'Propiedad actualizada.');
+        return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
     }
 
 }

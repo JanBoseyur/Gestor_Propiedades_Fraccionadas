@@ -125,16 +125,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.addEventListener('click', () => {
                         if (ocupada) return;
 
+                        // Toggle semana
                         if (selectedWeeks.includes(s.semana_id)) {
                             selectedWeeks.splice(selectedWeeks.indexOf(s.semana_id), 1);
                             div.classList.remove('bg-[#2C7474]/30', 'border', 'border-[#2C7474]/20');
-                        
                         } else {
                             selectedWeeks.push(s.semana_id);
                             div.classList.add('bg-[#2C7474]/30', 'border', 'border-[#2C7474]/20');
                         }
-                        renderSelectedWeeks();
+
+                        renderSelectedWeeks(); // mantiene tu render actual
+
+                        if (window.innerWidth < 640 && selectedWeeks.length > 0) {
+                            console.log('Disparando evento abrir-modal', selectedWeeks);
+                            window.dispatchEvent(new CustomEvent('abrir-modal', {
+                                detail: { selectedWeeks: [...selectedWeeks] }
+                            }));
+                        }
                     });
+
 
                     grid.appendChild(div);
                 });
@@ -170,23 +179,19 @@ document.addEventListener('DOMContentLoaded', () => {
             function renderSelectedWeeks() {
                 selectedContainer.innerHTML = '';
 
-                if (selectedWeeks.length === 0) {
-                    selectedContainer.innerHTML = `
-                        <p class = "text-gray-700 leading-relaxed whitespace-pre-line">
-                            Haz clic en las semanas disponibles del calendario para seleccionarlas
-                        </p>
-                    `;
-                    return;
-                }
-
                 selectedWeeks.forEach(id => {
                     const s = data.semanas.find(x => x.semana_id === id);
                     const rango = getWeekRange(s);
-                    const disponibilidad = s.estado === 'ocupada' ? 'Ocupada' : 'Disponible';
-                    const li = document.createElement('p');
-                    li.textContent = `Semana ${id} · ${formatDate(rango.start)} - ${formatDate(rango.end)}`;
-                    selectedContainer.appendChild(li);
+
+                    // Crear span estilo pill
+                    const span = document.createElement('span');
+                    span.className = 'text-center px-3 py-1 bg-[#2C7474]/20 text-[#2C7474] rounded-full text-sm font-medium mr-2 mb-2 inline-block';
+                    span.textContent = `Semana ${id} · ${formatDate(rango.start)} - ${formatDate(rango.end)}`;
+
+                    // Agregar al contenedor
+                    selectedContainer.appendChild(span);
                 });
+
             }
         });
 });

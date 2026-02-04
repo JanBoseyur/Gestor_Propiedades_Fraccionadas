@@ -5,12 +5,20 @@
 
 @section('content')
 
-<div class = "p-4 sm:p-6 max-w-7xl mx-auto w-full min-h-screen bg-gray-50">
+<div class = "w-full min-h-screen bg-white p-6">
 
-    <!-- TÍTULO -->
-    <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] text-center mb-8">
-        Gestión de Gasto Común
-    </h2>
+    <div class = "">
+
+        {{-- TÍTULO --}}
+        <div class = "mb-10 text-center md:text-left">
+            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+                Gestión de Pagos
+            </h2>
+            <p class = "mt-2 text-gray-500">
+                Revisa todos los pagos registrados
+            </p>
+        </div>
+
 
     <!-- ================= FILTROS ================= -->
     <form method = "GET"

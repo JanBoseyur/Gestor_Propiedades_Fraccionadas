@@ -27,8 +27,11 @@
 
 
     <title>@yield('title', 'Panel Admin')</title>
+    
     <!-- Tailwind -->
     @vite(['resources/css/app.css'])
+    @vite(['resources/js/app.js'])
+
     @stack('styles')
 </head>
 
@@ -37,7 +40,7 @@
     @stack('scripts')
     @include('components.sidebar')
 
-    <main class = "flex-1 overflow-y-auto bg-[#FFF6E9]">
+    <main class = "flex-1 overflow-y-auto bg-white">
 
         @include('components.header')
     

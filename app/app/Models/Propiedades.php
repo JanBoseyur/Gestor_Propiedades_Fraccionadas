@@ -88,4 +88,9 @@ class Propiedades extends Model
         )->distinct();
     }
 
+    public function semanasReservadas()
+    {
+        return $this->hasMany(PropiedadSemana::class, 'propiedad_id');
+    }
+
 }

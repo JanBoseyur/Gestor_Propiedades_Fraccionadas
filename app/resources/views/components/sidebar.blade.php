@@ -1,5 +1,4 @@
 
-
 <!-- Contenedor Sidebar -->
 <div x-data = "{ open: false }" class = "relative">
 
@@ -15,7 +14,7 @@
         style = "height: 100vh; height: 100dvh;"
         class = "overflow-y-auto bg-[white] w-64 max-w-full flex-shrink-0 fixed top-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col">
             
-    <div class = "flex flex-col h-full overflow-hidden p-4">
+    <div class = "flex flex-col h-full overflow-hidden p-4 shadow-xl">
 
             <div class = "flex justify-center items-center p-3 flex-shrink-0">
                 <img 

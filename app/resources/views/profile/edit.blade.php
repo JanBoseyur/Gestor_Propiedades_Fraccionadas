@@ -5,13 +5,13 @@
 
 @section('content')
 
-<div class = "min-h-screen bg-gray-50 py-10 px-4">
+<div class = "w-full min-h-screen bg-white p-6">
 
-    <div class  ="max-w-4xl mx-auto">
+    <div class = "">
 
         {{-- TÍTULO --}}
         <div class = "mb-10 text-center md:text-left">
-            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+            <h2 class="text-4xl font-extrabold text-[#2C7474] tracking-tight">
                 Mi Perfil
             </h2>
             <p class = "mt-2 text-gray-500">
@@ -57,63 +57,63 @@
             </div>
 
             {{-- FORMULARIO --}}
-            <form action = "{{ route('profile.update') }}" method="POST" class="p-8 space-y-8">
+            <form action = "{{ route('profile.update') }}" method = "POST" class = "p-8 space-y-8">
                 @csrf
 
                 <div class = "grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     {{-- NOMBRE --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">Nombre completo</label>
-                        <input type = "text" name="name" value="{{ old('name', $user->name) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
+                        <label class="block text-sm font-medium text-gray-700">Nombre completo</label>
+                        <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
                         @error('name')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- EMAIL --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">Correo electrónico</label>
-                        <input type = "email" name="email" value="{{ old('email', $user->email) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
-                        @error('email')<p class = "text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
+                        <label class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+                        <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
+                        @error('email')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- ID --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">ID de usuario</label>
-                        <input type = "text" value="{{ $user->id }}" disabled
-                            class = "mt-1 w-full rounded-xl border-gray-200 bg-gray-100 cursor-not-allowed">
+                        <label class="block text-sm font-medium text-gray-700">ID de usuario</label>
+                        <input type="text" value="{{ $user->id }}" disabled
+                            class = "mt-1 w-full border border-gray-300 bg-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
                     </div>
 
                     {{-- TELÉFONO --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input type = "text" name = "phone" value = "{{ old('phone', $user->phone) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
-                        @error('phone')<p class = "text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="text" name="phone" value="{{ old('phone', $user->phone) }}"
+                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
+                        @error('phone')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- DIRECCIÓN --}}
-                    <div class = "md:col-span-2">
-                        <label class = "block text-sm font-medium text-gray-700">Dirección</label>
-                        <input type = "text" name = "address" value = "{{ old('address', $user->address) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Dirección</label>
+                        <input type="text" name="address" value="{{ old('address', $user->address) }}"
+                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
                         @error('address')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- CIUDAD --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">Ciudad</label>
-                        <input type = "text" name = "city" value = "{{ old('city', $user->city) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
-                        @error('city')<p class = "text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
+                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                        <input type="text" name="city" value="{{ old('city', $user->city) }}"
+                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
+                        @error('city')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- PAÍS --}}
                     <div>
-                        <label class = "block text-sm font-medium text-gray-700">País</label>
-                        <input type = "text" name = "country" value = "{{ old('country', $user->country) }}"
-                            class = "mt-1 w-full rounded-xl border-gray-300 shadow-sm focus:border-[#2C7474] focus:ring-[#2C7474]/40 transition">
+                        <label class="block text-sm font-medium text-gray-700">País</label>
+                        <input type="text" name="country" value="{{ old('country', $user->country) }}"
+                            class = "w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition">
                         @error('country')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
                     </div>
 
@@ -131,5 +131,4 @@
         </div>
     </div>
 </div>
-
 @endsection

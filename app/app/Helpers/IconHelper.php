@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('amenidadIcon')) {
     function amenidadIcon($nombre) {
         $map = [
@@ -13,7 +14,6 @@ if (!function_exists('amenidadIcon')) {
             'Aire Acondicionado' => 'fa-solid fa-wind',
             'Acceso a la Playa' => 'fa-solid fa-umbrella-beach',
             'Seguridad 24/7' => 'fa-solid fa-shield',
-            'Cancha de Tenis' => 'BUSCAR',
             'Campo de Golf' => 'fa-solid fa-golf-ball-tee',
         ];
 

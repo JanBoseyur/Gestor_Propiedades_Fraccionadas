@@ -10,7 +10,7 @@ function pagarGasto(gastoId) {
                 color: '#2E6C6F',
                 fontSize: '16px',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                '::placeholder': { color: '#A0AEC0' },
+                '::placeholder': { color: '#c0a0aa' },
                 padding: '10px 12px'
             },
             invalid: { color: '#E53E3E' }
@@ -19,7 +19,6 @@ function pagarGasto(gastoId) {
         const elements = stripe.elements();
         const card = elements.create("card", { style });
         card.mount(`#card-element-${gastoId}`);
-
         cardElements[gastoId] = card;
     }
 
@@ -60,6 +59,7 @@ function pagarGasto(gastoId) {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[id^="card-element-"]').forEach(el => {
         const gastoId = el.id.split('-').pop();
+        
         if(!cardElements[gastoId]) {
             const style = {
                 base: {

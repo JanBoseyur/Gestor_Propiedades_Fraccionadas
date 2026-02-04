@@ -93,7 +93,7 @@
             bg-white
             rounded-2xl
             p-6 md:p-8
-            shadow-sm
+            shadow-xl
             border border-gray-100
         ">
             <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474]">
@@ -114,8 +114,9 @@
             </p>
 
             <ul class = "flex flex-wrap gap-2 text-gray-700">
+
                 @foreach ($propiedad->amenidades as $amenidad)
-                    <li class="
+                    <li class = "
                         flex items-center gap-2
                         px-3 py-1.5
                         rounded-full
@@ -123,10 +124,11 @@
                         text-[#2C7474]
                         text-sm
                     ">
-                        <i class="{{ amenidadIcon($amenidad) }} text-base md:text-lg"></i>
+                        <i class = "{{ amenidadIcon($amenidad) }} text-base md:text-lg"></i>
                         <span>{{ $amenidad }}</span>
                     </li>
                 @endforeach
+
             </ul>
 
             <!-- GALERÍA CARRUSEL -->
@@ -172,41 +174,38 @@
                 <template x-if = "open">
                     @include('components.image-modal')
                 </template>
+
+            </section>
+        </section>
     </div> 
 
     <!-- Contenedor Contenido 2 -->
-    <div class = "flex flex-col md:flex-row justify-center my-8">
+    <div class = "flex flex-row max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 gap-6">
 
-        <!-- Seccion Semanas -->
-        <div class = "max-w-2xl px-4"> 
-
-            <section class = "
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-sm
-                border border-gray-100">
-
-                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474] mb-5">Calendario {{ now()->year }}</h3>
-
-                <div id = "semanas-por-mes" data-url = "{{ route('propiedad.semanas.detalle', $propiedad->id) }}?anio={{ now()->year }}"></div>
-            </section>
+        <!-- Seccion Semanas (60%) -->
+        <div class = "w-full sm:w-3/5"> 
             
+            <section class = "bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
+                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474] mb-5">
+                    Calendario {{ now()->year }}
+                </h3>
+
+                <div id = "semanas-por-mes" 
+                    data-url = "{{ route('propiedad.semanas.detalle', $propiedad->id) }}?anio={{ now()->year }}">
+                </div>
+            </section>
+
         </div>
 
-        <!-- Seccion Selecciones -->
-        <div class = "max-w-2xs"> 
+        <!-- Seccion Selecciones (40%) -->
+        <div class = "w-2/5 hidden sm:block" id = "mis-selecciones-container">
+            
+            <section class = "bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
+                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474]">
+                    Mis Selecciones
+                </h3>
 
-            <section class = "
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-sm
-                border border-gray-100">
-
-                <h3 class = "text-2xl md:text-3xl font-semibold text-[#2C7474]">Mis Selecciones</h3>
-                
-                <div id = "mis-selecciones" class = "list-disc list-inside text-gray-700 text-sm">
+                <div id = "mis-selecciones" class="list-disc list-inside text-gray-700 text-sm py-4">
                     <p class = "text-gray-700 leading-relaxed whitespace-pre-line">
                         Haz clic en las semanas disponibles del calendario para seleccionarlas
                     </p>
@@ -217,9 +216,63 @@
                     class = "mt-4 px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition">
                     Guardar Selecciones
                 </button>
-                    
             </section>
-            
+
+        </div>
+
+        <!-- Modal Movil -->
+        <div x-data = "{ modalOpen: false, selectedWeeks: [] }" 
+            x-on:abrir-modal.window = "
+                console.log('Evento abrir-modal recibido', $event.detail.selectedWeeks); 
+                selectedWeeks = $event.detail.selectedWeeks; 
+                modalOpen = true; 
+                console.log('modalOpen ahora es', modalOpen);
+            "
+            class="sm:hidden">
+
+            <!-- Bottom sheet -->
+            <div x-show="modalOpen" x-transition class="fixed bottom-0 left-0 w-full z-50 pointer-events-auto">
+                <div class="relative w-full bg-white rounded-t-2xl p-4 max-h-[50vh] overflow-auto mx-2 shadow-lg">
+
+                    <h3 class="text-xl font-semibold text-[#2C7474] mb-4 text-center">Mis Selecciones</h3>
+
+                    <div id="mis-selecciones-modal" class="flex flex-wrap justify-center text-sm py-2">
+                        
+                        <template x-for="semana in selectedWeeks" :key="semana">
+                            <span class="px-3 py-1 bg-[#2C7474]/20 text-[#2C7474] rounded-full text-sm font-medium mr-1 mb-1">
+                                Semana <span x-text="semana"></span>
+                            </span>
+                        </template>
+
+                        <template x-if="selectedWeeks.length === 0">
+                            <p class="text-gray-700 leading-relaxed whitespace-pre-line text-center">
+                                Haz clic en las semanas disponibles del calendario para seleccionarlas
+                            </p>
+                        </template>
+
+                    </div>
+
+                    <!-- Botones -->
+                    <div class = "mt-4 flex flex-row gap-2">
+                        
+                        <!-- Cerrar modal -->
+                        <button @click = "modalOpen = false"
+                            class = "px-4 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition w-full">
+                            Cerrar
+                        </button>
+
+                        <!-- Guardar selecciones -->
+                        <button @click = "document.getElementById('guardar-selecciones').click(); modalOpen = false"
+                            class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition w-full">
+                            Guardar Selecciones
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
         </div>
 
     </div>
@@ -240,5 +293,6 @@
     <script>
         const propertyId = {{ $propiedad->id }};
         const takenWeeks = @json($takenWeeks ?? []);
+        const events = @json($events);
     </script>
 @endpush

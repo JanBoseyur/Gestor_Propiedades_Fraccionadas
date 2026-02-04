@@ -13,13 +13,12 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-.animate-carousel {
-    animation: carousel 15s linear infinite;
-    will-change: transform;
-}
-
-@keyframes carousel {
-    to {
-        transform: translateX(-100%);
+@media (min-width: 640px) {
+    .animate-carousel {
+        animation: scroll 15s linear infinite;
     }
+}
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }

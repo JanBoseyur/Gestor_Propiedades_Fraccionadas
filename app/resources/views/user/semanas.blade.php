@@ -4,11 +4,19 @@
 
 @section('content')
 
-<div class = "min-h-screen max-w-screen flex flex-col items-center justify-start bg-gray-50 p-4 sm:p-6">
+<div class = "w-full min-h-screen bg-white p-6">
 
-    <h2 class = "text-2xl sm:text-3xl font-extrabold text-[#2E6C6F] mb-8 text-center">
-        Mis semanas inscritas
-    </h2>
+    <div class = "">
+
+        {{-- TÍTULO --}}
+        <div class = "mb-10 text-center md:text-left">
+            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+                Semanas Inscritas
+            </h2>
+            <p class = "mt-2 text-gray-500">
+                Revisa tus proximas instancias para no perderte de nada
+            </p>
+        </div>
 
     @forelse($selecciones as $seleccion)
         <div class = "bg-white rounded-2xl shadow-md ring-1 ring-gray-200 p-4 sm:p-6 mb-6 hover:shadow-lg transition-shadow duration-300">

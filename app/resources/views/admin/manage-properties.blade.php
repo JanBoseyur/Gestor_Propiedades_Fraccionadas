@@ -5,7 +5,19 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-gray-50">
+<div class = "w-full min-h-screen bg-white p-6">
+
+    <div class = "">
+
+        {{-- TÍTULO --}}
+        <div class = "mb-10 text-center md:text-left">
+            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+                Gestión de Propiedades
+            </h2>
+            <p class = "mt-2 text-gray-500">
+                Revisa y modifica toda la información de las propiedades y sus respectivos socios
+            </p>
+        </div>
 
     <!-- CONTENEDOR ALPINE GLOBAL -->
     <div x-data = "{
@@ -29,7 +41,7 @@
             }
         }"
         x-on:open-delete-modal.window="openDeleteModal($event.detail)"
-        class = "p-4 sm:p-6 lg:p-7"
+        class = ""
     >
         <!-- GRID DE PROPIEDADES -->
         <div class = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -46,12 +58,14 @@
                         :background="$prop['background']"
                     />
     
-                    <!-- Botón de editar que aparece al hacer hover -->
-                    <a href =   "{{ route('propiedades.edit', $prop['propiedad']->id) }}" 
-                    class = "absolute top-2 right-2 opacity-0 hover:opacity-100 sm:opacity-0 sm:group-hover:opacity-100
-                            bg-[#2C7474] text-white px-2 py-1 rounded shadow-sm text-xs sm:text-sm transition-opacity duration-200 z-10">
+                    <a href = "{{ route('propiedades.edit', $prop['propiedad']->id) }}" 
+                    class = "absolute top-2 right-2 sm:top-4 sm:right-4 
+                            bg-[#2C7474] text-white px-2 sm:px-3 py-1 sm:py-2 
+                            rounded shadow-sm text-xs sm:text-sm 
+                            hover:opacity-90 transition-opacity duration-200 z-10">
                         Editar
                     </a>
+
                 </div>
                 
             @endforeach
