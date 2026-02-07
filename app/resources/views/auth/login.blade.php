@@ -27,7 +27,6 @@
 <body class = "">
 
     <!-- Acceder a info usuario -->
-
     <div class = "relative min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
         <!-- Fondo -->
@@ -40,10 +39,10 @@
         <!-- Contenedor Formulario -->
         <div class = "relative z-10 w-full max-w-sm sm:max-w-md lg:max-w-lg">
             
-            <div class = "flex items-center justify-center h-28 sm:h-36 lg:h-40">
+            <div class = "flex items-center justify-center w-full h-full overflow-hidden p-5">
                 <img 
                     src = "{{ asset('images/caribe-logo1.png') }}"
-                    class = "w-40 sm:w-52 lg:w-60"
+                    class = "w-40 sm:w-48 md:w-56 lg:w-44 h-auto object-contain"
                     alt = "Logo"
                 />
             </div>

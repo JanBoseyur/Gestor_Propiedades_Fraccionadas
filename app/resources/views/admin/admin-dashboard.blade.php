@@ -5,7 +5,7 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-white rounded-tl-xl p-6 ">
+<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
     <!-- TÍTULO -->
     <div class = "mb-8">
@@ -20,7 +20,7 @@
 
     </div>
 
-    <div class = "w-full min-h-screen p-6 space-y-6">
+    <div class = "w-full min-h-screen space-y-6">
 
         <!-- =================== TARJETAS =================== -->
         <div class = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -40,17 +40,17 @@
             </div>
 
             <!-- Tarjeta 3 -->
-            <div class="bg-white shadow-xl rounded-xl p-5 border-l-4 border-[#2C7474] flex flex-col">
-                <h3 class="text-sm font-semibold uppercase text-gray-500">Pagos Pendientes</h3>
-                <p class="text-2xl font-bold text-gray-800 mt-2">{{ $totalPendientes }} ({{ $porcentajePendientes }}%)</p>
-                <p class="text-xs text-gray-400 mt-1">Del total</p>
+            <div class = "bg-white shadow-xl rounded-xl p-5 border-l-4 border-[#2C7474] flex flex-col">
+                <h3 class = "text-sm font-semibold uppercase text-gray-500">Pagos Pendientes</h3>
+                <p class = "text-2xl font-bold text-gray-800 mt-2">{{ $totalPendientes }} ({{ $porcentajePendientes }}%)</p>
+                <p class = "text-xs text-gray-400 mt-1">Del total</p>
             </div>
 
             <!-- Tarjeta 4 -->
-            <div class="bg-white shadow-xl rounded-xl p-5 border-l-4 border-[#2C7474] flex flex-col">
-                <h3 class="text-sm font-semibold uppercase text-gray-500">Propiedades</h3>
-                <p class="text-2xl font-bold text-gray-800 mt-2">{{ $totalPropiedades }}</p>
-                <p class="text-xs text-gray-400 mt-1">Registradas</p>
+            <div class = "bg-white shadow-xl rounded-xl p-5 border-l-4 border-[#2C7474] flex flex-col">
+                <h3 class = "text-sm font-semibold uppercase text-gray-500">Propiedades</h3>
+                <p class = "text-2xl font-bold text-gray-800 mt-2">{{ $totalPropiedades }}</p>
+                <p class = "text-xs text-gray-400 mt-1">Registradas</p>
             </div>
 
         </div>
@@ -86,3 +86,9 @@
 </div>
 
 @endsection
+
+<script>
+    const gastos = @json($gastos);
+    const reservasPorMes = @json($reservasPorMes->values());
+    const recaudadoPorMes = @json($recaudadoPorMes->values());
+</script>

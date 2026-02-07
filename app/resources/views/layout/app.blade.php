@@ -25,6 +25,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <title>@yield('title', 'Panel Admin')</title>
     
@@ -40,10 +44,10 @@
     @stack('scripts')
     @include('components.sidebar')
 
-    <main class = "flex-1 overflow-y-auto bg-white">
+    <main class = "flex-1 overflow-y-auto bg-[#EDFAFA]">
 
         @include('components.header')
-    
+
         @yield('content')
 
     </main>

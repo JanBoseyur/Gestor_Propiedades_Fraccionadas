@@ -5,19 +5,19 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-white p-6">
+<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
-    <div class = "">
+    <!-- TÍTULO -->
+    <div class = "mb-8">
 
-        {{-- TÍTULO --}}
-        <div class = "mb-10 text-center md:text-left">
-            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
-                Gestión de Pagos
-            </h2>
-            <p class = "mt-2 text-gray-500">
-                Revisa todos los pagos registrados
-            </p>
-        </div>
+        <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+            Gestión de Pagos
+        </h2>
+        <p class = "mt-2 text-gray-500">
+            Revisa todos los pagos registrados
+        </p>
+        
+    </div>
 
 
     <!-- ================= FILTROS ================= -->
@@ -138,8 +138,8 @@
             <thead class = "bg-[#2E6C6F] text-white">
                 
                 <tr>
-                    <th class = "px-6 py-4 text-left">Propiedad</th>
-                    <th class = "px-6 py-4 text-left">Socio</th>
+                    <th class = "px-6 py-4 text-center">Propiedad</th>
+                    <th class = "px-6 py-4 text-center">Socio</th>
                     <th class = "px-6 py-4 text-center">Periodo</th>
                     <th class = "px-6 py-4 text-center">Monto</th>
                     <th class = "px-6 py-4 text-center">Estado</th>
@@ -154,11 +154,11 @@
 
                 <tr class = "hover:bg-[#F3FAFA] transition">
 
-                    <td class = "px-6 py-4 font-medium">
+                    <td class = "px-6 py-4 font-medium text-center">
                         {{ $pago->propiedad->nombre }}
                     </td>
 
-                    <td class = "px-6 py-4">
+                    <td class = "px-6 py-4 text-center">
                         {{ $pago->usuario->name }}
                     </td>
 

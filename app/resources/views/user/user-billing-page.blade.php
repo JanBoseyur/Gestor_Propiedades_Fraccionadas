@@ -5,9 +5,10 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-white p-6">
+<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
-    <div class = "">
+    <!-- TÍTULO -->
+    <div class = "mb-8">
 
         {{-- TÍTULO --}}
         <div class = "mb-10 text-center md:text-left">

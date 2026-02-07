@@ -5,19 +5,20 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-white p-6">
+<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
-    <div class = "">
+    <!-- TÍTULO -->
+    <div class = "mb-8">
 
-        {{-- TÍTULO --}}
-        <div class = "mb-10 text-center md:text-left">
-            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
-                Gestión de Propiedades
-            </h2>
-            <p class = "mt-2 text-gray-500">
-                Revisa y modifica toda la información de las propiedades y sus respectivos socios
-            </p>
-        </div>
+        <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+            Gestión de Propiedades
+        </h2>
+
+        <p class = "mt-2 text-gray-500">
+            Revisa y modifica toda la información de las propiedades y sus respectivos socios
+        </p>
+        
+    </div>
 
     <!-- CONTENEDOR ALPINE GLOBAL -->
     <div x-data = "{

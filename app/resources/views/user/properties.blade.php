@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <div class = "">
+    <div class = "w-full min-h-screen">
 
         @if($propiedades->isEmpty())
             <p>No hay propiedades registradas</p>

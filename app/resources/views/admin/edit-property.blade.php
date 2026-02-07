@@ -5,29 +5,27 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen bg-white p-6">
+<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
-    <div class = "">
+    {{-- TÍTULO --}}
+    <div class = "mb-10 text-center md:text-left">
+        
+        <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
+            Editar Propiedad
+        </h2>
 
-        {{-- TÍTULO --}}
-        <div class = "mb-10 text-center md:text-left">
-            
-            <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
-                Editar Propiedad
-            </h2>
+        <p class = "mt-2 text-gray-500">
+            Modifica la información de la propiedad
+        </p>
+        
+    </div>
 
-            <p class = "mt-2 text-gray-500">
-                Modifica la información de la propiedad
-            </p>
-            
+    {{-- ALERTA --}}
+    @if(session('success'))
+        <div class = "mb-6 p-4 rounded-xl bg-green-50 text-green-700 shadow-sm">
+            {{ session('success') }}
         </div>
-
-        {{-- ALERTA --}}
-        @if(session('success'))
-            <div class = "mb-6 p-4 rounded-xl bg-green-50 text-green-700 shadow-sm">
-                {{ session('success') }}
-            </div>
-        @endif
+    @endif
 
         <form action = "{{ route('propiedades.update', $propiedad->id) }}" method = "POST" enctype = "multipart/form-data" class="space-y-6">
             @csrf

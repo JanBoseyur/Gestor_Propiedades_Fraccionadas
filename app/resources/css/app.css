@@ -9,8 +9,8 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 @media (min-width: 640px) {
@@ -21,4 +21,18 @@
 @keyframes scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+}
+
+@layer components {
+    .sidebar-link {
+        @apply flex items-center px-4 py-3 rounded-lg transition;
+    }
+
+    .sidebar-link-active {
+        @apply bg-white text-[#2C7474];
+    }
+
+    .sidebar-link-inactive {
+        @apply text-white hover:bg-[#B3D3D3] hover:text-[#1F4F52];
+    }
 }

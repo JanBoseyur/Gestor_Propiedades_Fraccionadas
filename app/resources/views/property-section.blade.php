@@ -3,7 +3,7 @@
 @section('title', $propiedad->nombre)
 
 @section('content')
-<div class = "overflow-x-hidden w-full min-h-screen bg-gray-50">
+<div class = "overflow-x-hidden w-full min-h-screen">
 
     <!-- IMAGEN PRINCIPAL -->
     <div class = "relative w-full overflow-hidden">

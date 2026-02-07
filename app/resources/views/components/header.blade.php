@@ -1,5 +1,5 @@
 
-<header class = "flex justify-end bg-[white] items-center justify-between py-4">
+<header class = "flex justify-end items-center justify-between py-6">
 
     <div class = "flex items-center space-x-4 px-5">
         <span class = "flex flex-col items-center justify-center text-sm text-[#2C7474]">
