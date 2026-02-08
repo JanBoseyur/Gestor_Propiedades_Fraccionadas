@@ -3,6 +3,9 @@
 
 @section('title', 'Propiedades')
 
+@section('hideHeader')
+@endsection
+
 @section('content')
 
     <div class = "w-full min-h-screen">

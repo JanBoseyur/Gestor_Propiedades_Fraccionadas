@@ -5,11 +5,11 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
+<div class = "w-full min-h-screen rounded-tl-xl px-10">
 
     <!-- TÍTULO -->
-    <div class = "mb-8">
-        <h2 class="text-4xl font-extrabold text-[#2C7474] tracking-tight">
+    <div class = "">
+        <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
             Mi Perfil
         </h2>
         <p class = "mt-2 text-gray-500">
@@ -25,7 +25,7 @@
     @endif
 
     <!-- CARD -->
-    <div class = "bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div class = "bg-white rounded-3xl shadow-xl overflow-hidden my-8">
 
         {{-- HEADER PERFIL --}}
         <div class = "bg-gradient-to-r from-[#2C7474] to-[#3a8f8f] p-8 text-white">
@@ -45,8 +45,7 @@
                         {{ $user->email }}
                     </p>
 
-                    <span class = "inline-block mt-2 px-3 py-1 text-xs font-semibold rounded-full
-                        {{ $user->hasRole('admin') ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700' }}">
+                    <span class = "bg-white inline-block mt-2 px-3 py-1 text-xs font-semibold rounded-full text-[#2C7474]">
                         {{ $user->rol_legible }}
                     </span>
                 </div>

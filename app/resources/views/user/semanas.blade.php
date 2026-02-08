@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
+<div class = "w-full min-h-screen rounded-tl-xl px-10">
 
     <!-- TÍTULO -->
     <div class = "mb-8">
@@ -15,8 +15,37 @@
         <p class = "mt-2 text-gray-500">
             Revisa tus proximas instancias para no perderte de nada
         </p>
-        
+
     </div>
+
+    @if($estanciasCercanas->isNotEmpty())
+
+        <div class = "space-y-4 mb-5">
+            <h3 class = "text-lg font-semibold text-[#2C7474]">
+                @if($estanciasCercanas->count() === 1)
+                    ¡Tu próxima estancia!
+                @else
+                    ¡Tus próximas estancias!
+                @endif
+            </h3>
+
+            @foreach($estanciasCercanas as $estancia)
+                <div class = "bg-[#E6F3F3] rounded-xl p-4 shadow">
+                    
+                    <h4 class = "font-semibold text-[#184E4E]">
+                        {{ $estancia->propiedad->nombre }}!
+                    </h4>
+
+                    <p class = "text-sm text-[#2C7474]">
+                        📅 {{ $estancia->rango_formateado }}
+                    </p>
+
+                </div>
+            @endforeach
+            
+        </div>
+
+    @endif
 
     @forelse($selecciones as $seleccion)
         <div class = "bg-white rounded-2xl shadow-md ring-1 ring-gray-200 p-4 sm:p-6 mb-6 hover:shadow-lg transition-shadow duration-300">

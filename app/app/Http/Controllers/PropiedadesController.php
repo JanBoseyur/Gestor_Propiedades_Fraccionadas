@@ -233,7 +233,9 @@ class PropiedadesController extends Controller
 
     public function eliminarSocio($propiedadId, $usuarioId)
     {
-        Selection::where('id_usuario', $usuarioId)->delete();
+        Selection::where('id_usuario', $usuarioId)
+         ->where('propiedad_id', $propiedadId)
+         ->delete();
 
         $propiedad = Propiedades::findOrFail($propiedadId);
         $propiedad->usuarios()->detach($usuarioId);
@@ -285,12 +287,10 @@ class PropiedadesController extends Controller
     {
         $anio = $request->get('anio', now()->year);
 
-        // 1. Traer selecciones del año
         $selections = Selection::where('propiedad_id', $id)
             ->where('anio', $anio)
             ->get();
 
-        // 2. Unir semanas ocupadas
         $semanasOcupadas = [];
 
         foreach ($selections as $sel) {
@@ -301,10 +301,8 @@ class PropiedadesController extends Controller
 
         $semanasOcupadas = array_unique($semanasOcupadas);
 
-        // 3. Todas las semanas del año
         $todasLasSemanas = range(1, 52);
 
-        // 4. Calcular disponibles
         $semanasDisponibles = array_values(
             array_diff($todasLasSemanas, $semanasOcupadas)
         );
@@ -372,7 +370,6 @@ class PropiedadesController extends Controller
 
     public function update(Request $request, Propiedades $propiedad)
     {
-        // Validación de datos
         $request->validate([
             'nombre' => 'required|string|max:150',
             'ubicacion' => 'required|string|max:100',
@@ -383,26 +380,38 @@ class PropiedadesController extends Controller
 
         $data = $request->only(['nombre', 'ubicacion', 'descripcion']);
 
-        // Amenidades como JSON
-        $data['amenidades'] = $request->filled('amenidades')
-            ? json_encode(array_map('trim', explode(',', $request->amenidades)))
-            : null;
-
-        // Fotos como JSON
-        if ($request->hasFile('fotos')) {
-            \Log::info('Archivos detectados: ', [$request->file('fotos')]); // <-- muestra los archivos subidos
-            $fotos = [];
-            foreach ($request->file('fotos') as $file) {
-                $path = $file->store('propiedades', 'public');
-                \Log::info('Archivo guardado en: '.$path); // <-- muestra el path relativo
-                $fotos[] = asset('storage/' . $path);
-            }
-            $data['fotos'] = $fotos;
-        } else {
-            \Log::info('No se detectaron archivos.');
+        // --- AMENIDADES ---
+        $amenidadesExistentes = $propiedad->amenidades;
+        if (is_string($amenidadesExistentes)) {
+            $amenidadesExistentes = json_decode($amenidadesExistentes, true) ?? [];
         }
 
-        $propiedad->update($data); // actualizar todo de una vez
+        if ($request->filled('amenidades')) {
+            $nuevasAmenidades = array_map('trim', explode(',', $request->amenidades));
+            // combinamos existentes + nuevas sin duplicados
+            $amenidadesFinales = array_unique(array_merge($amenidadesExistentes, $nuevasAmenidades));
+        } else {
+            $amenidadesFinales = $amenidadesExistentes;
+        }
+
+        $data['amenidades'] = json_encode($amenidadesFinales);
+
+        // --- FOTOS ---
+        $fotosExistentes = $propiedad->fotos;
+        if (is_string($fotosExistentes)) {
+            $fotosExistentes = json_decode($fotosExistentes, true) ?? [];
+        }
+
+        if ($request->hasFile('fotos')) {
+            foreach ($request->file('fotos') as $file) {
+                $path = $file->store('propiedades', 'public');
+                $fotosExistentes[] = asset('storage/' . $path);
+            }
+        }
+
+        $data['fotos'] = json_encode($fotosExistentes);
+
+        $propiedad->update($data);
 
         return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
     }

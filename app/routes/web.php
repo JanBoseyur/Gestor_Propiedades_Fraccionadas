@@ -155,10 +155,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/propiedad/{id}/semanas-detalle', [PropiedadesController::class, 'semanasDetalle'])
             ->name('propiedad.semanas.detalle');
-
-        Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
-            ->name('selections.save');
-
     });
 
     /*

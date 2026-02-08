@@ -1,6 +1,6 @@
 
 <!-- Contenedor Carta Propiedades -->
-<div class = "bg-[#2C7474] shadow-lg overflow-hidden transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 cursor-pointer">
+<div class = "bg-[#428F8F] shadow-lg overflow-hidden transform hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 cursor-pointer">
 
     <!-- Fondo -->
     <div
@@ -14,7 +14,7 @@
       <h3 class = "text-2xl font-bold text-white">{{ $title }}</h3>
 
       <p class = "mt-2 flex items-center text-sm text-white">
-        <i class = "ri-map-pin-2-fill text-teal-200 mr-2"></i>
+        <i class = "ri-map-pin-2-fill text-white mr-2"></i>
         {{ $location }}
       </p>
 

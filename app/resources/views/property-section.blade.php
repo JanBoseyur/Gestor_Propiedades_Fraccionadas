@@ -1,3 +1,4 @@
+
 @extends('layout.app')
 
 @section('title', $propiedad->nombre)

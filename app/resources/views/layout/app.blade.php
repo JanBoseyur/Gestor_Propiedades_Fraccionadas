@@ -46,7 +46,9 @@
 
     <main class = "flex-1 overflow-y-auto bg-[#EDFAFA]">
 
-        @include('components.header')
+        @unless(View::hasSection('hideHeader'))
+            @include('components.header')
+        @endunless
 
         @yield('content')
 

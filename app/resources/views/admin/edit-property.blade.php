@@ -8,7 +8,7 @@
 <div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
     {{-- TÍTULO --}}
-    <div class = "mb-10 text-center md:text-left">
+    <div class = "mb-8 text-center md:text-left">
         
         <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
             Editar Propiedad
@@ -27,7 +27,14 @@
         </div>
     @endif
 
-        <form action = "{{ route('propiedades.update', $propiedad->id) }}" method = "POST" enctype = "multipart/form-data" class="space-y-6">
+        <form action = "{{ route('propiedades.update', $propiedad->id) }}" method = "POST" enctype = "multipart/form-data" 
+            class = "            
+                bg-white
+                rounded-2xl
+                p-6 md:p-8
+                shadow-xl
+                space-y-6">
+
             @csrf
             @method('PUT')
 

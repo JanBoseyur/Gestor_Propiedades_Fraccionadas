@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nombre', 150)->nullable();
             $table->string('ubicacion', 100);
             $table->string('descripcion', 200);
-            $table->json('fotos')->nullable();
             $table->json('amenidades')->nullable();
+            $table->json('fotos')->nullable();
             $table->timestamps();
         });
     }
