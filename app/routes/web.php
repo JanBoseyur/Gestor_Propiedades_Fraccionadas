@@ -108,6 +108,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/propiedades/{propiedad}', [PropiedadesController::class, 'update'])
             ->name('propiedades.update');
 
+        Route::get('/propiedades/crear', [PropiedadesController::class, 'create'])
+            ->name('propiedades.create');
+
+        Route::post('/propiedades', [PropiedadesController::class, 'store'])
+            ->name('propiedades.store');
+
+
         /*
         |-----------------------------------------------------------------------------
         | CHARTS Y CARDS
