@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
 
             fetch(`/pagos/marcar-pagado/${gastoId}`, {
-                method: 'POST',
+                method: 'GET',
                 credentials: 'include',
                 headers: {
                     'X-CSRF-TOKEN': document
