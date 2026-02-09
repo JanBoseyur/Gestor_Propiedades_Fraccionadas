@@ -39,8 +39,7 @@ class PagoController extends Controller
         $gasto->estado = 'pagado';
         $gasto->save();
 
-        return response()->json([
-            'success' => true,
-        ]);
+        return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
     }
+
 }

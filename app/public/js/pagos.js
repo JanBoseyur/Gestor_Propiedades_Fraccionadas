@@ -55,16 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const data = await res.json();
-            const res = await fetch(`/pagos/crear/${gastoId}`, {
+            const res = await fetch(`/pagos/crear/${gastoId}`);
+
+            fetch(`/pagos/marcar-pagado/${gastoId}`, {
                 method: 'GET',
-                credentials: 'include', // <- esto es clave
+                credentials: 'include',
                 headers: {
                     'X-CSRF-TOKEN': document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute('content'),
                     'Accept': 'application/json'
                 }
-            });
+            })
 
             alert('Pago realizado correctamente');
             location.reload();

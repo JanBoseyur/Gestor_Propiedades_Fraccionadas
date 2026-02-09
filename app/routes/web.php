@@ -160,6 +160,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/pagos/{gasto}', [PagoController::class, 'show']);
         Route::get('/pagos/crear/{gasto}', [PagoController::class, 'crearPago']);
         Route::post('/pagos/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado']);
+        
+        Route::post('/pagos/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado'])
+            ->name('pagos.marcar-pagado');
 
     });
 
