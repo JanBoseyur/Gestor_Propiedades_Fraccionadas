@@ -417,41 +417,4 @@ public function update(Request $request, Propiedades $propiedad)
     return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
     }
 
-    public function create()
-    {
-        return view('admin.property-create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:150',
-            'ubicacion' => 'required|string|max:100',
-            'descripcion' => 'required|string|max:200',
-            'amenidades' => 'required|string',
-            'fotos' => 'required|array',
-            'fotos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        $fotos = [];
-
-        if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $foto) {
-                $path = $foto->store('propiedades', 'public');
-                $fotos[] = $path;
-            }
-        }
-
-        Propiedad::create([
-            'nombre' => $request->nombre,
-            'ubicacion' => $request->ubicacion,
-            'descripcion' => $request->descripcion,
-            'amenidades' => json_encode(array_map('trim', explode(',', $request->amenidades))),
-            'fotos' => json_encode($fotos),
-        ]);
-
-        return redirect()->route('propiedades.create')
-            ->with('success', 'Propiedad creada correctamente');
-    }
-
 }
