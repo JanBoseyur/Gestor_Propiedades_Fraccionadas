@@ -15,9 +15,18 @@ class PagoController extends Controller
         $this->stripe = $stripe;
     }
 
+    public function show(GastoComun $gasto)
+    {
+        return view('user.user-billing-page', compact('gasto'));
+    }
+
     public function crearPago(GastoComun $gasto)
     {
-        $paymentIntent = $this->stripe->crearPago($gasto->monto, 'clp', "Pago GastoComun #{$gasto->id}");
+        $paymentIntent = $this->stripe->crearPago(
+            $gasto->monto,
+            'clp',
+            "Pago GastoComun #{$gasto->id}"
+        );
 
         return response()->json([
             'clientSecret' => $paymentIntent->client_secret,
@@ -30,6 +39,8 @@ class PagoController extends Controller
         $gasto->estado = 'pagado';
         $gasto->save();
 
-        return response()->json(['message' => 'Pago marcado como pagado']);
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

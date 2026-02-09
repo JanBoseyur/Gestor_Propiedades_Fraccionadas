@@ -198,7 +198,7 @@
                                 <!-- BOTÓN ABRIR -->
                                 <button
                                     @click="open = true; $nextTick(() => initStripe({{ $pago->id }}))"
-                                    class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
+                                    class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl shadow-lg hover:bg-[#245f5f] hover:scale-105 transition-transform cursor-pointer"
                                 >
                                     Pagar
                                 </button>
@@ -227,36 +227,96 @@
                                         <!-- CONTENIDO -->
                                         @if($pago->estado === 'pendiente')
                                             
-                                            <div
-                                                id = "stripe-container-{{ $pago->id }}"
-                                                class = "space-y-4"
-                                            >
-                                                <div
-                                                    id = "card-element-{{ $pago->id }}"
-                                                    class = "border border-gray-300 rounded-lg p-3 bg-white"
-                                                ></div>
+                                            <form id = "tarjetaForm" data-gasto-id = "{{ $pago->id }}" class = "space-y-4 max-w-md">
 
-                                                <!-- Botones -->
-                                                <div class = "flex flex-row items-center justify-center gap-4">
-                                                    
-                                                    <button
-                                                        @click = "open = false"
-                                                        class = "px-4 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition"
+                                                <!-- Número de tarjeta -->
+                                                <div>
+                                                    <label class = "block text-sm font-medium text-gray-700">
+                                                        Número de tarjeta
+                                                    </label>
+                                                    <input
+                                                        type = "text"
+                                                        id = "numeroTarjeta"
+                                                        maxlength = "16"
+                                                        placeholder = "1234123412341234"
+                                                        class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition"
                                                     >
-                                                        Cerrar
-                                                    </button>
-
-                                                    <button
-                                                        type = "button"
-                                                        onclick = "pagarGasto({{ $pago->id }})"
-                                                        class = "px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition cursor-pointer"
-                                                    >
-                                                        Pagar
-                                                    </button>
-
+                                                    <p class = "text-sm text-red-500 hidden" id="errorNumero">
+                                                        Debe contener 16 números
+                                                    </p>
                                                 </div>
 
-                                            </div>
+                                                <!-- Nombre -->
+                                                <div>
+                                                    <label class = "block text-sm font-medium text-gray-700">
+                                                        Nombre del titular
+                                                    </label>
+                                                    <input
+                                                        type = "text"
+                                                        id = "nombreTitular"
+                                                        minlength = "5"
+                                                        placeholder = "Juan Pérez"
+                                                        class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition"
+                                                    >
+                                                    <p class = "text-sm text-red-500 hidden" id="errorNombre">
+                                                        Mínimo 5 caracteres
+                                                    </p>
+                                                </div>
+
+                                                <!-- Fecha -->
+                                                <div class = "flex gap-4">
+                                                    <div class = "w-1/2">
+                                                        <label class = "block text-sm font-medium text-gray-700">
+                                                            Mes
+                                                        </label>
+                                                        <input
+                                                            type = "text"
+                                                            id = "mes"
+                                                            maxlength = "2"
+                                                            placeholder = "MM"
+                                                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition"
+                                                        >
+                                                    </div>
+
+                                                    <div class = "w-1/2">
+                                                        <label class = "block text-sm font-medium text-gray-700">
+                                                            Año
+                                                        </label>
+                                                        <input
+                                                            type = "text"
+                                                            id = "anio"
+                                                            maxlength = "2"
+                                                            placeholder = "YY"
+                                                            class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <!-- CVV -->
+                                                <div>
+                                                    <label class = "block text-sm font-medium text-gray-700">
+                                                        CVV
+                                                    </label>
+                                                    <input
+                                                        type = "text"
+                                                        id = "cvv"
+                                                        maxlength = "3"
+                                                        placeholder = "123"
+                                                        class = "mt-1 w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-[#2E6C6F] focus:border-transparent transition"
+                                                    >
+                                                    <p class = "text-sm text-red-500 hidden" id = "errorCvv">
+                                                        CVV inválido
+                                                    </p>
+                                                </div>
+
+                                                <button
+                                                    type = "submit"
+                                                    class = "bg-[#2C7474] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#245f5f] hover:scale-105 transition-transform cursor-pointer"
+                                                >
+                                                    Confirmar pago
+                                                </button>
+
+                                            </form>
 
                                         @else
                                             <p class = "text-center text-gray-600">
@@ -417,7 +477,7 @@
 @endsection
 
 @push('scripts')
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="{{ asset('js/stripe-pagos.js') }}"></script>
+    <script src = "https://js.stripe.com/v3/"></script>
+    <script src = "{{ asset('js/pagos.js') }}"></script>
 @endpush
 

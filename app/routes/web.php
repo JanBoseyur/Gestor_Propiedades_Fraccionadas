@@ -108,6 +108,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/propiedades/{propiedad}', [PropiedadesController::class, 'update'])
             ->name('propiedades.update');
 
+        Route::get('/propiedades/crear', [PropiedadesController::class, 'create'])
+            ->name('propiedades.create');
+
+        Route::post('/propiedades', [PropiedadesController::class, 'store'])
+            ->name('propiedades.store');
+
+
         /*
         |-----------------------------------------------------------------------------
         | CHARTS Y CARDS
@@ -147,14 +154,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/propiedades/{propiedad}/selections/save', [SelectionController::class, 'save'])
             ->name('selections.save');
 
-        Route::post('/pago/iniciar/{gasto}', [PagoController::class, 'crearPago'])
-            ->name('pago.iniciar');
-            
-        Route::get('/pagar-gasto/{gasto}', [PagoController::class, 'crearPago']);
-        Route::post('/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado']);
-
         Route::get('/propiedad/{id}/semanas-detalle', [PropiedadesController::class, 'semanasDetalle'])
             ->name('propiedad.semanas.detalle');
+
+        Route::get('/pagos/{gasto}', [PagoController::class, 'show']);
+        Route::get('/pagos/crear/{gasto}', [PagoController::class, 'crearPago']);
+        Route::post('/pagos/marcar-pagado/{gasto}', [PagoController::class, 'marcarPagado']);
+
     });
 
     /*

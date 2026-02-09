@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 datasets: [{ data: Object.values(data.gastos) }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: { legend: { position: 'bottom' } }
             }
         });
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             },
             options: {
                 responsive: true,
-                aspectRatio: 'false',
+                aspectRatio: false,
                 scales: { y: { beginAtZero: true } }
             }
         });

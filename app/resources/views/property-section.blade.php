@@ -214,7 +214,7 @@
 
                 <!-- Botón Guardar -->
                 <button id = "guardar-selecciones" 
-                    class = "mt-4 px-4 py-2 bg-[#2C7474] text-white rounded-xl hover:bg-[#245f5f] transition">
+                    class = "mt-4 px-4 py-2 bg-[#2C7474] text-white rounded-xl shadow-lg hover:bg-[#245f5f] hover:scale-105 transition-transform cursor-pointer">
                     Guardar Selecciones
                 </button>
             </section>

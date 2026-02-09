@@ -8,7 +8,7 @@
 <div class = "w-full min-h-screen rounded-tl-xl p-10 lg:p-0 lg:px-15">
 
     <!-- TÍTULO -->
-    <div class = "mb-8">
+    <div class = "">
 
         <h2 class = "text-4xl font-extrabold text-[#2C7474] tracking-tight">
             Gestión de Propiedades
@@ -19,6 +19,15 @@
         </p>
         
     </div>
+
+    <a href = "{{ route('propiedades.create') }}">
+        <button
+            type = "button"
+            class = "my-6 px-4 py-2 bg-[#2C7474] text-white font-semibold rounded-xl shadow-lg hover:bg-[#265a5c] hover:scale-105 transition transform duration-300 cursor-pointer"
+        >
+            Añadir Propiedad
+        </button>
+    </a>
 
     <!-- CONTENEDOR ALPINE GLOBAL -->
     <div x-data = "{

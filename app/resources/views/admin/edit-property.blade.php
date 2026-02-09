@@ -22,7 +22,7 @@
 
     {{-- ALERTA --}}
     @if(session('success'))
-        <div class = "mb-6 p-4 rounded-xl bg-green-50 text-green-700 shadow-sm">
+        <div class = "p-4 rounded-xl bg-green-50 text-green-700 shadow-sm">
             {{ session('success') }}
         </div>
     @endif
@@ -32,6 +32,7 @@
                 bg-white
                 rounded-2xl
                 p-6 md:p-8
+                my-6
                 shadow-xl
                 space-y-6">
 
@@ -73,8 +74,17 @@
                     <i class = "fa-solid fa-camera text-[#2C7474] text-lg flex-shrink-0"></i>
 
                     <span class = "text-gray-500 text-sm">Selecciona imágenes...</span>
-                    <input type = "file" name = "fotos[]" multiple accept = ".jpg,.jpeg,.png" class = "hidden">
+                    <input 
+                        type="file"
+                        name="fotos[]"
+                        id="inputFotos"
+                        multiple
+                        accept=".jpg,.jpeg,.png"
+                        class="hidden">
                 </label>
+
+                <!-- Previsualización de nuevas fotos -->
+                <div id = "preview-fotos" class = "mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 hidden"></div>
 
                 <!-- Previsualización de fotos -->
                 @if($propiedad->fotos)
@@ -124,3 +134,37 @@
 </div>
 
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const inputFotos = document.getElementById('inputFotos');
+    const preview = document.getElementById('preview-fotos');
+
+    if (!inputFotos || !preview) return;
+
+    inputFotos.addEventListener('change', () => {
+        preview.innerHTML = '';
+        preview.classList.remove('hidden');
+
+        const files = Array.from(inputFotos.files);
+
+        files.forEach(file => {
+            if (!file.type.startsWith('image/')) return;
+
+            const imgContainer = document.createElement('div');
+            imgContainer.className =
+                'w-full h-32 overflow-hidden rounded-xl shadow-sm border border-gray-200';
+
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.className =
+                'w-full h-full object-cover transition duration-300 hover:scale-105';
+
+            img.onload = () => URL.revokeObjectURL(img.src);
+
+            imgContainer.appendChild(img);
+            preview.appendChild(imgContainer);
+        });
+    });
+});
+</script>

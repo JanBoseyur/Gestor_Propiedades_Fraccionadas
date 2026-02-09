@@ -119,7 +119,7 @@
             <!-- BOTÓN -->
             <div class = "flex justify-end pt-6">
                 <button type = "submit"
-                    class = "px-10 py-3 rounded-xl bg-[#2C7474] text-white font-semibold shadow-lg hover:bg-[#245f5f] hover:scale-105 transition-transform">
+                    class = "px-10 py-3 rounded-xl bg-[#2C7474] text-white font-semibold shadow-lg hover:bg-[#245f5f] hover:scale-105 transition-transform cursor-pointer">
                     Guardar cambios
                 </button>
             </div>

@@ -20,16 +20,16 @@
 
     </div>
 
-    <div class = "w-full min-h-screen space-y-6">
+    <div class = "w-full space-y-3">
 
         <!-- =================== TARJETAS =================== -->
-        <div class = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div class = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
 
             <!-- Tarjeta 1 -->
             <div class = "bg-white shadow-xl rounded-xl p-5 border-l-4 border-[#2C7474] flex flex-col">
                 <h3 class = "text-sm font-semibold uppercase text-gray-500">Total Reservas</h3>
                 <p class = "text-2xl font-bold text-gray-800 mt-2">{{ $totalReservas }}</p>
-                <p class = "text-xs text-gray-400 mt-1">Este mes</p>
+                <p class = "text-xs text-gray-400 mt-1">Este año</p>
             </div>
 
             <!-- Tarjeta 2 -->
@@ -59,29 +59,45 @@
         <div class = "grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <!-- Gastos -->
-            <div class = "bg-white rounded-xl shadow-xl p-6 border-l-4 border-[#2C7474] flex flex-col justify-center">
-                <h3 class = "text-sm font-semibold uppercase text-gray-500 mb-2">Estado de Gastos</h3>
-                <canvas id = "gastosChart" class = "mx-auto" data-gastos = '@json($gastos)'></canvas>
+            <div class = "bg-white rounded-xl shadow-xl p-6 border-l-4 border-[#2C7474]">
+                <h3 class = "text-sm font-semibold uppercase text-gray-500">
+                    Estado de Gastos
+                </h3>
+                <p class = "text-xs text-gray-400 mb-4">
+                    Pagado y Pendiente
+                </p>
+
+                <!-- CONTENEDOR RESPONSIVE -->
+                <div class = "relative w-full h-52 sm:h-60 md:h-64 lg:h-72">
+                    <canvas id = "gastosChart"></canvas>
+                </div>
             </div>
 
-            <!-- Gráfico 2 -->
+            <!-- Reservas -->
             <div class = "bg-white rounded-xl shadow-xl p-5 border-l-4 border-[#2C7474]">
-                <h3 class = "text-sm font-semibold uppercase text-gray-500">Reservas por Mes</h3>
-                <p class = "text-xs text-gray-400 mb-4">Enero a Diciembre</p>
-                <canvas id = "reservasMesChart" class = "w-full h-64"></canvas>
+                <h3 class = "text-sm font-semibold uppercase text-gray-500">
+                    Reservas por Mes
+                </h3>
+                <p class = "text-xs text-gray-400 mb-4">
+                    Enero a Diciembre
+                </p>
+
+                <!-- CONTENEDOR RESPONSIVE -->
+                <div class = "relative w-full h-56 sm:h-64 md:h-72 lg:h-80">
+                    <canvas id = "reservasMesChart"></canvas>
+                </div>
             </div>
 
         </div>
 
         <!-- Fila inferior: gráfico ancho -->
-        <div class = "bg-white rounded-xl shadow-xl p-5 border-l-4 border-[#2C7474]">
+        <div class = "bg-white rounded-xl shadow-xl p-5 border-l-4 border-[#2C7474] mb-6">
             <h3 class = "text-sm font-semibold uppercase text-gray-500">Monto Recaudado</h3>
-            <p class = "text-xs text-gray-400 mb-4">Pagado vs Pendiente</p>
+            <p class = "text-xs text-gray-400 mb-4">Enero a Diciembre</p>
             <canvas id = "recaudadoMesChart" class = "w-full h-64"></canvas>
         </div>
 
     </div>
-
 
 </div>
 

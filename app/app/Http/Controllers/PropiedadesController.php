@@ -368,52 +368,90 @@ class PropiedadesController extends Controller
         return view('admin.edit-property', compact('propiedad'));
     }
 
-    public function update(Request $request, Propiedades $propiedad)
+public function update(Request $request, Propiedades $propiedad)
+{
+    $request->validate([
+        'nombre'      => 'required|string|max:150',
+        'ubicacion'   => 'required|string|max:100',
+        'descripcion' => 'required|string|max:200',
+        'fotos.*'     => 'image|mimes:jpg,jpeg,png,gif,webp',
+        'amenidades'  => 'nullable|string',
+    ]);
+
+    $data = $request->only(['nombre', 'ubicacion', 'descripcion']);
+
+    /* ===============================
+     * AMENIDADES
+     * =============================== */
+    $amenidadesExistentes = $propiedad->amenidades ?? [];
+
+    if ($request->filled('amenidades')) {
+        $nuevasAmenidades = array_map(
+            'trim',
+            explode(',', $request->amenidades)
+        );
+
+        $data['amenidades'] = array_values(
+            array_unique(array_merge($amenidadesExistentes, $nuevasAmenidades))
+        );
+    } else {
+        $data['amenidades'] = $amenidadesExistentes;
+    }
+
+    /* ===============================
+     * FOTOS
+     * =============================== */
+    $fotosExistentes = $propiedad->fotos ?? [];
+
+    if ($request->hasFile('fotos')) {
+        foreach ($request->file('fotos') as $file) {
+            $path = $file->store('propiedades', 'public');
+            $fotosExistentes[] = asset('storage/' . $path);
+        }
+    }
+
+    $data['fotos'] = $fotosExistentes;
+
+    $propiedad->update($data);
+
+    return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
+    }
+
+    public function create()
+    {
+        return view('admin.property-create');
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:150',
             'ubicacion' => 'required|string|max:100',
             'descripcion' => 'required|string|max:200',
-            'fotos.*' => 'image|mimes:jpg,jpeg,png,gif,webp',
-            'amenidades' => 'nullable|string',
+            'amenidades' => 'required|string',
+            'fotos' => 'required|array',
+            'fotos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only(['nombre', 'ubicacion', 'descripcion']);
-
-        // --- AMENIDADES ---
-        $amenidadesExistentes = $propiedad->amenidades;
-        if (is_string($amenidadesExistentes)) {
-            $amenidadesExistentes = json_decode($amenidadesExistentes, true) ?? [];
-        }
-
-        if ($request->filled('amenidades')) {
-            $nuevasAmenidades = array_map('trim', explode(',', $request->amenidades));
-            // combinamos existentes + nuevas sin duplicados
-            $amenidadesFinales = array_unique(array_merge($amenidadesExistentes, $nuevasAmenidades));
-        } else {
-            $amenidadesFinales = $amenidadesExistentes;
-        }
-
-        $data['amenidades'] = json_encode($amenidadesFinales);
-
-        // --- FOTOS ---
-        $fotosExistentes = $propiedad->fotos;
-        if (is_string($fotosExistentes)) {
-            $fotosExistentes = json_decode($fotosExistentes, true) ?? [];
-        }
+        $fotos = [];
 
         if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $file) {
-                $path = $file->store('propiedades', 'public');
-                $fotosExistentes[] = asset('storage/' . $path);
+            foreach ($request->file('fotos') as $foto) {
+                $path = $foto->store('propiedades', 'public');
+                $fotos[] = $path;
             }
         }
 
-        $data['fotos'] = json_encode($fotosExistentes);
+        Propiedad::create([
+            'nombre' => $request->nombre,
+            'ubicacion' => $request->ubicacion,
+            'descripcion' => $request->descripcion,
+            'amenidades' => json_encode(array_map('trim', explode(',', $request->amenidades))),
+            'fotos' => json_encode($fotos),
+        ]);
 
-        $propiedad->update($data);
-
-        return redirect()->back()->with('success', 'Propiedad actualizada correctamente.');
+        return redirect()->route('propiedades.create')
+            ->with('success', 'Propiedad creada correctamente');
     }
 
 }
